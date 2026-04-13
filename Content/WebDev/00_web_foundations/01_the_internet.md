@@ -3,6 +3,7 @@ title: "The Internet"
 lesson_plan: "Web Foundations"
 order: 1
 duration_minutes: 15
+sidebar_position: 1
 tags:
   - internet
   - client-server

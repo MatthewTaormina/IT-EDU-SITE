@@ -3,6 +3,7 @@ title: "DNS"
 lesson_plan: "Web Foundations"
 order: 7
 duration_minutes: 20
+sidebar_position: 7
 tags:
   - dns
   - domain

@@ -3,6 +3,7 @@ title: "Web Servers"
 lesson_plan: "Web Foundations"
 order: 4
 duration_minutes: 20
+sidebar_position: 4
 tags:
   - server
   - static

@@ -3,6 +3,7 @@ title: "How a Page Loads"
 lesson_plan: "Web Foundations"
 order: 9
 duration_minutes: 30
+sidebar_position: 9
 tags:
   - page-load
   - rendering

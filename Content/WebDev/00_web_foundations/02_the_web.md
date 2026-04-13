@@ -3,6 +3,7 @@ title: "The World Wide Web"
 lesson_plan: "Web Foundations"
 order: 2
 duration_minutes: 10
+sidebar_position: 2
 tags:
   - web
   - www

@@ -2,6 +2,8 @@
 title: "Unit Review — Web Foundations"
 lesson_plan: "Web Foundations"
 type: "review"
+sidebar_position: 999
+sidebar_label: "Review & Summary"
 ---
 
 # Unit Review — Web Foundations

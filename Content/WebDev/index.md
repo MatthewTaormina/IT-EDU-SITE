@@ -5,6 +5,8 @@ domain: "WebDev"
 difficulty: "Beginner to Advanced"
 prerequisites:
   - "None for the first unit. Later units assume completion of prior units."
+sidebar_position: 0
+sidebar_label: "Course Overview"
 ---
 
 # Web Development

@@ -3,6 +3,7 @@ title: "Web Browsers"
 lesson_plan: "Web Foundations"
 order: 3
 duration_minutes: 20
+sidebar_position: 3
 tags:
   - browser
   - rendering

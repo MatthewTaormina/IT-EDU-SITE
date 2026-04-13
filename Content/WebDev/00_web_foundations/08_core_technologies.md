@@ -3,6 +3,7 @@ title: "Core Technologies: HTML, CSS & JavaScript"
 lesson_plan: "Web Foundations"
 order: 8
 duration_minutes: 20
+sidebar_position: 8
 tags:
   - html
   - css

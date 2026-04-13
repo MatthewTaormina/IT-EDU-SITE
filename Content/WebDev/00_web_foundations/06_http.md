@@ -3,6 +3,7 @@ title: "HTTP"
 lesson_plan: "Web Foundations"
 order: 6
 duration_minutes: 25
+sidebar_position: 6
 tags:
   - http
   - https

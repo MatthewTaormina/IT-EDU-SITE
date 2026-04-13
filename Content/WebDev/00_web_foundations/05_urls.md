@@ -3,6 +3,7 @@ title: "URLs"
 lesson_plan: "Web Foundations"
 order: 5
 duration_minutes: 20
+sidebar_position: 5
 tags:
   - url
   - uri

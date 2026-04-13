@@ -12,6 +12,8 @@ learning_objectives:
   - "Explain the HTTP request-response cycle at a high level"
   - "Identify the roles of HTML, CSS, and JavaScript without writing any code"
   - "Trace the complete journey of a URL from input to rendered page"
+sidebar_position: 0
+sidebar_label: "Overview"
 ---
 
 # Web Foundations
