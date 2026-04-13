@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 280" width="540" height="280" font-family="system-ui, -apple-system, sans-serif" font-size="14">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- Browser -->
+  <rect x="185" y="10" width="170" height="48" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="270" y="39" text-anchor="middle" fill="#1d4ed8" font-weight="600">Browser (Client)</text>
+
+  <!-- Arrow: Browser → Load Balancer -->
+  <line x1="270" y1="58" x2="270" y2="113" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Load Balancer -->
+  <rect x="160" y="115" width="220" height="48" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="270" y="144" text-anchor="middle" fill="#92400e" font-weight="600">Load Balancer</text>
+
+  <!-- Arrow: Load Balancer → Server A -->
+  <line x1="210" y1="163" x2="92" y2="218" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow: Load Balancer → Server B -->
+  <line x1="270" y1="163" x2="270" y2="218" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow: Load Balancer → Server C -->
+  <line x1="330" y1="163" x2="448" y2="218" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Server A -->
+  <rect x="25" y="220" width="130" height="44" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="90" y="247" text-anchor="middle" fill="#15803d" font-weight="500">Server A</text>
+
+  <!-- Server B -->
+  <rect x="205" y="220" width="130" height="44" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="270" y="247" text-anchor="middle" fill="#15803d" font-weight="500">Server B</text>
+
+  <!-- Server C -->
+  <rect x="385" y="220" width="130" height="44" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="450" y="247" text-anchor="middle" fill="#15803d" font-weight="500">Server C</text>
+</svg>

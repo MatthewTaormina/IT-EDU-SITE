@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 220" font-family="system-ui, -apple-system, sans-serif" font-size="12">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- HTML file -->
+  <rect x="10" y="28" width="90" height="40" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="55" y="53" text-anchor="middle" fill="#1e40af" font-weight="600">HTML file</text>
+
+  <!-- CSS file -->
+  <rect x="10" y="152" width="90" height="40" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="55" y="177" text-anchor="middle" fill="#92400e" font-weight="600">CSS file</text>
+
+  <!-- Arrows: parse -->
+  <line x1="101" y1="48" x2="158" y2="48" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="130" y="42" text-anchor="middle" fill="#9ca3af" font-size="10">parse</text>
+
+  <line x1="101" y1="172" x2="158" y2="172" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="130" y="166" text-anchor="middle" fill="#9ca3af" font-size="10">parse</text>
+
+  <!-- DOM -->
+  <rect x="160" y="28" width="90" height="40" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="205" y="53" text-anchor="middle" fill="#1e40af" font-weight="600">DOM</text>
+
+  <!-- CSSOM -->
+  <rect x="160" y="152" width="90" height="40" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="205" y="177" text-anchor="middle" fill="#92400e" font-weight="600">CSSOM</text>
+
+  <!-- Elbow lines: DOM and CSSOM merge into Render Tree -->
+  <path d="M 250,48 L 285,48 L 285,107" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+  <path d="M 250,172 L 285,172 L 285,113" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+  <line x1="285" y1="110" x2="318" y2="110" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Render Tree -->
+  <rect x="320" y="90" width="110" height="40" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="375" y="110" text-anchor="middle" fill="#5b21b6" font-weight="600" font-size="11">Render Tree</text>
+  <text x="375" y="123" text-anchor="middle" fill="#7c3aed" font-size="9">DOM + styles merged</text>
+
+  <!-- Render Tree → Layout -->
+  <line x1="431" y1="110" x2="458" y2="110" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Layout -->
+  <rect x="460" y="90" width="80" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="500" y="110" text-anchor="middle" fill="#15803d" font-weight="600" font-size="11">Layout</text>
+  <text x="500" y="123" text-anchor="middle" fill="#16a34a" font-size="9">size &amp; position</text>
+
+  <!-- Layout → Paint -->
+  <line x1="541" y1="110" x2="568" y2="110" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Paint -->
+  <rect x="570" y="90" width="70" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="605" y="110" text-anchor="middle" fill="#15803d" font-weight="600" font-size="11">Paint</text>
+  <text x="605" y="123" text-anchor="middle" fill="#16a34a" font-size="9">pixels</text>
+
+  <!-- Caption -->
+  <text x="350" y="210" text-anchor="middle" fill="#94a3b8" font-size="10">The browser builds the DOM and CSSOM separately, then combines them to render the page.</text>
+
+</svg>

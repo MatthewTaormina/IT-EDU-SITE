@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 120" font-family="system-ui, -apple-system, sans-serif" font-size="12">
+
+  <!--
+    Segment positions (monospace 14px ≈ 8.5px/char):
+    https          x=20  w=43   end=63
+    ://            x=63  w=25   end=88   (separator, not labeled)
+    api.example.com x=88  w=128  end=216
+    :3000          x=216 w=43   end=259
+    /users         x=259 w=51   end=310
+    ?page=2        x=310 w=60   end=370
+    #top           x=370 w=34   end=404
+  -->
+
+  <!-- URL text: explicit x on each tspan so positioning is font-width-independent -->
+  <text y="50" font-family="monospace" font-size="14">
+    <tspan x="20"  fill="#3b82f6">https</tspan>
+    <tspan x="63"  fill="#9ca3af">://</tspan>
+    <tspan x="88"  fill="#16a34a">api.example.com</tspan>
+    <tspan x="216" fill="#d97706">:3000</tspan>
+    <tspan x="259" fill="#7c3aed">/users</tspan>
+    <tspan x="310" fill="#db2777">?page=2</tspan>
+    <tspan x="370" fill="#dc2626">#top</tspan>
+  </text>
+
+  <!-- Underlines anchored to the same x positions -->
+  <rect x="20"  y="55" width="43"  height="4" rx="2" fill="#3b82f6"/>
+  <rect x="88"  y="55" width="128" height="4" rx="2" fill="#16a34a"/>
+  <rect x="216" y="55" width="43"  height="4" rx="2" fill="#d97706"/>
+  <rect x="259" y="55" width="51"  height="4" rx="2" fill="#7c3aed"/>
+  <rect x="310" y="55" width="60"  height="4" rx="2" fill="#db2777"/>
+  <rect x="370" y="55" width="34"  height="4" rx="2" fill="#dc2626"/>
+
+  <!-- Above labels: line starts 3px below text baseline (y=13), ends 2px above underline (y=55) -->
+  <text x="42"  y="13" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="600">Protocol</text>
+  <line x1="42"  y1="16" x2="42"  y2="40" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <text x="238" y="13" text-anchor="middle" fill="#d97706" font-size="11" font-weight="600">Port</text>
+  <line x1="238" y1="16" x2="238" y2="40" stroke="#d97706" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <text x="340" y="13" text-anchor="middle" fill="#db2777" font-size="11" font-weight="600">Query String</text>
+  <line x1="340" y1="16" x2="340" y2="40" stroke="#db2777" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Below labels: line ends 3px above text top (~y=86), text baseline at y=97 -->
+  <line x1="152" y1="62" x2="152" y2="83" stroke="#16a34a" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="152" y="97" text-anchor="middle" fill="#16a34a" font-size="11" font-weight="600">Host / Domain</text>
+
+  <line x1="285" y1="62" x2="285" y2="83" stroke="#7c3aed" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="285" y="97" text-anchor="middle" fill="#7c3aed" font-size="11" font-weight="600">Path</text>
+
+  <line x1="387" y1="62" x2="387" y2="83" stroke="#dc2626" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="387" y="97" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="600">Fragment</text>
+
+  <!-- Caption -->
+  <text x="215" y="116" text-anchor="middle" fill="#94a3b8" font-size="10">Every component is optional except the protocol and host.</text>
+
+</svg>

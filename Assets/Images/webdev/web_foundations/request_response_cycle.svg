@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" font-family="system-ui, -apple-system, sans-serif" font-size="12">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- Browser -->
+  <rect x="20" y="80" width="120" height="40" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="80" y="100" text-anchor="middle" fill="#1e40af" font-weight="600">Browser</text>
+  <text x="80" y="113" text-anchor="middle" fill="#3b82f6" font-size="10">(Client)</text>
+
+  <!-- Request arrow -->
+  <line x1="142" y1="90" x2="278" y2="90" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="210" y="80" text-anchor="middle" fill="#374151" font-size="11" font-weight="500">① HTTP Request</text>
+  <text x="210" y="92" text-anchor="middle" fill="#9ca3af" font-size="9">GET /index.html</text>
+
+  <!-- Server -->
+  <rect x="280" y="60" width="120" height="80" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="340" y="95" text-anchor="middle" fill="#15803d" font-weight="600">Server</text>
+  <text x="340" y="110" text-anchor="middle" fill="#16a34a" font-size="10">finds / generates</text>
+  <text x="340" y="123" text-anchor="middle" fill="#16a34a" font-size="10">the resource</text>
+
+  <!-- Response arrow -->
+  <line x1="278" y1="115" x2="142" y2="115" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="210" y="136" text-anchor="middle" fill="#374151" font-size="11" font-weight="500">② HTTP Response</text>
+  <text x="210" y="148" text-anchor="middle" fill="#9ca3af" font-size="9">200 OK + HTML file</text>
+
+  <!-- Status code labels on right -->
+  <rect x="420" y="60" width="120" height="80" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="480" y="82" text-anchor="middle" fill="#334155" font-weight="600" font-size="11">Status Codes</text>
+  <text x="480" y="98" text-anchor="middle" fill="#16a34a" font-size="10">200 OK</text>
+  <text x="480" y="111" text-anchor="middle" fill="#d97706" font-size="10">301 Redirect</text>
+  <text x="480" y="124" text-anchor="middle" fill="#dc2626" font-size="10">404 Not Found</text>
+  <text x="480" y="137" text-anchor="middle" fill="#dc2626" font-size="10">500 Server Error</text>
+
+  <!-- Connecting line to status codes -->
+  <line x1="401" y1="100" x2="418" y2="100" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Network label -->
+  <text x="210" y="175" text-anchor="middle" fill="#9ca3af" font-size="10">——————— Internet ———————</text>
+
+</svg>

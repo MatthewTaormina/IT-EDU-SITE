@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 160" font-family="system-ui, -apple-system, sans-serif" font-size="13">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- Client box -->
+  <rect x="20" y="56" width="160" height="48" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="100" y="76" text-anchor="middle" fill="#1e40af" font-weight="600" font-size="14">Browser</text>
+  <text x="100" y="94" text-anchor="middle" fill="#3b82f6" font-size="11">(Client)</text>
+
+  <!-- Server box -->
+  <rect x="380" y="56" width="160" height="48" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="460" y="76" text-anchor="middle" fill="#15803d" font-weight="600" font-size="14">Web Server</text>
+  <text x="460" y="94" text-anchor="middle" fill="#16a34a" font-size="11">(Server)</text>
+
+  <!-- Request arrow -->
+  <line x1="183" y1="72" x2="377" y2="72" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="280" y="66" text-anchor="middle" fill="#374151" font-size="11">HTTP Request</text>
+
+  <!-- Response arrow -->
+  <line x1="377" y1="92" x2="183" y2="92" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="280" y="110" text-anchor="middle" fill="#374151" font-size="11">HTTP Response</text>
+
+  <!-- Internet label -->
+  <text x="280" y="145" text-anchor="middle" fill="#9ca3af" font-size="11">——————— Internet ———————</text>
+</svg>
