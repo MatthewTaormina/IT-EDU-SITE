@@ -1,0 +1,41 @@
+# Normalize line endings to LF for all text files across all platforms.
+# Prevents the LF → CRLF warning noise on Windows and keeps diffs clean.
+
+# Default: auto-detect text files and store with LF
+* text=auto eol=lf
+
+# Markdown and documentation
+*.md    text eol=lf
+*.txt   text eol=lf
+
+# Web source files
+*.html  text eol=lf
+*.css   text eol=lf
+*.js    text eol=lf
+*.ts    text eol=lf
+*.jsx   text eol=lf
+*.tsx   text eol=lf
+
+# Data / config
+*.json  text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.toml  text eol=lf
+*.env   text eol=lf
+
+# SVG (XML-based text)
+*.svg   text eol=lf
+
+# Binary files — never touch line endings
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.zip   binary
