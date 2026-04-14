@@ -71,7 +71,7 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
-          sidebarId: 'coursesSidebar',
+          sidebarId: 'webdevSidebar',
           position: 'left',
           label: 'Courses',
         },
