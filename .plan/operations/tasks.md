@@ -39,7 +39,7 @@
 
 | ID | Title | Priority | Assignee | Started | PRD / Notes |
 |----|-------|----------|----------|---------|-------------|
-| — | — | — | — | — | — |
+| TASK-018 | Author WebDev pathway — FrontEndIntermediate course | P1 | Copilot Agent | 2026-04-14 | Node 2 approved; see [[.plan/roadmap/pathways.md]] |
 
 ---
 

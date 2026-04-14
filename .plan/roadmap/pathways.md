@@ -1,6 +1,6 @@
 # WebDev Pathway — High-Level Node Map
 
-> **Status:** Awaiting approval to expand individual course nodes to unit/lesson detail.
+> **Status:** Node 2 (FrontEndIntermediate) — IN PROGRESS. All other nodes pending approval after Node 2 is reviewed.
 > **Constraint:** All courses follow the Competency Node strategy — every course has an explicit Prerequisite and a Terminal Project.
 > Linked to: [[.plan/vision/vision.md]] | [[.plan/operations/tasks.md]] | [[.plan/roadmap/milestones.md]]
 > Source research: [[.research/programming/core-competencies-fullstack.md]] | [[.research/web-dev/frontend-stack.md]] | [[.research/web-dev/backend-stack.md]] | [[.research/web-dev/infrastructure.md]]
