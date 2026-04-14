@@ -13,7 +13,6 @@
   <line x1="276" y1="26" x2="298" y2="26" stroke="#666" stroke-width="2.5" stroke-linecap="round"/>
   <line x1="276" y1="33" x2="298" y2="33" stroke="#666" stroke-width="2.5" stroke-linecap="round"/>
   <line x1="276" y1="40" x2="298" y2="40" stroke="#666" stroke-width="2.5" stroke-linecap="round"/>
-  <text x="248" y="36" font-size="8" fill="#aaa">☰ menu</text>
 
   <!-- ─── Mobile nav OPEN state ────────────────────────────────────── -->
   <rect x="8" y="60" width="304" height="88" fill="#1a1a2e" stroke="#c0c0c0" stroke-width="1"/>
