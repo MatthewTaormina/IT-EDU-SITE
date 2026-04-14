@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'IT Learning Hub',
   tagline: 'From foundations to full-stack — structured courses for every level.',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
 
   future: {
     v4: true,
@@ -66,20 +66,28 @@ const config: Config = {
       items: [
         {
           to: '/courses',
-          label: 'Content Hub',
+          label: 'Hub',
           position: 'left',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'coursesSidebar',
+          to: '/courses/Pathways',
+          label: 'Pathways',
           position: 'left',
+        },
+        {
+          to: '/courses/Courses',
           label: 'Courses',
+          position: 'left',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'articlesSidebar',
+          to: '/courses/Projects',
+          label: 'Projects',
           position: 'left',
+        },
+        {
+          to: '/courses/Articles',
           label: 'Articles',
+          position: 'left',
         },
       ],
     },
@@ -87,20 +95,26 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Courses',
+          title: 'Explore',
           items: [
-            {
-              label: 'Web Development',
-              to: '/courses/Courses/webdev/',
-            },
+            { label: 'Pathways', to: '/courses/Pathways' },
+            { label: 'Courses', to: '/courses/Courses' },
+            { label: 'Projects', to: '/courses/Projects' },
+            { label: 'Articles', to: '/courses/Articles' },
           ],
         },
         {
-          title: 'Articles',
+          title: 'Courses',
+          items: [
+            { label: 'Web Development', to: '/courses/Courses/webdev/' },
+          ],
+        },
+        {
+          title: 'Pathways',
           items: [
             {
-              label: 'Internet vs Web',
-              to: '/courses/Articles/internet_vs_web',
+              label: 'Web Developer: Zero to Employable',
+              to: '/courses/Pathways/webdev_beginner/',
             },
           ],
         },

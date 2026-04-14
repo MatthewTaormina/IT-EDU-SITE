@@ -1,0 +1,33 @@
+---
+title: "Courses"
+description: "Discipline-scoped courses covering web development, networking, security, and more."
+hide_table_of_contents: true
+pagination_prev: null
+pagination_next: null
+---
+
+import CatalogSearch from '@site/src/components/CatalogSearch';
+
+# Courses
+
+Each course is a self-contained curriculum covering a specific discipline. Courses are made up of units, which are made up of lessons. Work through a course in order for the best results, or use the sidebar to jump to any topic.
+
+<CatalogSearch
+  placeholder="Search courses…"
+  items={[
+    {
+      icon: '🌐',
+      title: 'Web Development',
+      description:
+        'From the theory of how the web works to building modern full-stack applications — HTML, CSS, JavaScript, APIs, and beyond. Starts from zero; no prior experience required.',
+      href: '/courses/Courses/webdev/',
+      difficulty: 'Beginner → Advanced',
+      tags: ['html', 'css', 'javascript', 'web', 'fullstack', 'dom', 'responsive'],
+      meta: '4 Units · 60+ lessons',
+    },
+  ]}
+/>
+
+---
+
+> **More courses coming.** Networking, Operating Systems, Security, Databases, and Python are planned. Content is added as it is written.
