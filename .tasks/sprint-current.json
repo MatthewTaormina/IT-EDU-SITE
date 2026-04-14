@@ -1,0 +1,27 @@
+{
+  "sprint_id": "SPR-001",
+  "start_date": "2026-04-14",
+  "end_date": "2026-04-28",
+  "goal": "Author WebDev FrontEndIntermediate course — all units, lessons, and capstone project for Node 2 of the WebDev pathway.",
+  "velocity_target": 8,
+  "tasks": [
+    {
+      "task_id": "TASK-018",
+      "title": "Author WebDev pathway — FrontEndIntermediate course",
+      "status": "IN_PROGRESS",
+      "assigned_agent": "lesson-author",
+      "content_items": [
+        "Content/Courses/webdev_intermediate/",
+        "Content/Units/webdev_int_git/",
+        "Content/Units/webdev_int_async/",
+        "Content/Units/webdev_int_es6/",
+        "Content/Units/webdev_int_apis/",
+        "Content/Units/webdev_int_animations/",
+        "Content/Units/webdev_int_devtools/",
+        "Content/Projects/webdev_intermediate_capstone/"
+      ],
+      "blockers": ["TASK-016 (git-workflow research doc not yet created)"]
+    }
+  ],
+  "notes": "Sprint 1 — First sprint using new agile workflow system. Research TASK-016 should be addressed early in sprint by research-analyst before lesson-author reaches the Git unit."
+}

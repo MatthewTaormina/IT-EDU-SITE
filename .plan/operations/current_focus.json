@@ -1,6 +1,0 @@
-{
-  "active_task_id": "TASK-018",
-  "current_objective": "Author WebDev FrontEndIntermediate course — all units, lessons, and capstone project for the second node of the WebDev pathway.",
-  "dependencies": ["TASK-000", "TASK-016"],
-  "blockers": []
-}

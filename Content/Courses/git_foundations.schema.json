@@ -1,0 +1,36 @@
+{
+  "course_id": "git_foundations",
+  "title": "Foundations of Git",
+  "description": "A beginner course introducing the core concepts and workflows of Git version control.",
+  "skills_required": [],
+  "skills_granted": [
+    "git:init_repo",
+    "git:add_commit",
+    "git:status_log",
+    "git:branch_merge",
+    "git:remote_basics",
+    "git:resolve_conflicts"
+  ],
+  "units": [
+    {
+      "unit_id": "git_intro",
+      "title": "Introduction to Version Control"
+    },
+    {
+      "unit_id": "git_init_commit",
+      "title": "Initializing a Repository and Making Commits"
+    },
+    {
+      "unit_id": "git_branching",
+      "title": "Branching and Merging"
+    },
+    {
+      "unit_id": "git_remotes",
+      "title": "Working with Remotes"
+    },
+    {
+      "unit_id": "git_conflicts",
+      "title": "Resolving Merge Conflicts"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "$schema_version": "2.0.0",
+  "directory": ".knowledge",
+  "purpose": "Root manifest for the Instructional Knowledge Engine. Maps all domains and documents; consumed by agents as a structural overview before traversing subdirectory manifests.",
+  "engine_version": "2.0.0",
+  "last_updated": "2026-04-14",
+  "schema_file": ".knowledge/manifest.schema.json",
+  "domains": [
+    {
+      "id": "pedagogy",
+      "path": ".knowledge/pedagogy",
+      "manifest": ".knowledge/pedagogy/manifest.json",
+      "document_count": 5,
+      "purpose": "Educational frameworks and learning science: PBL, Scaffolding, CLT, Bloom's Taxonomy, IT Education Strategies"
+    },
+    {
+      "id": "programming",
+      "path": ".knowledge/programming",
+      "manifest": ".knowledge/programming/manifest.json",
+      "document_count": 5,
+      "purpose": "Language fundamentals, paradigms, SE principles, programming pedagogy, full-stack competency map"
+    },
+    {
+      "id": "web-dev",
+      "path": ".knowledge/web-dev",
+      "manifest": ".knowledge/web-dev/manifest.json",
+      "document_count": 4,
+      "purpose": "Frontend stack, backend stack, web standards, infrastructure and deployment"
+    },
+    {
+      "id": "indexes",
+      "path": ".knowledge/indexes",
+      "manifest": ".knowledge/indexes/manifest.json",
+      "document_count": 2,
+      "purpose": "Navigation and cross-reference indexes for agent graph traversal"
+    },
+    {
+      "id": "validation",
+      "path": ".knowledge/validation",
+      "manifest": ".knowledge/validation/manifest.json",
+      "document_count": 1,
+      "purpose": "Gap analysis, deprecation notices, and currency audits driving the research backlog"
+    }
+  ],
+  "agent_entry_point": ".knowledge/README_AGENT.md",
+  "graph_entry_point": ".knowledge/map.json",
+  "total_documents": 17,
+  "critical_gaps": ["GAP-001", "GAP-002", "GAP-003", "GAP-004"],
+  "next_review_due": "2026-07-14"
+}
