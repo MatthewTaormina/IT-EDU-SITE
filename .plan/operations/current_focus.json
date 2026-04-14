@@ -1,6 +1,6 @@
 {
-  "active_task_id": "TASK-002",
-  "current_objective": "Author Networking pathway — define units, lessons, and learning objectives for the Networking course.",
-  "dependencies": ["TASK-001"],
-  "blockers": ["PRD_networking_pathway.md must be created and approved before implementation begins"]
+  "active_task_id": "TASK-018",
+  "current_objective": "Author WebDev FrontEndIntermediate course — all units, lessons, and capstone project for the second node of the WebDev pathway.",
+  "dependencies": ["TASK-000", "TASK-016"],
+  "blockers": []
 }

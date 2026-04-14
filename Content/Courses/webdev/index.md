@@ -49,7 +49,13 @@ The theory of the web: how browsers, servers, DNS, and HTTP work before you writ
 The structural language of the web. Document structure, the DOM, text, links, images, lists, tables, forms, semantic landmarks, the `<head>`, and accessibility basics.
 → [Start Unit](../../Units/webdev_01_html/index.md)
 
-<!-- Future units added here as they are written -->
+### Unit 3 — CSS
+Cascade, box model, selectors, Flexbox, Grid, typography, colour, responsive design.
+→ [Start Unit](../../Units/webdev_02_css/index.md)
+
+### Unit 4 — JavaScript Basics
+Variables, types, control flow, functions, data structures, DOM manipulation, and events.
+→ [Start Unit](../../Units/webdev_03_js_basics/index.md)
 
 ---
 
