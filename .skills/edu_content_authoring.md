@@ -2,11 +2,21 @@
 
 ## Project Context
 
-This skill governs the creation of all educational content for the **IT EDU SITE** — an IT education platform currently authored in Markdown. Content will eventually be rendered by a purpose-built website. Until then, all structure, formatting, and metadata conventions defined here ensure a smooth future migration.
+This skill governs the creation of all educational content for the **IT EDU SITE** — an IT education platform authored in Markdown and rendered by a Docusaurus site.
 
-**Current Stack:** Plain Markdown files, organized in `Content/`
-**Future Stack:** A website that renders this Markdown (framework TBD)
+**Content Stack:** Markdown files in `Content/`, served by Docusaurus at route `/courses`
+**Assets:** Static files in `Assets/`, served via Docusaurus `staticDirectories`
 **Subject Domain:** Information Technology (Web Dev, Networking, OS, Algorithms, Hardware, etc.)
+
+### Supporting Directories
+
+| Directory | Purpose |
+| :--- | :--- |
+| `.research/` | Instructional Knowledge Engine — domain research graph; **always consult before authoring** |
+| `.plan/` | Operations — vision, roadmap, Kanban tasks, PRD specs, UX flows, and review checklists |
+| `site/` | Docusaurus site configuration and React/MDX components |
+
+> **Agent rule:** Read `.research/README_AGENT.md` and `.research/map.json` before creating any new content. Check `.plan/operations/tasks.md` to confirm the topic is in-scope before authoring.
 
 ---
 
@@ -558,15 +568,35 @@ Unit-level resources are collected in `review.md` under a `## Further Reading` s
 
 ## 13. Quick Checklist Before Saving Any File
 
-- [ ] Frontmatter is present, complete, and includes `type:`
+### Frontmatter
+- [ ] `type` field present and matches one of: `pathway`, `course`, `unit`, `lesson`, `project`, `article`
+- [ ] `title` is unique, descriptive, and ≤60 characters
+- [ ] `description` is present and ≤160 characters
+- [ ] `difficulty` is set (`Beginner` | `Intermediate` | `Advanced`)
+- [ ] `estimated_hours` or `duration_minutes` is set
+- [ ] `tags` array contains ≥2 relevant tags
 - [ ] `references:` field lists all direct child entities (for Units and Courses)
+
+### Content Quality
 - [ ] All technical terms are **bolded** on first use and defined
 - [ ] Every abstract concept has at least one **Example** block
 - [ ] At least one **💡 Tip** or **⚠️ Warning** is present where relevant
+- [ ] Lesson opens with a clear learning objective ("By the end of this lesson, you will be able to…")
+- [ ] Every concept is paired with a code example, exercise, or real-world application
+- [ ] Code blocks have language specifiers (` ```html `, ` ```js `, etc.)
+- [ ] No broken internal relative links
 - [ ] No spelling errors, no placeholder text
+
+### Structure & Naming
 - [ ] File is named `00_lowercase_underscores` with correct numeric prefix and domain prefix
 - [ ] The lesson is scoped to ONE concept
+- [ ] Heading hierarchy is logical (H1 → H2 → H3, never skipped)
+- [ ] Tables have a header row
+
+### Catalog
 - [ ] `catalog.json` has been regenerated after adding/modifying files
+
+*Full pre-publish checklist: [[.plan/operations/checklists/checklist_content_review.md]]*
 
 ---
 
@@ -605,17 +635,216 @@ Start with a simplified, working mental model. Then incrementally add real compl
 
 **Never skip ahead without explicit user approval.**
 
+### Step 0 — Research (Required Before Any New Content)
+
+Before generating any lesson, unit, or course:
+
+1. Read `.research/map.json` — identify the relevant domain node(s).
+2. Read the domain `manifest.json` — review `terminal_objective` and existing `educational_assets`.
+3. Read the target `.research/<domain>/<topic>.md` — use `terminal_objective.concept` as the lesson's core definition.
+4. Check `.research/validation/gap-analysis.md` — confirm the topic is not a CRITICAL gap that requires a new research document first.
+5. Check `.plan/operations/tasks.md` — confirm the topic is in-scope and assigned.
+
+> Use `terminal_objective.prerequisite` → lesson prerequisites; `terminal_objective.concept` → "Concept Explanation" section; `terminal_objective.practical_application` → lab/challenge deliverable; `terminal_objective.market_value` → "Why This Matters" framing.
+
 ### Step 1 — Plan (Structural Outline)
+
 Present the full directory/file tree with names, numbering, and a one-line description of each file. Wait for approval.
 
 ### Step 2 — Stub (Frontmatter + Skeleton)
+
 Create files with valid frontmatter and section headings only. No prose content yet. Wait for approval.
 
 ### Step 3 — Expand (One File at a Time)
+
 Write full content for one file at a time. Use progressive expansion: introduce Layer 1 content first, seek approval before adding Layer 2/3 depth.
 
 ### Rules
+
 - **Never output multiple fully-written files in a single response.**
 - **Always present a plan and wait for approval before creating files.**
 - When in doubt about scope, ask — don't assume.
 - Stubs are always preferable to placeholders.
+- Validate generated content targets Bloom Level ≥ 3. If not, revise.
+
+### Research Protocols Quick Reference
+
+| Protocol | When to Use | Entry Point |
+| :--- | :--- | :--- |
+| **A — Generate Lesson/Unit** | New content creation | `.research/map.json` → domain manifest → research `.md` |
+| **B — Assess Learner Readiness** | Prerequisite chain analysis | `terminal_objective.prerequisite` → recursive graph traversal |
+| **C — Prioritize Backlog** | Sprint/quarter planning | `gap-analysis.md` → severity filter → `map.json` cross-reference |
+| **D — Create Research Document** | Gap identified; no node exists | Verify in `gap-analysis.md` → create `.md` → update `map.json` + manifest + `master-index.md` |
+| **E — Generate Educational Assets** | Lab/quiz/project from existing node | Domain manifest `educational_assets` array → deliverable as acceptance criteria |
+
+*Full protocol definitions: [[.research/README_AGENT.md]]*
+
+### 2026 Priority Signal
+
+When generating new content, prioritize these high-demand skill areas:
+
+| Priority | Skill Area | Gap ID | Target Document |
+| :--- | :--- | :--- | :--- |
+| ★★★★★ | Automated Testing (unit/integration/e2e) | GAP-004 | `programming/automated-testing.md` |
+| ★★★★★ | LLM API Integration | GAP-001 | `programming/llm-api-integration.md` |
+| ★★★★★ | Model Context Protocol (MCP) | GAP-003 | `programming/mcp-model-context-protocol.md` |
+| ★★★★★ | AI Agent Orchestration | GAP-002 | `programming/agent-orchestration.md` |
+| ★★★★☆ | Web Security (OWASP Top 10) | GAP-011 | `web-dev/web-security.md` |
+| ★★★★☆ | Observability + OpenTelemetry | GAP-006 | `web-dev/observability.md` |
+| ★★★★☆ | Vector Databases + Embeddings | GAP-008 | `programming/vector-databases-embeddings.md` |
+
+*Full gap register: [[.research/validation/gap-analysis.md]]*
+
+---
+
+## 16. Knowledge Engine & Operations Reference
+
+---
+
+### `.research/` — Instructional Knowledge Engine
+
+The `.research/` directory is a machine-optimized research graph backing all curriculum tasks. It is **not** public-facing content.
+
+```
+.research/
+├── README_AGENT.md         ← Agent system prompt extension (read first)
+├── map.json                ← Full node graph and edge relationships (always read before authoring)
+├── manifest.json           ← Root manifest listing all domains and document counts
+├── manifest.schema.json    ← JSON schema for manifests
+├── pedagogy/               ← 5 nodes: PBL, scaffolding, CLT, Bloom's, IT strategies
+├── programming/            ← 5 nodes: language fundamentals, paradigms, SE principles, pedagogy, competency map
+├── web-dev/                ← 4 nodes: frontend stack, backend stack, web standards, infrastructure
+├── indexes/                ← 2 nodes: master-index, cross-reference-map
+└── validation/             ← 1 node: gap-analysis (curriculum currency audit)
+```
+
+**Every research `.md` file contains a `terminal_objective` YAML block with four authoritative fields:**
+
+```yaml
+terminal_objective:
+  prerequisite: "What must be known before this content"
+  concept: "The machine-readable concept definition for this node"
+  practical_application: "What the learner actually does with this knowledge"
+  market_value: "Industry demand signal and employment relevance"
+```
+
+Do not re-derive these from prose — the YAML is authoritative.
+
+#### How to Read `.research/`
+
+| Goal | What to Read |
+| :--- | :--- |
+| Get the full picture before authoring | `map.json` (node graph) → domain `manifest.json` → target `.md` file |
+| Find prerequisites for a topic | `terminal_objective.prerequisite` → traverse edges in `map.json` |
+| Check what topics are missing | `validation/gap-analysis.md` |
+| Navigate all nodes at once | `indexes/master-index.md` |
+| Find relationships between nodes | `indexes/cross-reference-map.md` |
+
+#### How to Update `.research/`
+
+**Updating an existing research document:**
+
+1. Edit the `.md` file — update prose, examples, or technology references.
+2. Update the `last_updated` YAML field to the current ISO date (`YYYY-MM-DD`).
+3. If `terminal_objective` fields change, update the matching entry in the domain `manifest.json`.
+4. If `related_topics` (Wikilinks) change, update `map.json` edges and `indexes/cross-reference-map.md`.
+5. Increment `map.json` → `meta.version`: **PATCH** for content edits.
+
+**Adding a new research document (Protocol D):**
+
+1. Verify the topic has an entry in `validation/gap-analysis.md` — do not create undocumented additions.
+2. Read an existing `.md` in the target domain for format reference.
+3. Create the new file at `.research/<domain>/<slug>.md` with:
+   - YAML frontmatter: `tags`, `related_topics` (Wikilinks), `last_updated`, and `terminal_objective` (all 4 fields)
+   - `## Summary for AI Agents` section immediately after frontmatter
+   - Content structured for RAG chunking: short, self-contained sections with clear headings
+   - No placeholder prose
+4. Add the new node to `map.json` under `nodes[]` with at least **two edges** in `edges[]`.
+5. Add the document entry to the domain `manifest.json` (`documents[]` array) with `terminal_objective` and `educational_assets`.
+6. Add the node to `indexes/master-index.md` in the appropriate domain table.
+7. Add the node to `indexes/cross-reference-map.md`.
+8. Update `manifest.json` (root) `total_documents` count.
+9. Increment `map.json` → `meta.version`: **MINOR** for new nodes.
+
+**Removing or deprecating a research document:**
+
+1. Add a Deprecation Notice to `validation/gap-analysis.md` explaining what replaced it.
+2. Remove the node from `map.json` and all orphaned edges.
+3. Remove from domain `manifest.json`, `indexes/master-index.md`, and `indexes/cross-reference-map.md`.
+4. Increment `map.json` → `meta.version`: **MINOR**.
+
+> **Schema changes** (new YAML fields, new edge relationship types) require a **MAJOR** version bump in `map.json`.
+
+---
+
+### `.plan/` — Operations Directory
+
+The `.plan/` directory contains all project management and planning artefacts.
+
+```
+.plan/
+├── vision/vision.md                        ← North Star, product strategy, guiding principles
+├── roadmap/milestones.md                   ← Milestone definitions and quarterly objectives
+├── operations/tasks.md                     ← Kanban board (BACKLOG / IN_PROGRESS / REVIEW / DONE)
+├── operations/checklists/
+│   ├── checklist_content_review.md         ← Pre-publish gate for all content nodes
+│   └── checklist_prd_review.md             ← Pre-development gate for PRDs
+├── specs/PRD_TEMPLATE.md                   ← PRD template (required for P0/P1 features)
+└── ux/README.md                            ← Site-level user flows and wireframe conventions
+```
+
+#### How to Read `.plan/`
+
+| Goal | What to Read |
+| :--- | :--- |
+| Understand the product direction | `vision/vision.md` |
+| See what's being built and when | `roadmap/milestones.md` |
+| Find the current active work items | `operations/tasks.md` — look at `[BACKLOG]` and `[IN_PROGRESS]` tables |
+| Check requirements for a feature | `specs/PRD_<feature_slug>.md` |
+| Understand the site user flows | `ux/README.md` |
+| Gate content before publishing | `operations/checklists/checklist_content_review.md` |
+| Gate a PRD before development | `operations/checklists/checklist_prd_review.md` |
+
+#### How to Update `.plan/`
+
+**Adding a new task:**
+
+1. Open `operations/tasks.md`.
+2. Assign the next sequential `TASK-NNN` ID (never reuse an ID).
+3. Add a row to the `[BACKLOG]` table with: ID, Title, Priority (`P0`/`P1`/`P2`), Assignee, and a PRD link if applicable.
+4. For P0/P1 tasks, create the PRD before moving to IN_PROGRESS (see below).
+
+**Moving a task through the Kanban:**
+
+| Transition | Action |
+| :--- | :--- |
+| BACKLOG → IN_PROGRESS | PRD must be `APPROVED`; run `checklist_prd_review.md`; record `Started` date |
+| IN_PROGRESS → REVIEW | Work complete; link review artefact (PR, draft, etc.) |
+| REVIEW → DONE | All checklist items cleared; record `Completed` date and notes |
+
+**Creating a PRD:**
+
+1. Copy `specs/PRD_TEMPLATE.md` → `specs/PRD_<feature_slug>.md`.
+2. Fill in every section — no `_TODO_` placeholders.
+3. Link the PRD in `operations/tasks.md` for its corresponding task.
+4. Run `operations/checklists/checklist_prd_review.md` and set status to `APPROVED` before development begins.
+
+**Updating the roadmap:**
+
+1. Edit `roadmap/milestones.md` — update the Gantt chart and milestone definition tables.
+2. Update the "Quarterly Objectives" table to reflect the new state.
+3. Update the `Last updated` footer line.
+
+**Updating the vision:**
+
+Only edit `vision/vision.md` when the product direction changes at a strategic level. Update the "Current State" table whenever a major milestone ships.
+
+**Adding a UX wireframe:**
+
+1. Create `ux/<feature_slug>_wireframe.md`.
+2. Use Mermaid.js or SVG only — no image files.
+3. Link to the new file from the relevant PRD's UX section.
+
+**Updating checklists:**
+
+Edit `operations/checklists/checklist_content_review.md` or `checklist_prd_review.md` when authoring or review standards change. Bump the checklist version comment at the bottom of the file.
