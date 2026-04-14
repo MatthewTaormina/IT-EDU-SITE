@@ -85,10 +85,9 @@ const config: Config = {
           position: 'left',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'articlesSidebar',
-          position: 'left',
+          to: '/courses/Articles',
           label: 'Articles',
+          position: 'left',
         },
       ],
     },
@@ -101,7 +100,7 @@ const config: Config = {
             { label: 'Pathways', to: '/courses/Pathways' },
             { label: 'Courses', to: '/courses/Courses' },
             { label: 'Projects', to: '/courses/Projects' },
-            { label: 'Articles', to: '/courses/Articles/internet_vs_web' },
+            { label: 'Articles', to: '/courses/Articles' },
           ],
         },
         {
