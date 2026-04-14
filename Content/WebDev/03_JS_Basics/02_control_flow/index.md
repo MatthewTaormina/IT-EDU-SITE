@@ -1,0 +1,38 @@
+---
+title: "Control Flow"
+description: "Conditionals, loops, and switch statements — how to dictate the logical path of a JavaScript program."
+domain: "WebDev"
+difficulty: "Beginner"
+prerequisites:
+  - "JS Foundations"
+learning_objectives:
+  - "Write if/else if/else chains to branch program logic"
+  - "Explain truthy and falsy and use them intentionally in conditions"
+  - "Use the ternary operator for concise inline conditionals"
+  - "Write for, while, and for...of loops"
+  - "Use break and continue to control loop iteration"
+  - "Write switch statements and explain fall-through behaviour"
+sidebar_position: 0
+sidebar_label: "Overview"
+---
+
+# Control Flow
+
+> **Sub-unit Summary:** Control flow is the order in which statements execute. By default JavaScript runs top-to-bottom — conditionals and loops let you change that, branching based on conditions or repeating blocks multiple times.
+
+## Learning Objectives
+
+By the end of this sub-unit, you will be able to:
+
+- Write `if`/`else if`/`else` chains to branch program logic based on runtime conditions
+- Explain truthy and falsy and use them intentionally in boolean expressions
+- Use the ternary operator for concise inline conditionals
+- Write `for`, `while`, and `for...of` loops and know when each is appropriate
+- Use `break` and `continue` to control iteration
+- Write `switch` statements and explain fall-through behaviour
+
+## Lessons
+
+1. [Conditionals](./01_conditionals.md)
+2. [Loops](./02_loops.md)
+3. [Switch Statements](./03_switch.md)

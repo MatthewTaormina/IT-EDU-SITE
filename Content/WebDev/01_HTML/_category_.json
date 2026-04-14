@@ -1,4 +1,8 @@
 {
-  "label": "HTML",
-  "position": 2
+  "label": "HTML Basics",
+  "position": 2,
+  "link": {
+    "type": "doc",
+    "id": "index"
+  }
 }

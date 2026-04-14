@@ -1,4 +1,8 @@
 {
   "label": "4. Data Structures",
-  "position": 4
+  "position": 4,
+  "link": {
+    "type": "doc",
+    "id": "index"
+  }
 }
