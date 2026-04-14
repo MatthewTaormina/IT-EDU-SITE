@@ -6,15 +6,17 @@ These instructions are automatically loaded into every agent session. Read this 
 
 ## 1. Project Overview
 
-**IT EDU SITE** is a free, open-source IT education platform. Learners follow structured learning pathways from zero knowledge to job-ready skills. The platform is built with Docusaurus 3.10, React 19, TypeScript, and MDX, deployed to Netlify.
+**IT EDU SITE** is a free, open-source IT education platform. Learners follow structured learning pathways from zero knowledge to job-ready skills. The platform is built with Next.js 16 App Router, React 19, TypeScript, Tailwind CSS v4, and MDX, deployed to Netlify.
 
 **Stack:**
 - Content layer: `/Content/` — Markdown + YAML frontmatter files (the source of truth)
-- Site layer: `/site/` — Docusaurus 3.10, React 19, TypeScript; content consumed at build time
+- Site layer: `/web/` — Next.js 16 App Router, React 19, TypeScript, Tailwind CSS v4; content consumed at build time via `web/lib/content.ts`
 - Knowledge base: `/.knowledge/` — machine-optimized research graph backing curriculum generation
-- Build/deploy: `netlify.toml`, Docusaurus static output
+- Build/deploy: `netlify.toml` → builds `web/`, uses `@netlify/plugin-nextjs`
 
-**Do not confuse the content layer with the site layer.** Content authors never touch `/site/`. Platform engineers never touch `/Content/`.
+**Do not confuse the content layer with the site layer.** Content authors never touch `/web/`. Platform engineers never touch `/Content/`.
+
+**`/site/` (Docusaurus — DEPRECATED).** This folder is the old Docusaurus 3.10 site. It is kept as a reference only and will be deleted once the Next.js site is verified in production. Do not add anything to `/site/`.
 
 ---
 
@@ -253,16 +255,16 @@ Use these fields directly as inputs when generating lesson content. Do not re-de
 
 | Agent | Can Write | Read-Only | Never Touches |
 |--|--|--|--|
-| `curriculum-architect` | `/Content` (schemas, indexes) | `.knowledge/`, `.objectives/` | `/site/` |
-| `lesson-planner` | `/Content` (lesson plan JSON) | `.knowledge/`, `/Content` | `/site/` |
-| `lesson-author` | `/Content/Lessons/`, `/Content/Units/` | `.knowledge/`, `/Content` | `/site/` |
-| `article-writer` | `/Content/Articles/` | `.knowledge/` | `/site/`, `/Content/Lessons/` |
-| `project-designer` | `/Content/Projects/` | `/Content/Courses/`, `/Assets/Starter/` | `/site/` |
-| `content-editor` | `/Content/` | `/Content/` | `/site/` |
-| `research-analyst` | `.knowledge/` | `/Content/` | `/site/` |
-| `learning-experience-designer` | `.objectives/`, `.designs/` | `/Content/`, `.knowledge/` | `/site/`, `/Content/` (edit) |
-| `ui-component-engineer` | `/site/src/components/`, `/site/src/css/` | `/Content/` | `/Content/` (edit) |
-| `platform-engineer` | `/site/`, `netlify.toml` | `/Content/` | `/Content/` (edit) |
+| `curriculum-architect` | `/Content` (schemas, indexes) | `.knowledge/`, `.objectives/` | `/web/`, `/site/` |
+| `lesson-planner` | `/Content` (lesson plan JSON) | `.knowledge/`, `/Content` | `/web/`, `/site/` |
+| `lesson-author` | `/Content/Lessons/`, `/Content/Units/` | `.knowledge/`, `/Content` | `/web/`, `/site/` |
+| `article-writer` | `/Content/Articles/` | `.knowledge/` | `/web/`, `/site/`, `/Content/Lessons/` |
+| `project-designer` | `/Content/Projects/` | `/Content/Courses/`, `/Assets/Starter/` | `/web/`, `/site/` |
+| `content-editor` | `/Content/` | `/Content/` | `/web/`, `/site/` |
+| `research-analyst` | `.knowledge/` | `/Content/` | `/web/`, `/site/` |
+| `learning-experience-designer` | `.objectives/`, `.designs/` | `/Content/`, `.knowledge/` | `/web/`, `/site/`, `/Content/` (edit) |
+| `ui-component-engineer` | `/web/components/`, `/web/app/globals.css` | `/Content/` | `/Content/` (edit), `/site/` |
+| `platform-engineer` | `/web/`, `netlify.toml` | `/Content/` | `/Content/` (edit) |
 
 ---
 

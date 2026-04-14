@@ -1,0 +1,11 @@
+# Netlify redirects — backward compat for old Docusaurus paths
+# Pattern: /courses/Lessons/:slug → /learn/:course/:slug
+# Since we can't easily map slug→course in a static redirect, we redirect catalog pages
+
+/courses /learn 301
+/courses/Lessons/* /learn/webdev/:splat 301
+/courses/Courses/webdev/* /learn/webdev/:splat 301
+/courses/Courses/webdev_intermediate/* /learn/webdev_intermediate/:splat 301
+/courses/Pathways/* /pathways/:splat 301
+/courses/Projects/* /projects/:splat 301
+/courses/Articles/* /articles/:splat 301
