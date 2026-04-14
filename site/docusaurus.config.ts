@@ -66,14 +66,23 @@ const config: Config = {
       items: [
         {
           to: '/courses',
-          label: 'Content Hub',
+          label: 'Hub',
           position: 'left',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'webdevSidebar',
+          to: '/courses/Pathways',
+          label: 'Pathways',
           position: 'left',
+        },
+        {
+          to: '/courses/Courses',
           label: 'Courses',
+          position: 'left',
+        },
+        {
+          to: '/courses/Projects',
+          label: 'Projects',
+          position: 'left',
         },
         {
           type: 'docSidebar',
@@ -87,20 +96,26 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Courses',
+          title: 'Explore',
           items: [
-            {
-              label: 'Web Development',
-              to: '/courses/Courses/webdev/',
-            },
+            { label: 'Pathways', to: '/courses/Pathways' },
+            { label: 'Courses', to: '/courses/Courses' },
+            { label: 'Projects', to: '/courses/Projects' },
+            { label: 'Articles', to: '/courses/Articles/internet_vs_web' },
           ],
         },
         {
-          title: 'Articles',
+          title: 'Courses',
+          items: [
+            { label: 'Web Development', to: '/courses/Courses/webdev/' },
+          ],
+        },
+        {
+          title: 'Pathways',
           items: [
             {
-              label: 'Internet vs Web',
-              to: '/courses/Articles/internet_vs_web',
+              label: 'Web Developer: Zero to Employable',
+              to: '/courses/Pathways/webdev_beginner/',
             },
           ],
         },

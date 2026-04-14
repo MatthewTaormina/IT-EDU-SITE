@@ -8,41 +8,54 @@ pagination_prev: null
 
 # Content Hub
 
-The IT Learning Hub organises content into seven independent entity types. Each type is independently addressable and can be cross-referenced by any other type.
+The IT Learning Hub organises content into six independent entity types. Use the catalogs below to browse and discover content, or jump into a course or pathway to start learning.
 
 ---
 
-## Content Types
+## Browse by Type
 
-| Type | What it is | Where to start |
+| Type | What it is | Browse |
 | :--- | :--- | :--- |
-| **Pathway** | Curated, goal-oriented sequence of courses and projects | [Pathways →](/courses/Pathways/webdev_beginner/) |
-| **Course** | Discipline-scoped curriculum of units and lessons | [Courses →](/courses/Courses/webdev/) |
+| **Pathway** | Curated, goal-oriented sequence of courses and projects | [Pathways →](/courses/Pathways) |
+| **Course** | Discipline-scoped curriculum of units and lessons | [Courses →](/courses/Courses) |
 | **Unit** | Topic cluster of lessons (and optionally sub-units) | Browse via a Course |
 | **Lesson** | Single focused concept — completable in one sitting | Browse via a Unit |
-| **Project** | Applied deliverable — build something real | [Projects →](/courses/Projects/webdev_capstone_portfolio/) |
+| **Project** | Applied deliverable — build something real | [Projects →](/courses/Projects) |
 | **Article** | Blog-style deep-dive; cites external sources freely | [Articles →](/courses/Articles/internet_vs_web) |
 
 ---
 
-## Available Courses
+## Quick Start
 
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;margin-top:1.5rem">
+<div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))',gap:'1.5rem',marginTop:'1.5rem'}}>
 
-<div style="border:1px solid var(--ifm-color-emphasis-300);border-radius:8px;padding:1.5rem">
+<div style={{border:'1px solid var(--ifm-color-emphasis-300)',borderRadius:'10px',padding:'1.5rem'}}>
 
-### 🌐 Web Development
+### 🗺️ Pathways
 
-**Beginner → Advanced**
+Guided, opinionated sequences with a clear end goal. No decisions required — just follow the steps.
 
-From the theory of how the web works to building modern full-stack applications — HTML, CSS, JavaScript, APIs, and beyond.
+[**Browse Pathways →**](/courses/Pathways)
 
-**You will learn:**
-- How browsers, servers, DNS, and HTTP interact
-- HTML, CSS, and JavaScript from scratch
-- REST APIs, frameworks, and modern tooling
+</div>
 
-[**Start Course →**](/courses/Courses/webdev/)
+<div style={{border:'1px solid var(--ifm-color-emphasis-300)',borderRadius:'10px',padding:'1.5rem'}}>
+
+### 🌐 Courses
+
+Self-contained curricula covering a full discipline. Each course has its own sidebar for easy navigation.
+
+[**Browse Courses →**](/courses/Courses)
+
+</div>
+
+<div style={{border:'1px solid var(--ifm-color-emphasis-300)',borderRadius:'10px',padding:'1.5rem'}}>
+
+### 🎓 Projects
+
+Professional simulations — client brief, wireframes, acceptance criteria. Build something real.
+
+[**Browse Projects →**](/courses/Projects)
 
 </div>
 
@@ -50,4 +63,5 @@ From the theory of how the web works to building modern full-stack applications 
 
 ---
 
-> **More courses coming.** Networking, Operating Systems, Security, Databases, and Python are planned. Content is added as it is written.
+> **More content coming.** Networking, Operating Systems, Security, Databases, and Python are planned. Content is added as it is written.
+

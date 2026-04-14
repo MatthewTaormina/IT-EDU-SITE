@@ -1,0 +1,143 @@
+/* ── Search input ────────────────────────────────────────────────────────── */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.searchInput {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  margin-bottom: 2rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+}
+
+/* ── Card grid ────────────────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cardWrapper {
+  display: flex;
+}
+
+/* ── Individual card ──────────────────────────────────────────────────────── */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 10px;
+  padding: 1.5rem;
+  /* use the surface colour when available (Docusaurus ≥2.4), else fall back */
+  background: var(--ifm-background-surface-color, var(--ifm-background-color));
+  text-decoration: none !important;
+  color: var(--ifm-font-color-base) !important;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.15s;
+}
+
+.card:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.cardIcon {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--ifm-font-color-base);
+}
+
+.cardDescription {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+  flex: 1;
+  margin: 0 0 1.25rem;
+  line-height: 1.6;
+}
+
+/* ── Card footer (badges, tags, meta) ─────────────────────────────────────── */
+
+.cardFooter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-top: auto;
+}
+
+/* Difficulty badge — outlined in primary colour, works light + dark */
+.badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 99px;
+  border: 1.5px solid var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  white-space: nowrap;
+}
+
+/* Topic tag — subtle chip */
+.tag {
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 0.15rem 0.55rem;
+  border-radius: 99px;
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-800);
+  white-space: nowrap;
+  text-transform: lowercase;
+}
+
+/* Right-aligned meta text */
+.meta {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* ── Empty state ──────────────────────────────────────────────────────────── */
+
+.noResults {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--ifm-color-emphasis-500);
+  font-style: italic;
+}
