@@ -4,6 +4,8 @@ title: "The Internet and the Web Are Not the Same Thing"
 description: "A deep-dive into the distinction between the Internet as a global network infrastructure and the World Wide Web as one application that runs on top of it — plus the history of how that confusion became so common."
 author: "IT Learning Hub"
 published_date: "2026-04-14"
+pagination_prev: null
+pagination_next: null
 tags:
   - internet
   - web
