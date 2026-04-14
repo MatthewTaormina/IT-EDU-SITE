@@ -1,3 +1,15 @@
+/* ── Outline CTA button — forces white text/border on the hero's blue bg ─── */
+
+.heroCtaOutline {
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.heroCtaOutline:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: white !important;
+}
+
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 
 .hero {

@@ -53,7 +53,7 @@ export default function Home(): ReactNode {
             <Link className="button button--primary button--lg" to="/courses/Courses">
               Browse Courses
             </Link>
-            <Link className="button button--outline button--lg" to="/courses/Pathways" style={{ color: 'white', borderColor: 'rgba(255,255,255,0.6)' }}>
+            <Link className={`button button--outline button--lg ${styles.heroCtaOutline}`} to="/courses/Pathways">
               View Pathways
             </Link>
           </div>
