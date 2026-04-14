@@ -53,7 +53,6 @@ export default function CatalogSearch({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         className={styles.searchInput}
-        aria-label="Search catalog"
       />
 
       {filtered.length === 0 ? (
