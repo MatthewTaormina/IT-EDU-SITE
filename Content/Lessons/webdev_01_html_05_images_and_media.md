@@ -18,7 +18,7 @@ tags:
 
 > **Lesson Summary:** Images are one of the most common elements on the web — and one of the most commonly misused. The `<img>` element is simple on the surface, but `alt` text is a first-class accessibility and SEO obligation, not optional decoration. This lesson also introduces `<figure>`, `<video>`, and `<audio>` — how the browser embeds media with meaning.
 
-![A web page layout showing an image frame, caption, video player, and audio waveform on a dark background](../../../Assets/Images/webdev/html/html_images_media.png)
+![A web page layout showing an image frame, caption, video player, and audio waveform on a dark background](../../Assets/Images/webdev/html/html_images_media.png)
 
 ## The `<img>` Element
 

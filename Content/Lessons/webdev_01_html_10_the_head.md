@@ -18,7 +18,7 @@ tags:
 
 > **Lesson Summary:** The `<head>` is invisible to the user but critical to everything else — the browser's rendering decisions, mobile layout, search engine snippets, social media previews, and performance all begin here. This lesson covers every significant `<head>` tag and what it controls.
 
-![A dark background with glowing metadata cards representing HTML head element tags — title, charset, viewport, description, and link](../../../Assets/Images/webdev/html/html_head_element.png)
+![A dark background with glowing metadata cards representing HTML head element tags — title, charset, viewport, description, and link](../../Assets/Images/webdev/html/html_head_element.png)
 
 ## What Goes in `<head>`
 

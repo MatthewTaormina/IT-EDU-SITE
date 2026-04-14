@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** Flexbox begins with one declaration: `display: flex`. That single property turns an element into a flex container and activates the flex layout model for all its direct children. Every other flex property is configuration of how that layout behaves.
 
-![Flex container diagram with main axis flowing left to right, three flex items, and gap annotations](../../../../../Assets/Images/webdev/css/diagram_flex_container.svg)
+![Flex container diagram with main axis flowing left to right, three flex items, and gap annotations](../../Assets/Images/webdev/css/diagram_flex_container.svg)
 
 ## Activating Flexbox
 

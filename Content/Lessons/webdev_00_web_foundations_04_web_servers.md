@@ -32,11 +32,11 @@ When someone says "we deployed to a server," they usually mean both — a progra
 > **Example — Development Server:**
 > When you run `node server.js` on your laptop, Node.js becomes a software server. Your machine is the hardware server. Visit `http://localhost:3000` and your browser (the client) sends a request to your own machine (the server) over a loopback connection — no cloud required.
 
-![The HTTP request-response cycle: a browser sends a GET request to a server, which responds with a status code and the requested resource.](../../../Assets/Images/webdev/web_foundations/request_response_cycle.svg)
+![The HTTP request-response cycle: a browser sends a GET request to a server, which responds with a status code and the requested resource.](../../Assets/Images/webdev/web_foundations/request_response_cycle.svg)
 
 ## The Hardware: Where Servers Live
 
-![A professional data center interior with rows of rack-mounted servers illuminated by blue LED lights](../../../Assets/Images/webdev/web_foundations/server_room.png)
+![A professional data center interior with rows of rack-mounted servers illuminated by blue LED lights](../../Assets/Images/webdev/web_foundations/server_room.png)
 
 ### Your Own Machine (Development)
 
@@ -102,7 +102,7 @@ Nginx is frequently deployed as a reverse proxy in front of Node.js or Python ap
 
 A **load balancer** is a gateway that distributes incoming requests across multiple backend servers in a cluster.
 
-![A load balancer sitting between the browser and three backend servers, distributing incoming requests evenly](../../../Assets/Images/webdev/web_foundations/load_balancer.svg)
+![A load balancer sitting between the browser and three backend servers, distributing incoming requests evenly](../../Assets/Images/webdev/web_foundations/load_balancer.svg)
 
 Without a load balancer, all traffic hits one server. With one, no single server is overwhelmed, and if one fails, the others absorb its traffic.
 

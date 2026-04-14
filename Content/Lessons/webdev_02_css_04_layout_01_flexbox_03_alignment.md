@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** Flexbox's alignment system is what makes it so powerful for UI layout. Six properties — three on the container and one on individual items — give you precise, axis-aware control over how items are positioned within their container. This lesson covers all of them and when to use each.
 
-![Alignment diagram showing justify-content variants on the main axis and align-items variants on the cross axis](../../../../../Assets/Images/webdev/css/diagram_flex_alignment.svg)
+![Alignment diagram showing justify-content variants on the main axis and align-items variants on the cross axis](../../Assets/Images/webdev/css/diagram_flex_alignment.svg)
 
 ## The Axis Model — Revisited
 

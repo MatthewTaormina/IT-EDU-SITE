@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** Media queries are CSS conditional blocks — styles inside them only apply when a condition (typically viewport width) is true. They are the primary tool for breakpoint-based layout changes. This lesson covers syntax, the mobile-first strategy, and media features beyond just width.
 
-![Media query breakpoint diagram showing desktop two-column layout collapsing to mobile single-column](../../../../Assets/Images/webdev/css/diagram_media_query.svg)
+![Media query breakpoint diagram showing desktop two-column layout collapsing to mobile single-column](../../Assets/Images/webdev/css/diagram_media_query.svg)
 
 ## Basic Syntax
 

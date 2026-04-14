@@ -17,7 +17,7 @@ tags:
 
 > **Lesson Summary:** Accessibility is not a feature you add at the end — it is a quality of the HTML you write from the start. Most of what makes a page accessible is simply correct semantic HTML, properly associated labels, and intact keyboard focus. This lesson covers the essentials. A full unit on accessibility will go deeper — but what is here is not optional.
 
-![A web page with keyboard focus rings, screen reader icon, and contrast swatches on a dark background](../../../Assets/Images/webdev/html/html_accessibility.png)
+![A web page with keyboard focus rings, screen reader icon, and contrast swatches on a dark background](../../Assets/Images/webdev/html/html_accessibility.png)
 
 ## Why Accessibility Is Not Optional
 

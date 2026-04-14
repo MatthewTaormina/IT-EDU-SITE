@@ -23,7 +23,7 @@ tags:
 
 When you type a URL and press Enter, it feels instantaneous. Under the hood, your browser orchestrates a precise sequence of steps across multiple systems.
 
-![The eight steps of a page load: URL entry, DNS resolution, HTTP request, server response, HTML parsing, sub-resource fetching, script execution, and final render](../../../Assets/Images/webdev/web_foundations/page_load_flow.svg)
+![The eight steps of a page load: URL entry, DNS resolution, HTTP request, server response, HTML parsing, sub-resource fetching, script execution, and final render](../../Assets/Images/webdev/web_foundations/page_load_flow.svg)
 
 Let's walk through each step.
 

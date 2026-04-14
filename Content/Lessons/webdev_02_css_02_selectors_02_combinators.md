@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** Combinators let you target elements based on their relationship to other elements in the DOM tree — not just what they are, but *where* they are. The four CSS combinators map directly to the parent-child-sibling relationships you learned in the DOM lesson.
 
-![A logical diagram visually comparing the 4 CSS structure combinators: descendant, child, adjacent, and general sibling](../../../../Assets/Images/webdev/css/diagram_combinators.svg)
+![A logical diagram visually comparing the 4 CSS structure combinators: descendant, child, adjacent, and general sibling](../../Assets/Images/webdev/css/diagram_combinators.svg)
 
 ## The Four Combinators
 

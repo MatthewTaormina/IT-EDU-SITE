@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** Pseudo-classes let you style elements based on their *state* or *structural position* — without adding extra classes to the HTML. They are how you create hover effects, styled focus outlines, zebra-striped tables, and form validation feedback purely in CSS.
 
-![A web element shown in four states — hover, focus, active, and disabled — each with a different glow color on a dark background](../../../../Assets/Images/webdev/css/diagram_pseudo_classes.svg)
+![A web element shown in four states — hover, focus, active, and disabled — each with a different glow color on a dark background](../../Assets/Images/webdev/css/diagram_pseudo_classes.svg)
 
 ## What Is a Pseudo-class?
 

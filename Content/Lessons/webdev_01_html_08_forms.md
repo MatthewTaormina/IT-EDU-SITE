@@ -17,7 +17,7 @@ tags:
 
 > **Lesson Summary:** Forms are the primary mechanism through which users send data to a server — login credentials, search queries, registrations, orders, messages. Every form input must have a label. Every form must have a submit button. Built-in validation exists and should be used. This lesson covers the complete HTML form toolkit.
 
-![A glowing form panel with labeled input fields, radio buttons, a dropdown, and a submit button on a dark background](../../../Assets/Images/webdev/html/html_forms.png)
+![A glowing form panel with labeled input fields, radio buttons, a dropdown, and a submit button on a dark background](../../Assets/Images/webdev/html/html_forms.png)
 
 ## The `<form>` Element
 

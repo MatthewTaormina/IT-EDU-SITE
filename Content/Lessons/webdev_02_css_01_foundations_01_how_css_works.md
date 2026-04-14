@@ -17,7 +17,7 @@ tags:
 
 > **Lesson Summary:** CSS does not act directly on the HTML file — it acts on the DOM. Understanding how a browser processes a stylesheet, and the three different ways to attach CSS to a document, is the first step to writing CSS that behaves predictably.
 
-![A stylesheet on the left connected by glowing lines to a browser rendering a web page on the right](../../../../Assets/Images/webdev/css/diagram_how_it_works.svg)
+![A stylesheet on the left connected by glowing lines to a browser rendering a web page on the right](../../Assets/Images/webdev/css/diagram_how_it_works.svg)
 
 ## The Browser's CSS Pipeline
 

@@ -17,7 +17,7 @@ tags:
 
 > **Lesson Summary:** A CSS file is a sequence of rules. Each rule has a selector and a block of declarations. Getting this anatomy right — and understanding shorthands, comments, and common value types — is the prerequisite for everything else in CSS.
 
-![A glowing CSS code block showing selector, property, and value structure on a dark background](../../../../Assets/Images/webdev/css/diagram_css_syntax.svg)
+![A glowing CSS code block showing selector, property, and value structure on a dark background](../../Assets/Images/webdev/css/diagram_css_syntax.svg)
 
 ## The CSS Rule
 

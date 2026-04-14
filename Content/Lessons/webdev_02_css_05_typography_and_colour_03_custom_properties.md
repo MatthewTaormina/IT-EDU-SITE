@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** CSS custom properties (often called CSS variables) let you define a value once and reference it throughout a stylesheet. They are dynamic — they participate in the cascade and inheritance, change at runtime, and are the foundation of any serious CSS design system. They are not the preprocessor variables you have seen in Sass; they are fundamentally different and more powerful.
 
-![Diagram showing a custom property declared on :root and referenced by multiple components](../../../../Assets/Images/webdev/css/diagram_custom_properties.svg)
+![Diagram showing a custom property declared on :root and referenced by multiple components](../../Assets/Images/webdev/css/diagram_custom_properties.svg)
 
 ## Declaring Custom Properties
 

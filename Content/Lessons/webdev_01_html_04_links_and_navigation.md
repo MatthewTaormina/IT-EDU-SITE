@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** The "HT" in HTML stands for HyperText — and hypertext means links. The ability to connect documents together is what turned a file-sharing protocol into the World Wide Web. The `<a>` element is how you create those connections, and understanding it means understanding relative vs. absolute URLs, link targets, accessibility requirements, and how navigation landmarks structure a page.
 
-![Glowing blue arrows connecting floating document cards on a dark background, representing hyperlinks](../../../Assets/Images/webdev/html/html_links_navigation.png)
+![Glowing blue arrows connecting floating document cards on a dark background, representing hyperlinks](../../Assets/Images/webdev/html/html_links_navigation.png)
 
 ## The Anchor Element
 

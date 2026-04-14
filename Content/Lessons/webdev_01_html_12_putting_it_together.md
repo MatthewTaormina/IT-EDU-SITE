@@ -15,7 +15,7 @@ tags:
 
 > **Lesson Summary:** You have learned every significant HTML element. Now you will use all of them — without guidance. This is a challenge, not a tutorial. There is no step-by-step walkthrough. You are given a target, a set of requirements, and the tools you have built over the preceding eleven lessons. The rest is up to you.
 
-![A glowing developer profile page layout showing a portrait, name, bio, skills, and contact section on a dark background](../../../Assets/Images/webdev/html/html_capstone.png)
+![A glowing developer profile page layout showing a portrait, name, bio, skills, and contact section on a dark background](../../Assets/Images/webdev/html/html_capstone.png)
 
 ---
 

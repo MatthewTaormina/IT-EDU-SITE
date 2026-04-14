@@ -27,7 +27,7 @@ These two terms are used interchangeably in everyday conversation, but they desc
 | **Invented** | ~1960s (ARPANET) | 1989, by Tim Berners-Lee |
 | **Required for the other?** | No — the Internet existed before the Web | Yes — the Web runs on top of the Internet |
 
-![The Web is one of many applications built on top of the Internet. Email, gaming, and SSH also use the Internet but are not the Web.](../../../Assets/Images/webdev/web_foundations/internet_vs_web.svg)
+![The Web is one of many applications built on top of the Internet. Email, gaming, and SSH also use the Internet but are not the Web.](../../Assets/Images/webdev/web_foundations/internet_vs_web.svg)
 
 Think of it this way: the Internet is the global highway system. The Web is one thing you can *do* on those highways — like a postal service that runs trucks on those roads. Email, online gaming, and video calls also use the highways, but they are not the postal service.
 
@@ -47,7 +47,7 @@ A **hyperlink** (or just "link") is the mechanism that connects one hypertext do
 
 This network of documents, all cross-linking to each other, is what creates the "web" shape the system is named after.
 
-![Four web pages linked to each other in a non-linear mesh: Page A links to B and C, Page B links to D, Page C links back to A](../../../Assets/Images/webdev/web_foundations/web_of_links.svg)
+![Four web pages linked to each other in a non-linear mesh: Page A links to B and C, Page B links to D, Page C links back to A](../../Assets/Images/webdev/web_foundations/web_of_links.svg)
 
 No single page is the "start." Any document can link to any other. The result is a mesh — a web.
 

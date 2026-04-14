@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** `box-sizing` is the single most impactful CSS property you will set exactly once, globally, and then forget. The difference between `content-box` (the default) and `border-box` (the universal standard) determines whether padding and border *add to* or *shrink within* your element's declared width. Get this wrong and your layouts will never add up.
 
-![Comparison diagram: content-box element grows wider than declared; border-box element stays at the declared width](../../../../Assets/Images/webdev/css/diagram_box_sizing.svg)
+![Comparison diagram: content-box element grows wider than declared; border-box element stays at the declared width](../../Assets/Images/webdev/css/diagram_box_sizing.svg)
 
 
 ## The Problem: `content-box`

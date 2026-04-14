@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** Most of what ends up on a web page is text. HTML provides a rich set of elements for marking up that text — not to control how it looks, but to communicate what it *means*. A heading is not large text; it is a statement about document structure. A `<strong>` tag is not bold text; it is a declaration of importance. Getting this distinction right is the foundation of semantic HTML.
 
-![A glowing typographic hierarchy showing headings of different sizes and paragraph blocks on a dark background](../../../Assets/Images/webdev/html/html_text_elements.png)
+![A glowing typographic hierarchy showing headings of different sizes and paragraph blocks on a dark background](../../Assets/Images/webdev/html/html_text_elements.png)
 
 ## The Semantic Principle
 

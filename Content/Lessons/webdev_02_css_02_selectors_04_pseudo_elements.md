@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** Pseudo-elements target specific *parts* of an element — not the whole element, but a sub-part such as the first line, the first letter, the space before it, or the space after it. They are written with a double colon `::` and are the primary tool for inserting decorative content without touching HTML.
 
-![A paragraph element with glowing decorative content added before and after it, and a highlighted first line on a dark background](../../../../Assets/Images/webdev/css/diagram_pseudo_elements.svg)
+![A paragraph element with glowing decorative content added before and after it, and a highlighted first line on a dark background](../../Assets/Images/webdev/css/diagram_pseudo_elements.svg)
 
 ## Pseudo-elements vs. Pseudo-classes
 

@@ -15,7 +15,7 @@ tags:
 
 > **Lesson Summary:** When the browser reads an HTML file, it does not keep it as raw text. It builds a tree of objects — the DOM. Understanding the DOM is not optional; it is the single most important mental model in web development. CSS targets it. JavaScript reads and rewrites it. Everything you learn in this course — and beyond — makes more sense once you have this picture clear.
 
-![A glowing DOM tree with hierarchical nodes connected by lines on a dark background](../../../Assets/Images/webdev/html/html_dom_tree.png)
+![A glowing DOM tree with hierarchical nodes connected by lines on a dark background](../../Assets/Images/webdev/html/html_dom_tree.png)
 
 ## The Browser Does Not Display HTML
 

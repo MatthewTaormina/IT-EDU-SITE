@@ -31,7 +31,7 @@ The key word is *uniform*. URLs follow a strict, standardised structure so that 
 
 ## Anatomy of a URL
 
-![The parts of a URL: protocol (https), host (api.example.com), port (:3000), path (/users), query string (?page=2), and fragment (#top)](../../../Assets/Images/webdev/web_foundations/url_anatomy.svg)
+![The parts of a URL: protocol (https), host (api.example.com), port (:3000), path (/users), query string (?page=2), and fragment (#top)](../../Assets/Images/webdev/web_foundations/url_anatomy.svg)
 
 ### Protocol (Scheme)
 

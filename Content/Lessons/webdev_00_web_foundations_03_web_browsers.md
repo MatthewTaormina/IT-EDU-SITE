@@ -66,7 +66,7 @@ The browser then performs two final steps:
 
 This entire process — from HTML text to painted pixels — is called the **rendering pipeline**. It happens in milliseconds and can be triggered again whenever the page changes.
 
-![The browser rendering pipeline: HTML is parsed into the DOM, CSS into the CSSOM. Both merge into a Render Tree, which feeds Layout, then Paint.](../../../Assets/Images/webdev/web_foundations/rendering_pipeline.svg)
+![The browser rendering pipeline: HTML is parsed into the DOM, CSS into the CSSOM. Both merge into a Render Tree, which feeds Layout, then Paint.](../../Assets/Images/webdev/web_foundations/rendering_pipeline.svg)
 
 ### 4. Running JavaScript
 

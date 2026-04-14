@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** Before Flexbox and Grid, browsers arranged elements using **normal flow** — the default layout algorithm. Understanding how `block` and `inline` elements behave in that flow is essential context for everything that follows. Every layout system in CSS (Flexbox, Grid, absolute positioning) is fundamentally an override of this default behaviour.
 
-![Diagram showing block elements stacking vertically, inline elements flowing in text, and inline-block elements as fixed boxes in a line](../../../../Assets/Images/webdev/css/diagram_display_flow.svg)
+![Diagram showing block elements stacking vertically, inline elements flowing in text, and inline-block elements as fixed boxes in a line](../../Assets/Images/webdev/css/diagram_display_flow.svg)
 
 ## The `display` Property
 

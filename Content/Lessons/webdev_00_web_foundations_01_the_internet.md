@@ -14,7 +14,7 @@ tags:
 
 > **Lesson Summary:** The Internet is the global network that lets a browser on your laptop talk to a server on the other side of the world. This lesson covers what web developers need to know about it — no networking degree required.
 
-![A glowing global network of interconnected nodes representing computers and servers linked across the world](../../../Assets/Images/webdev/web_foundations/global_internet_network.png)
+![A glowing global network of interconnected nodes representing computers and servers linked across the world](../../Assets/Images/webdev/web_foundations/global_internet_network.png)
 
 ## What Is the Internet?
 
@@ -47,7 +47,7 @@ A server is just a computer running special software. Your own laptop could be a
 
 Every web interaction is a **request** from a client followed by a **response** from a server. This back-and-forth is called the **request-response cycle** and is covered in depth in the [HTTP lesson](./webdev_00_web_foundations_06_http.md).
 
-![The client-server model: a browser sends an HTTP request to a web server, which sends an HTTP response back](../../../Assets/Images/webdev/web_foundations/client_server_model.svg)
+![The client-server model: a browser sends an HTTP request to a web server, which sends an HTTP response back](../../Assets/Images/webdev/web_foundations/client_server_model.svg)
 
 ## IP Addresses
 
@@ -76,7 +76,7 @@ Think of it this way: the IP address is the building's street address, and the p
 | `8080` | Common alternative for local dev servers |
 | `5432` | PostgreSQL database |
 
-![A server machine with three ports: 80 (HTTP), 443 (HTTPS), and 5432 (PostgreSQL). A browser connects specifically to port 443.](../../../Assets/Images/webdev/web_foundations/ports_diagram.svg)
+![A server machine with three ports: 80 (HTTP), 443 (HTTPS), and 5432 (PostgreSQL). A browser connects specifically to port 443.](../../Assets/Images/webdev/web_foundations/ports_diagram.svg)
 
 Browsers handle ports `80` and `443` silently — you never type `https://google.com:443` because the browser assumes it. But the moment you spin up a local dev server, ports become visible: `http://localhost:3000`.
 

@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** `display: grid` turns an element into a grid container. You then define how many columns and rows you want, how wide they are, and how much space between them. The browser places items automatically — or you can place them manually. This lesson covers defining the grid structure.
 
-![CSS Grid container diagram showing three columns, two rows, a spanning item, and gap annotations](../../../../../Assets/Images/webdev/css/diagram_grid_container.svg)
+![CSS Grid container diagram showing three columns, two rows, a spanning item, and gap annotations](../../Assets/Images/webdev/css/diagram_grid_container.svg)
 
 ## Activating Grid
 

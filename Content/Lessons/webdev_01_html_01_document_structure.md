@@ -15,7 +15,7 @@ tags:
 
 > **Lesson Summary:** Before you write a single visible element, every HTML document needs a skeleton — a specific set of outer tags that tell the browser what kind of document it is and where different types of content live. This lesson covers that skeleton: what each piece is, what it does, and why leaving any part out is a mistake.
 
-![A glowing HTML document skeleton showing the DOCTYPE, html, head, and body tags on a dark background](../../../Assets/Images/webdev/html/html_document_structure.png)
+![A glowing HTML document skeleton showing the DOCTYPE, html, head, and body tags on a dark background](../../Assets/Images/webdev/html/html_document_structure.png)
 
 ## The Minimal Valid HTML Document
 

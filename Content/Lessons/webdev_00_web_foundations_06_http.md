@@ -33,7 +33,7 @@ Key properties:
 
 Every HTTP exchange consists of two messages: a **request** from the client and a **response** from the server.
 
-![The structure of an HTTP request (left) and HTTP response (right), showing the start line, headers, and optional body of each.](../../../Assets/Images/webdev/web_foundations/http_message_structure.svg)
+![The structure of an HTTP request (left) and HTTP response (right), showing the start line, headers, and optional body of each.](../../Assets/Images/webdev/web_foundations/http_message_structure.svg)
 
 ### The HTTP Request
 

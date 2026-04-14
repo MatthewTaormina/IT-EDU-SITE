@@ -21,7 +21,7 @@ tags:
 
 > **Lesson Summary:** Semantic HTML means choosing elements that describe the *meaning* of your content, not just its appearance. A `<div>` and a `<main>` can look identical on screen — but only `<main>` tells browsers, screen readers, and search engines what that region *is*. This lesson covers the full set of page-level semantic landmarks and explains why `<div>` and `<span>` are last resorts, not defaults.
 
-![A web page divided into semantic regions — header, main, aside, and footer each outlined in different colors on a dark background](../../../Assets/Images/webdev/html/html_semantic.png)
+![A web page divided into semantic regions — header, main, aside, and footer each outlined in different colors on a dark background](../../Assets/Images/webdev/html/html_semantic.png)
 
 ## What "Semantic" Means
 

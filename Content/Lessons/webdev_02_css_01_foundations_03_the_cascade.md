@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** CSS stands for *Cascading* Style Sheets — the cascade is the algorithm that decides which rule wins when two rules could both apply to the same element. Inheritance is the mechanism by which some properties automatically flow from parent to child. Together, these two systems explain most of the "why isn't this working?" moments in CSS.
 
-![Layered glowing rule cards cascading downward in priority order on a dark background](../../../../Assets/Images/webdev/css/diagram_cascade.svg)
+![Layered glowing rule cards cascading downward in priority order on a dark background](../../Assets/Images/webdev/css/diagram_cascade.svg)
 
 ## Why the Cascade Exists
 

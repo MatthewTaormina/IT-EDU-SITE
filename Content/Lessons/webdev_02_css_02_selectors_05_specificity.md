@@ -15,7 +15,7 @@ tags:
 
 > **Lesson Summary:** Specificity is the scoring system CSS uses to decide which rule wins when two rules target the same element. Understanding it means you can predict exactly which style will apply — and fix the inevitable "why isn't my rule working?" without resorting to `!important`.
 
-![A three-column scoreboard showing ID, class, and type specificity scores with colored columns on a dark background](../../../../Assets/Images/webdev/css/diagram_specificity.svg)
+![A three-column scoreboard showing ID, class, and type specificity scores with colored columns on a dark background](../../Assets/Images/webdev/css/diagram_specificity.svg)
 
 ## The Specificity Score
 

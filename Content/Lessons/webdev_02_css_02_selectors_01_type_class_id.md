@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** The three fundamental selector types — type, class, and ID — cover the majority of daily CSS targeting. Getting their semantics right (not just their syntax) prevents specificity problems and keeps stylesheets maintainable.
 
-![Glowing targeting reticles pointing at different elements in a DOM tree, colored by selector type](../../../../Assets/Images/webdev/css/diagram_selectors.svg)
+![Glowing targeting reticles pointing at different elements in a DOM tree, colored by selector type](../../Assets/Images/webdev/css/diagram_selectors.svg)
 
 ## Type Selectors
 

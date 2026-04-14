@@ -18,7 +18,7 @@ tags:
 
 > **Lesson Summary:** Tables are for **tabular data** — information that has meaning because of its row-and-column relationship. They are not for layout. This lesson covers the full table element set, spanning cells, proper header markup, and why correct table structure is an accessibility requirement, not a style preference.
 
-![A glowing HTML table grid with a highlighted header row and spanning cells on a dark background](../../../Assets/Images/webdev/html/html_tables.png)
+![A glowing HTML table grid with a highlighted header row and spanning cells on a dark background](../../Assets/Images/webdev/html/html_tables.png)
 
 ## Tables Are for Tabular Data
 

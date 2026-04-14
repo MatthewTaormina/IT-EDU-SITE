@@ -15,7 +15,7 @@ tags:
 
 > **Lesson Summary:** `grid-template-areas` lets you design your page layout as a visual ASCII-style map — except instead of characters, you use area names. Each named area corresponds to one or more grid cells, and grid items are assigned to those areas by name. The result is layout code that reads like a diagram of the page.
 
-![CSS Grid layout with header spanning full width, sidebar and main content in the middle row, footer spanning full width](../../../../../Assets/Images/webdev/css/diagram_grid_areas.svg)
+![CSS Grid layout with header spanning full width, sidebar and main content in the middle row, footer spanning full width](../../Assets/Images/webdev/css/diagram_grid_areas.svg)
 
 ## The Concept
 

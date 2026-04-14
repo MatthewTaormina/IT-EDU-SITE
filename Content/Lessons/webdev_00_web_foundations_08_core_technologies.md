@@ -15,13 +15,13 @@ tags:
 
 > **Lesson Summary:** Every web page is assembled from exactly three technologies, each with a distinct and non-overlapping job. This lesson introduces their roles — what each one *is* and *why* all three are needed — without syntax. Think of this as meeting three colleagues before learning what they can do.
 
-![Three stacked layers representing the three core web technologies: HTML for structure, CSS for presentation, and JavaScript for behavior](../../../Assets/Images/webdev/web_foundations/three_tech_layers.png)
+![Three stacked layers representing the three core web technologies: HTML for structure, CSS for presentation, and JavaScript for behavior](../../Assets/Images/webdev/web_foundations/three_tech_layers.png)
 
 ## The Three Layers of a Web Page
 
 A web page is not a single thing. It is three technologies layered on top of each other, each responsible for a different dimension of the experience.
 
-![HTML as the foundation structure layer, CSS as the presentation layer, and JavaScript as the behavior layer — stacked with HTML at the bottom](../../../Assets/Images/webdev/web_foundations/three_layers.svg)
+![HTML as the foundation structure layer, CSS as the presentation layer, and JavaScript as the behavior layer — stacked with HTML at the bottom](../../Assets/Images/webdev/web_foundations/three_layers.svg)
 
 | Technology | Job | File type |
 | :--- | :--- | :--- |

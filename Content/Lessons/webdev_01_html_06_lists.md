@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** Lists are one of the most frequently used structures on the web — navigation menus, search results, article feeds, feature bullet points, and step-by-step instructions are all lists underneath their CSS. HTML provides three list types, each with a specific semantic meaning. Choosing the right one is not a stylistic decision — it is a structural one.
 
-![Three types of HTML lists shown side by side on a dark background — bulleted, numbered, and definition](../../../Assets/Images/webdev/html/html_lists.png)
+![Three types of HTML lists shown side by side on a dark background — bulleted, numbered, and definition](../../Assets/Images/webdev/html/html_lists.png)
 
 ## The Three List Types
 

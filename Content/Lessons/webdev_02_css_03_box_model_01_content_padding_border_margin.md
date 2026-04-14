@@ -18,7 +18,7 @@ tags:
 
 Working from inside to outside — each layer wraps around the one inside it:
 
-![CSS box model diagram showing the four concentric layers: margin, border, padding, and content](../../../../Assets/Images/webdev/css/diagram_box_model.svg)
+![CSS box model diagram showing the four concentric layers: margin, border, padding, and content](../../Assets/Images/webdev/css/diagram_box_model.svg)
 
 
 ---

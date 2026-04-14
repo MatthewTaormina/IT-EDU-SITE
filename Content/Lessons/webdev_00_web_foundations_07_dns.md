@@ -16,7 +16,7 @@ tags:
 
 > **Lesson Summary:** DNS (Domain Name System) translates human-readable domain names into the IP addresses computers use to find each other. Without DNS, every URL would be a string of numbers. Understanding DNS explains one of the most common sources of delays and failures on the web.
 
-![A digital lookup system translating a human-readable domain name into a numerical IP address — the core job of DNS](../../../Assets/Images/webdev/web_foundations/dns_phonebook.png)
+![A digital lookup system translating a human-readable domain name into a numerical IP address — the core job of DNS](../../Assets/Images/webdev/web_foundations/dns_phonebook.png)
 
 ## The Problem DNS Solves
 
@@ -30,7 +30,7 @@ DNS is the system that connects the two. You type `example.com`; DNS translates 
 
 When your browser needs to resolve a domain name, it does not ask a single server. It follows a chain of servers, each one pointing to the next, until it reaches the authoritative source.
 
-![The DNS resolution chain: browser queries resolver, which queries root, TLD, and authoritative name servers in order before returning the IP address to the browser.](../../../Assets/Images/webdev/web_foundations/dns_resolution.svg)
+![The DNS resolution chain: browser queries resolver, which queries root, TLD, and authoritative name servers in order before returning the IP address to the browser.](../../Assets/Images/webdev/web_foundations/dns_resolution.svg)
 
 ### Step 1 — Browser Cache
 
