@@ -28,7 +28,7 @@ references:
 
 ## Pathway Overview
 
-This pathway takes you through the Web Development course in a single opinionated sequence. Every step builds directly on the last. Do not skip.
+This pathway takes you through the Front-End Basics (web) course in a single opinionated sequence. Every step builds directly on the last. Do not skip.
 
 | Step | Content | Type | Skills Gained |
 | :--- | :--- | :--- | :--- |

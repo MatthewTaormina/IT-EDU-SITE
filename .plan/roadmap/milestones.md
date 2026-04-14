@@ -33,9 +33,9 @@ gantt
 
 ### M-00 — Foundation ✅
 **Goal:** Repo structure, authoring standards, and first pathway live.
-**Done when:** Web Dev pathway is published and passes content checklist.
+**Done when:** Front-End Basics (web) pathway is published and passes content checklist.
 **Success Metrics:**
-- Web Dev pathway has ≥4 units with complete lessons
+- Front-End Basics (web) pathway has ≥4 units with complete lessons
 - All frontmatter fields validated against [[.skills/edu_content_authoring.md]]
 
 ---
@@ -83,7 +83,7 @@ gantt
 
 | Quarter | Primary Objective | Key Results |
 |---------|-------------------|-------------|
-| Q1 2026 | Stabilise foundation | .plan/ live, Web Dev reviewed, authoring guide v1 |
+| Q1 2026 | Stabilise foundation | .plan/ live, Front-End Basics (web) reviewed, authoring guide v1 |
 | Q2 2026 | Networking pathway | M-01 shipped, search MVP |
 | Q3 2026 | Security + Python pathways | M-02 & M-03 shipped |
 | Q4 2026 | Platform features | Progress tracking, contribution guide, performance audit |

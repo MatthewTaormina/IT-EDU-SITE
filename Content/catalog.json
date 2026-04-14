@@ -18,10 +18,10 @@
   {
     "slug": "webdev",
     "type": "course",
-    "title": "Web Development",
-    "description": "From the theory of how the web works to building full-stack applications — HTML, CSS, JavaScript, and beyond.",
+    "title": "Front-End Basics (web)",
+    "description": "From the theory of how the web works to building styled, interactive front-end pages — HTML, CSS, and JavaScript fundamentals.",
     "path": "Courses/webdev/index.md",
-    "difficulty": "Beginner to Advanced",
+    "difficulty": "Beginner to Intermediate",
     "domain": "WebDev"
   },
   {

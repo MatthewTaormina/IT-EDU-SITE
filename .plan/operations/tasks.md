@@ -42,7 +42,7 @@
 
 | ID | Title | Completed | Notes |
 |----|-------|-----------|-------|
-| TASK-000 | Web Dev pathway launched (`webdev_beginner`) | 2026-Q1 | [[Content/Pathways/webdev_beginner]], [[Content/Courses/webdev]] |
+| TASK-000 | Front-End Basics (web) pathway launched (`webdev_beginner`) | 2026-Q1 | [[Content/Pathways/webdev_beginner]], [[Content/Courses/webdev]] |
 | TASK-001 | Initialise `.plan/` directory (vision, Kanban, PRD template, agent coordination) | 2026-04-14 | [[.plan/vision/vision.md]], [[.plan/specs/PRD_TEMPLATE.md]] |
 
 ---

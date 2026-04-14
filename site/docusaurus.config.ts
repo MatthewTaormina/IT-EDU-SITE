@@ -106,7 +106,7 @@ const config: Config = {
         {
           title: 'Courses',
           items: [
-            { label: 'Web Development', to: '/courses/Courses/webdev/' },
+            { label: 'Front-End Basics (web)', to: '/courses/Courses/webdev/' },
           ],
         },
         {

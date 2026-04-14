@@ -1,9 +1,9 @@
 ---
 type: course
-title: "Web Development"
-description: "From the theory of how the web works to building full-stack applications — HTML, CSS, JavaScript, and beyond."
+title: "Front-End Basics (web)"
+description: "From the theory of how the web works to building styled, interactive front-end pages — HTML, CSS, and JavaScript fundamentals."
 domain: "WebDev"
-difficulty: "Beginner to Advanced"
+difficulty: "Beginner to Intermediate"
 prerequisites:
   - "None for the first unit. Later units assume completion of prior units."
 references:
@@ -19,9 +19,9 @@ references:
     slug: webdev_capstone_portfolio
 ---
 
-# Web Development
+# Front-End Basics (web)
 
-> **Course Summary:** This course takes you from the foundational theory of how the web works all the way to building modern full-stack applications. You will understand the systems beneath your code before you write a single line of it — then build mastery from the ground up.
+> **Course Summary:** This course takes you from the foundational theory of how the web works to writing styled, interactive front-end pages. You will understand the systems beneath your code before you write a single line of it — then build mastery in HTML, CSS, and JavaScript from the ground up.
 
 ## Course Objectives
 
@@ -30,9 +30,8 @@ By the end of this course, you will be able to:
 - Explain how browsers, servers, DNS, and HTTP interact to deliver a web page
 - Write semantic, accessible HTML documents
 - Style pages with CSS using the box model, layouts, and responsive design
-- Write JavaScript that manipulates the DOM, handles events, and communicates with APIs
-- Build and consume RESTful APIs
-- Work with modern tooling, bundlers, and frameworks used in industry
+- Write JavaScript that manipulates the DOM and handles user events
+- Build and deploy a complete, interactive static front-end project
 
 ## Prerequisites
 
