@@ -58,11 +58,12 @@ portfolio/
 | `C-03` | The navigation must be `position: sticky; top: 0` so it stays visible on scroll |
 | `C-04` | The Projects section must use CSS Grid or Flexbox to lay out the three cards |
 | `C-05` | The About section must use Flexbox or Grid for the two-column layout |
-| `C-06` | The site must be responsive — it must work without horizontal scrolling at 375px, 768px, and 1280px viewport widths |
-| `C-07` | The hamburger menu icon and the full nav links must each only appear at their respective breakpoints — not both at once |
-| `C-08` | Focus styles must be visible on all interactive elements (do not `outline: none` without a replacement) |
-| `C-09` | Body text must have a minimum contrast ratio of 4.5:1 against its background |
-| `C-10` | A Google Font must be loaded and applied as the body font |
+| `C-06` | Use **one breakpoint at 768px**. Below 768px = mobile layout. At 768px and above = desktop layout. The range 768px–1023px (tablets) uses the desktop layout — it will naturally compress; no third layout is needed for this project. |
+| `C-07` | The site must work without horizontal scrolling at 375px, 768px, and 1280px viewport widths |
+| `C-08` | The hamburger menu icon and the full nav links must each only appear at their respective breakpoints — not both at once |
+| `C-09` | Focus styles must be visible on all interactive elements (do not `outline: none` without a replacement) |
+| `C-10` | Body text must have a minimum contrast ratio of 4.5:1 against its background |
+| `C-11` | A Google Font must be loaded and applied as the body font |
 
 ---
 
