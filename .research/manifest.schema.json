@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "manifest.schema.json",
+  "title": "Research Directory Manifest",
+  "description": "Maps research documents to educational assets and terminal objectives. Version 2.0 — Instructional Knowledge Engine.",
+  "type": "object",
+  "required": ["$schema_version", "directory", "purpose", "documents"],
+  "properties": {
+    "$schema_version": { "type": "string" },
+    "directory": { "type": "string" },
+    "purpose": { "type": "string" },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "terminal_objective", "educational_assets"],
+        "properties": {
+          "id": { "type": "string" },
+          "path": { "type": "string" },
+          "terminal_objective": {
+            "type": "object",
+            "required": ["prerequisite", "concept", "practical_application", "market_value"],
+            "properties": {
+              "prerequisite": { "type": "string" },
+              "concept": { "type": "string" },
+              "practical_application": { "type": "string" },
+              "market_value": { "type": "string" }
+            }
+          },
+          "educational_assets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "title", "bloom_level", "deliverable"],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["code_lab", "quiz", "project", "exercise", "case_study", "rubric"]
+                },
+                "title": { "type": "string" },
+                "bloom_level": { "type": "integer", "minimum": 1, "maximum": 6 },
+                "deliverable": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

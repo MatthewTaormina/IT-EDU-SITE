@@ -1,0 +1,204 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "last_updated": "2026-04-14",
+    "description": "Flattened research node graph for the .research/ Instructional Knowledge Engine. Optimized for RAG retrieval and agent navigation. Every node includes a terminal_objective block.",
+    "total_nodes": 17,
+    "domains": ["pedagogy", "programming", "web-dev", "indexes", "validation"],
+    "engine_version": "2.0.0",
+    "agent_entry_point": ".research/README_AGENT.md"
+  },
+  "nodes": [
+    {
+      "id": "project-based-learning",
+      "domain": "pedagogy",
+      "path": ".research/pedagogy/project-based-learning.md",
+      "title": "Project-Based Learning (PBL)",
+      "description": "Instructional methodology where students acquire knowledge through real-world projects. Covers the Gold Standard PBL framework, driving questions, authentic products, PBL in IT education, failure modes, and implementation checklist.",
+      "tags": ["pedagogy", "pbl", "active-learning", "it-education", "curriculum-design"],
+      "related_nodes": ["scaffolding", "bloom-taxonomy", "cognitive-load-theory", "it-education-strategies", "core-competencies-fullstack"]
+    },
+    {
+      "id": "scaffolding",
+      "domain": "pedagogy",
+      "path": ".research/pedagogy/scaffolding.md",
+      "title": "Instructional Scaffolding",
+      "description": "Temporary instructional support within the Zone of Proximal Development (ZPD). Covers content scaffolds, process scaffolds, code scaffolds (starter code, faded worked examples), social scaffolds, metacognitive scaffolds, and fading strategies.",
+      "tags": ["pedagogy", "scaffolding", "zone-of-proximal-development", "instructional-design", "differentiation"],
+      "related_nodes": ["project-based-learning", "cognitive-load-theory", "bloom-taxonomy", "it-education-strategies", "programming-pedagogy"]
+    },
+    {
+      "id": "cognitive-load-theory",
+      "domain": "pedagogy",
+      "path": ".research/pedagogy/cognitive-load-theory.md",
+      "title": "Cognitive Load Theory (CLT)",
+      "description": "Framework for human learning based on working memory limitations. Covers intrinsic, extraneous, and germane cognitive load; CLT effects (worked example, split-attention, redundancy, expertise reversal, modality); and instructional design checklist.",
+      "tags": ["pedagogy", "cognitive-load", "working-memory", "instructional-design", "learning-science"],
+      "related_nodes": ["scaffolding", "bloom-taxonomy", "project-based-learning", "programming-pedagogy", "it-education-strategies"]
+    },
+    {
+      "id": "bloom-taxonomy",
+      "domain": "pedagogy",
+      "path": ".research/pedagogy/bloom-taxonomy.md",
+      "title": "Bloom's Taxonomy (Revised)",
+      "description": "Hierarchical framework classifying educational objectives into six cognitive levels: Remember, Understand, Apply, Analyze, Evaluate, Create. Covers learning objective writing, action verbs, assessment alignment, and IT curriculum sequencing.",
+      "tags": ["pedagogy", "bloom-taxonomy", "learning-objectives", "assessment", "curriculum-design"],
+      "related_nodes": ["cognitive-load-theory", "scaffolding", "project-based-learning", "it-education-strategies", "programming-pedagogy"]
+    },
+    {
+      "id": "it-education-strategies",
+      "domain": "pedagogy",
+      "path": ".research/pedagogy/it-education-strategies.md",
+      "title": "IT Education Strategies",
+      "description": "Synthesis of strategies specific to IT education: concept-first sequencing, competency-based progression, authentic assessment, the novice-to-practitioner transition, spiral curriculum, threshold concepts, and research-backed practice table.",
+      "tags": ["pedagogy", "it-education", "curriculum-design", "active-learning", "industry-alignment"],
+      "related_nodes": ["project-based-learning", "scaffolding", "bloom-taxonomy", "cognitive-load-theory", "programming-pedagogy", "core-competencies-fullstack"]
+    },
+    {
+      "id": "language-fundamentals",
+      "domain": "programming",
+      "path": ".research/programming/language-fundamentals.md",
+      "title": "Programming Language Fundamentals",
+      "description": "Universal programming concepts: values and types, static vs. dynamic typing, variables, operators, control flow, functions, scope, closures, memory management, and error handling. Language-agnostic; examples in JavaScript and Python.",
+      "tags": ["programming", "language-fundamentals", "cs-concepts", "data-types", "control-flow", "memory"],
+      "related_nodes": ["programming-paradigms", "software-engineering-principles", "programming-pedagogy", "core-competencies-fullstack", "it-education-strategies"]
+    },
+    {
+      "id": "programming-paradigms",
+      "domain": "programming",
+      "path": ".research/programming/programming-paradigms.md",
+      "title": "Programming Paradigms",
+      "description": "Major programming paradigms: imperative, object-oriented (OOP), functional (FP), declarative, and event-driven. Multi-paradigm language table, paradigm selection guide, and web development paradigm mapping.",
+      "tags": ["programming", "paradigms", "oop", "functional", "imperative", "declarative", "event-driven"],
+      "related_nodes": ["language-fundamentals", "software-engineering-principles", "programming-pedagogy", "frontend-stack", "backend-stack"]
+    },
+    {
+      "id": "software-engineering-principles",
+      "domain": "programming",
+      "path": ".research/programming/software-engineering-principles.md",
+      "title": "Software Engineering Principles",
+      "description": "Durable design principles: DRY, YAGNI, KISS, Separation of Concerns, SOLID (SRP, OCP, LSP, ISP, DIP), Gang of Four design patterns (creational, structural, behavioral), and Clean Code heuristics.",
+      "tags": ["software-engineering", "solid", "dry", "clean-code", "design-patterns", "architecture"],
+      "related_nodes": ["programming-paradigms", "language-fundamentals", "core-competencies-fullstack", "backend-stack", "it-education-strategies"]
+    },
+    {
+      "id": "programming-pedagogy",
+      "domain": "programming",
+      "path": ".research/programming/programming-pedagogy.md",
+      "title": "Programming Pedagogy",
+      "description": "Research-backed strategies for teaching programming: the notional machine, PRIMM methodology, Parsons Problems, Peer Instruction, live coding, language selection criteria, common anti-patterns, and assessment strategies.",
+      "tags": ["pedagogy", "programming-education", "cs1", "cs2", "computing-education-research", "novice-programming"],
+      "related_nodes": ["it-education-strategies", "scaffolding", "cognitive-load-theory", "bloom-taxonomy", "language-fundamentals", "programming-paradigms"]
+    },
+    {
+      "id": "core-competencies-fullstack",
+      "domain": "programming",
+      "path": ".research/programming/core-competencies-fullstack.md",
+      "title": "Core Competencies for Full-Stack Web Development",
+      "description": "Tiered competency map for full-stack web development: Tier 0 (foundations), Tier 1 (frontend core), Tier 2 (frontend advanced), Tier 3 (backend core), Tier 4 (backend advanced), Tier 5 (DevOps/infrastructure), Tier 6 (professional skills). Industry alignment notes for 2025.",
+      "tags": ["fullstack", "competencies", "web-development", "career-readiness", "curriculum-design", "skills-map"],
+      "related_nodes": ["frontend-stack", "backend-stack", "web-standards", "infrastructure", "software-engineering-principles", "it-education-strategies", "programming-paradigms"]
+    },
+    {
+      "id": "frontend-stack",
+      "domain": "web-dev",
+      "path": ".research/web-dev/frontend-stack.md",
+      "title": "Frontend Technology Stack",
+      "description": "HTML5 (semantic elements, accessibility, content model), CSS3 (box model, flexbox, grid, custom properties, Tailwind), JavaScript/TypeScript (ES6+, DOM, Event Loop, async), React (components, hooks, ecosystem), and Vite build tooling.",
+      "tags": ["web-dev", "frontend", "html", "css", "javascript", "react", "typescript", "performance", "accessibility"],
+      "related_nodes": ["backend-stack", "web-standards", "infrastructure", "core-competencies-fullstack", "programming-paradigms"]
+    },
+    {
+      "id": "backend-stack",
+      "domain": "web-dev",
+      "path": ".research/web-dev/backend-stack.md",
+      "title": "Backend Technology Stack",
+      "description": "Node.js (event loop, modules, npm, environment variables), Express.js (routing, middleware, error handling), REST API design (resource naming, HTTP methods, status codes), PostgreSQL (SQL, relationships, indexes), Prisma ORM, authentication (bcrypt, JWT, OAuth), and input validation/security.",
+      "tags": ["web-dev", "backend", "nodejs", "express", "databases", "api", "authentication", "rest"],
+      "related_nodes": ["frontend-stack", "web-standards", "infrastructure", "core-competencies-fullstack", "software-engineering-principles"]
+    },
+    {
+      "id": "web-standards",
+      "domain": "web-dev",
+      "path": ".research/web-dev/web-standards.md",
+      "title": "Modern Web Standards",
+      "description": "Standards bodies (W3C, WHATWG, IETF, ECMA), HTML Living Standard, CSS modules and browser compatibility, ECMAScript version history (ES6+), HTTP/1.1/2/3, HTTPS/TLS, WCAG 2.1 (POUR principles, conformance levels), and browser Web Platform APIs.",
+      "tags": ["web-dev", "web-standards", "http", "html5", "css3", "wcag", "w3c", "whatwg", "web-platform"],
+      "related_nodes": ["frontend-stack", "backend-stack", "infrastructure", "core-competencies-fullstack"]
+    },
+    {
+      "id": "infrastructure",
+      "domain": "web-dev",
+      "path": ".research/web-dev/infrastructure.md",
+      "title": "Web Infrastructure and Deployment",
+      "description": "Static vs. dynamic deployment types, Netlify/Vercel/GitHub Pages (static), Render/Railway/Fly.io (backend), DNS record types and resolution, HTTPS/TLS and security headers, environment management (.env, Twelve-Factor App), Docker (images, containers, Compose), and CI/CD with GitHub Actions.",
+      "tags": ["web-dev", "infrastructure", "devops", "deployment", "docker", "ci-cd", "cloud", "hosting"],
+      "related_nodes": ["frontend-stack", "backend-stack", "web-standards", "core-competencies-fullstack"]
+    },
+    {
+      "id": "master-index",
+      "domain": "indexes",
+      "path": ".research/indexes/master-index.md",
+      "title": "Master Research Index",
+      "description": "Complete listing of all 16 research nodes organized by domain with descriptions, file paths, and key questions answered. Entry point for human navigation of the .research/ knowledge base.",
+      "tags": ["index", "master-index", "research-navigation", "all-nodes"],
+      "related_nodes": ["cross-reference-map"]
+    },
+    {
+      "id": "cross-reference-map",
+      "domain": "indexes",
+      "path": ".research/indexes/cross-reference-map.md",
+      "title": "Cross-Reference Map",
+      "description": "Directed relationship graph showing all inbound and outbound links between research nodes. Includes relationship density summary table identifying the most central nodes in the graph.",
+      "tags": ["index", "cross-reference", "graph", "adjacency", "research-navigation"],
+      "related_nodes": ["master-index"]
+    },
+    {
+      "id": "gap-analysis",
+      "domain": "validation",
+      "path": ".research/validation/gap-analysis.md",
+      "title": "2026 Tech Trend Gap Analysis",
+      "description": "Validates internal research coverage against 2026 high-growth industry skill demands. Classifies 15 gaps as CRITICAL/HIGH/MEDIUM/LOW. Priority action plan for new research document creation. CRITICAL gaps: Automated Testing, LLM API Integration, MCP, Agent Orchestration.",
+      "tags": ["validation", "gap-analysis", "2026-tech-trends", "high-growth-skills", "curriculum-audit"],
+      "related_nodes": ["core-competencies-fullstack", "programming-paradigms", "backend-stack", "infrastructure", "frontend-stack"]
+    }
+  ],
+  "edges": [
+    { "from": "project-based-learning", "to": "scaffolding", "relationship": "requires" },
+    { "from": "project-based-learning", "to": "bloom-taxonomy", "relationship": "assessed-by" },
+    { "from": "project-based-learning", "to": "cognitive-load-theory", "relationship": "explained-by" },
+    { "from": "project-based-learning", "to": "it-education-strategies", "relationship": "is-strategy-within" },
+    { "from": "scaffolding", "to": "cognitive-load-theory", "relationship": "justified-by" },
+    { "from": "scaffolding", "to": "bloom-taxonomy", "relationship": "calibrated-by" },
+    { "from": "scaffolding", "to": "programming-pedagogy", "relationship": "manifests-in" },
+    { "from": "cognitive-load-theory", "to": "scaffolding", "relationship": "informs-design-of" },
+    { "from": "cognitive-load-theory", "to": "bloom-taxonomy", "relationship": "predicts-load-for" },
+    { "from": "cognitive-load-theory", "to": "programming-pedagogy", "relationship": "underpins" },
+    { "from": "bloom-taxonomy", "to": "it-education-strategies", "relationship": "used-in" },
+    { "from": "bloom-taxonomy", "to": "programming-pedagogy", "relationship": "aligns-assessment-in" },
+    { "from": "it-education-strategies", "to": "programming-pedagogy", "relationship": "includes" },
+    { "from": "it-education-strategies", "to": "core-competencies-fullstack", "relationship": "scopes" },
+    { "from": "language-fundamentals", "to": "programming-paradigms", "relationship": "substrate-of" },
+    { "from": "programming-paradigms", "to": "software-engineering-principles", "relationship": "provides-context-for" },
+    { "from": "programming-paradigms", "to": "frontend-stack", "relationship": "applied-in" },
+    { "from": "programming-paradigms", "to": "backend-stack", "relationship": "applied-in" },
+    { "from": "software-engineering-principles", "to": "core-competencies-fullstack", "relationship": "advanced-competency-in" },
+    { "from": "software-engineering-principles", "to": "backend-stack", "relationship": "applied-in" },
+    { "from": "programming-pedagogy", "to": "language-fundamentals", "relationship": "teaches" },
+    { "from": "core-competencies-fullstack", "to": "frontend-stack", "relationship": "maps-tiers-to" },
+    { "from": "core-competencies-fullstack", "to": "backend-stack", "relationship": "maps-tiers-to" },
+    { "from": "core-competencies-fullstack", "to": "infrastructure", "relationship": "maps-tiers-to" },
+    { "from": "core-competencies-fullstack", "to": "web-standards", "relationship": "grounded-in" },
+    { "from": "frontend-stack", "to": "backend-stack", "relationship": "consumes-api-of" },
+    { "from": "frontend-stack", "to": "web-standards", "relationship": "implements" },
+    { "from": "frontend-stack", "to": "infrastructure", "relationship": "deployed-via" },
+    { "from": "backend-stack", "to": "web-standards", "relationship": "communicates-via" },
+    { "from": "backend-stack", "to": "infrastructure", "relationship": "deployed-via" },
+    { "from": "master-index", "to": "cross-reference-map", "relationship": "companion-to" },
+    { "from": "gap-analysis", "to": "core-competencies-fullstack", "relationship": "validates-against" },
+    { "from": "gap-analysis", "to": "programming-paradigms", "relationship": "identifies-gaps-in" },
+    { "from": "gap-analysis", "to": "backend-stack", "relationship": "identifies-gaps-in" },
+    { "from": "gap-analysis", "to": "infrastructure", "relationship": "identifies-gaps-in" },
+    { "from": "gap-analysis", "to": "frontend-stack", "relationship": "identifies-gaps-in" }
+  ]
+}
