@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 460" role="img" aria-label="A modern, glowing scoreboard showing CSS Specificity rules for IDs, Classes, and Types">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="50%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    
+    <!-- Card Gradients -->
+    <linearGradient id="card-red" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4c0519" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="card-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#172554" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="card-green" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Glowing Filters for Numbers -->
+    <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-blue" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-green" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Subtle Drop Shadow for Cards -->
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <style>
+      .font-sans { font-family: system-ui, -apple-system, "Inter", "Segoe UI", sans-serif; }
+      .font-mono { font-family: "Fira Code", "JetBrains Mono", "Cascadia Code", ui-monospace, monospace; }
+      .title { font-size: 28px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; }
+      .subtitle { font-size: 16px; font-weight: 500; fill: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase; }
+      .score-title { font-size: 18px; font-weight: 700; fill: #ffffff; }
+      .score-desc { font-size: 14px; font-weight: 400; fill: #94a3b8; }
+      .score-value { font-size: 100px; font-weight: 900; }
+      .code-badge { font-size: 13px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="840" height="460" rx="16" fill="url(#bg)"/>
+  
+  <!-- Subtle Grid Pattern overlay -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <!-- Horizontal lines -->
+    <path d="M0,40 L840,40 M0,80 L840,80 M0,120 L840,120 M0,160 L840,160 M0,200 L840,200 M0,240 L840,240 M0,280 L840,280 M0,320 L840,320 M0,360 L840,360 M0,400 L840,400 M0,440 L840,440" />
+    <!-- Vertical lines -->
+    <path d="M40,0 L40,460 M80,0 L80,460 M120,0 L120,460 M160,0 L160,460 M200,0 L200,460 M240,0 L240,460 M280,0 L280,460 M320,0 L320,460 M360,0 L360,460 M400,0 L400,460 M440,0 L440,460 M480,0 L480,460 M520,0 L520,460 M560,0 L560,460 M600,0 L600,460 M640,0 L640,460 M680,0 L680,460 M720,0 L720,460 M760,0 L760,460 M800,0 L800,460" />
+  </g>
+
+  <!-- Header -->
+  <text x="420" y="60" class="font-sans title" text-anchor="middle">SPECIFICITY SCOREBOARD</text>
+  <text x="420" y="85" class="font-sans subtitle" text-anchor="middle">Calculating The Cascade (A, B, C)</text>
+
+  <!-- Scoreboard Panel Container -->
+  <g transform="translate(60, 130)">
+    
+    <!-- 1️⃣ COLUMN A: IDs -->
+    <g transform="translate(0, 0)">
+      <!-- Card Base with Glassmorphism shadow -->
+      <rect x="0" y="0" width="220" height="270" rx="16" fill="url(#card-red)" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="220" height="270" rx="16" fill="transparent" stroke="#f43f5e" stroke-width="1.5" stroke-opacity="0.3"/>
+      <!-- Header Area -->
+      <path d="M0,16 Q0,0 16,0 L204,0 Q220,0 220,16 L220,60 L0,60 Z" fill="#f43f5e" fill-opacity="0.1"/>
+      <line x1="0" y1="60" x2="220" y2="60" stroke="#f43f5e" stroke-opacity="0.3" stroke-width="1"/>
+      
+      <text x="110" y="30" class="font-sans score-title" text-anchor="middle">Hundreds</text>
+      <text x="110" y="50" class="font-sans score-desc" text-anchor="middle">Column A</text>
+      
+      <!-- Big Value with Glow -->
+      <text x="110" y="160" class="font-mono score-value" fill="#fb7185" filter="url(#glow-red)" text-anchor="middle">1</text>
+      
+      <!-- Descriptions -->
+      <text x="110" y="200" class="font-sans score-title" fill="#fecdd3" text-anchor="middle">ID Selectors</text>
+      
+      <!-- Code Badge -->
+      <rect x="50" y="220" width="120" height="26" rx="13" fill="#881337" stroke="#f43f5e" stroke-opacity="0.5"/>
+      <text x="110" y="238" class="font-mono code-badge" fill="#fda4af" text-anchor="middle">#navigation</text>
+    </g>
+
+    <!-- Comma Separator -->
+    <text x="240" y="210" class="font-mono score-value" fill="#475569" text-anchor="middle">,</text>
+
+    <!-- 2️⃣ COLUMN B: Classes -->
+    <g transform="translate(250, 0)">
+      <!-- Card Base -->
+      <rect x="0" y="0" width="220" height="270" rx="16" fill="url(#card-blue)" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="220" height="270" rx="16" fill="transparent" stroke="#3b82f6" stroke-width="1.5" stroke-opacity="0.3"/>
+      <!-- Header Area -->
+      <path d="M0,16 Q0,0 16,0 L204,0 Q220,0 220,16 L220,60 L0,60 Z" fill="#3b82f6" fill-opacity="0.1"/>
+      <line x1="0" y1="60" x2="220" y2="60" stroke="#3b82f6" stroke-opacity="0.3" stroke-width="1"/>
+      
+      <text x="110" y="30" class="font-sans score-title" text-anchor="middle">Tens</text>
+      <text x="110" y="50" class="font-sans score-desc" text-anchor="middle">Column B</text>
+      
+      <!-- Big Value with Glow -->
+      <text x="110" y="160" class="font-mono score-value" fill="#60a5fa" filter="url(#glow-blue)" text-anchor="middle">0</text>
+      
+      <!-- Descriptions -->
+      <text x="110" y="200" class="font-sans score-title" fill="#bfdbfe" text-anchor="middle">Classes &amp; Pseudo-classes</text>
+      
+      <!-- Code Badge -->
+      <rect x="40" y="220" width="140" height="26" rx="13" fill="#1e3a8a" stroke="#3b82f6" stroke-opacity="0.5"/>
+      <text x="110" y="238" class="font-mono code-badge" fill="#93c5fd" text-anchor="middle">.card, :hover</text>
+    </g>
+
+    <!-- Comma Separator -->
+    <text x="490" y="210" class="font-mono score-value" fill="#475569" text-anchor="middle">,</text>
+
+    <!-- 3️⃣ COLUMN C: Types -->
+    <g transform="translate(500, 0)">
+      <!-- Card Base -->
+      <rect x="0" y="0" width="220" height="270" rx="16" fill="url(#card-green)" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="220" height="270" rx="16" fill="transparent" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.3"/>
+      <!-- Header Area -->
+      <path d="M0,16 Q0,0 16,0 L204,0 Q220,0 220,16 L220,60 L0,60 Z" fill="#10b981" fill-opacity="0.1"/>
+      <line x1="0" y1="60" x2="220" y2="60" stroke="#10b981" stroke-opacity="0.3" stroke-width="1"/>
+      
+      <text x="110" y="30" class="font-sans score-title" text-anchor="middle">Ones</text>
+      <text x="110" y="50" class="font-sans score-desc" text-anchor="middle">Column C</text>
+      
+      <!-- Big Value with Glow -->
+      <text x="110" y="160" class="font-mono score-value" fill="#34d399" filter="url(#glow-green)" text-anchor="middle">0</text>
+      
+      <!-- Descriptions -->
+      <text x="110" y="200" class="font-sans score-title" fill="#a7f3d0" text-anchor="middle">Types &amp; Pseudo-elements</text>
+      
+      <!-- Code Badge -->
+      <rect x="40" y="220" width="140" height="26" rx="13" fill="#064e3b" stroke="#10b981" stroke-opacity="0.5"/>
+      <text x="110" y="238" class="font-mono code-badge" fill="#6ee7b7" text-anchor="middle">a, ::before</text>
+    </g>
+
+  </g>
+</svg>

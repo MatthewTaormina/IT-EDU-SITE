@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 500" role="img" aria-label="Premium diagram of the CSS Box Model showing Content, Padding, Border, and Margin layers">
+  <defs>
+    <!-- Background -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="50%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <!-- Layer Gradients -->
+    <linearGradient id="margin-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#451a03" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="border-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#500724" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="padding-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#022c22" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="content-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <!-- Glowing Lines Filters -->
+    <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-pink" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+
+    <style>
+      .font-sans { font-family: system-ui, -apple-system, Roboto, sans-serif; }
+      .font-mono { font-family: "Fira Code", "JetBrains Mono", ui-monospace, monospace; }
+      .title { font-size: 26px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; }
+      .subtitle { font-size: 14px; font-weight: 500; fill: #94a3b8; letter-spacing: 1px; }
+      .label-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+      .label-desc { font-size: 11px; font-weight: 500; }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="840" height="500" rx="16" fill="url(#bg)"/>
+
+  <!-- Subtle Grid -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <path d="M0,40 L840,40 M0,80 L840,80 M0,120 L840,120 M0,160 L840,160 M0,200 L840,200 M0,240 L840,240 M0,280 L840,280 M0,320 L840,320 M0,360 L840,360 M0,400 L840,400 M0,440 L840,440 M0,480 L840,480" />
+    <path d="M40,0 L40,500 M80,0 L80,500 M120,0 L120,500 M160,0 L160,500 M200,0 L200,500 M240,0 L240,500 M280,0 L280,500 M320,0 L320,500 M360,0 L360,500 M400,0 L400,500 M440,0 L440,500 M480,0 L480,500 M520,0 L520,500 M560,0 L560,500 M600,0 L600,500 M640,0 L640,500 M680,0 L680,500 M720,0 L720,500 M760,0 L760,500 M800,0 L800,500" />
+  </g>
+
+  <!-- Headers -->
+  <text x="420" y="55" class="font-sans title" text-anchor="middle">THE CSS BOX MODEL</text>
+  <text x="420" y="80" class="font-sans subtitle" text-anchor="middle">EVERY HTML ELEMENT IS A BOX BUILT OF FOUR LAYERS</text>
+
+  <!-- ==============================================
+       CENTRAL DIAGRAM
+       ============================================== -->
+  <g transform="translate(180, 130)" filter="url(#shadow)">
+    
+    <!-- 1. MARGIN (Amber) -->
+    <rect x="0" y="0" width="480" height="320" rx="4" fill="url(#margin-grad)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="10,6" filter="url(#glow-amber)"/>
+    <text x="14" y="24" class="font-sans label-title" fill="#fcd34d">Margin</text>
+    
+    <!-- Diagonal corner connectors for depth / isometric feel, pointing inward -->
+    <line x1="0" y1="0" x2="40" y2="40" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="480" y1="0" x2="440" y2="40" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="0" y1="320" x2="40" y2="280" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="480" y1="320" x2="440" y2="280" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2,2"/>
+
+    <!-- 2. BORDER (Pink) -->
+    <rect x="40" y="40" width="400" height="240" rx="4" fill="url(#border-grad)" stroke="#f43f5e" stroke-width="3" filter="url(#glow-pink)"/>
+    <text x="54" y="64" class="font-sans label-title" fill="#fda4af">Border</text>
+
+    <line x1="40" y1="40" x2="80" y2="80" stroke="#f43f5e" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="440" y1="40" x2="400" y2="80" stroke="#f43f5e" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="40" y1="280" x2="80" y2="240" stroke="#f43f5e" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="440" y1="280" x2="400" y2="240" stroke="#f43f5e" stroke-width="1" stroke-dasharray="2,2"/>
+
+    <!-- 3. PADDING (Cyan) -->
+    <rect x="80" y="80" width="320" height="160" rx="4" fill="url(#padding-grad)" stroke="#06b6d4" stroke-width="2" stroke-dasharray="6,4" filter="url(#glow-cyan)"/>
+    <text x="94" y="104" class="font-sans label-title" fill="#67e8f9">Padding</text>
+
+    <line x1="80" y1="80" x2="120" y2="120" stroke="#06b6d4" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="400" y1="80" x2="360" y2="120" stroke="#06b6d4" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="80" y1="240" x2="120" y2="200" stroke="#06b6d4" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="400" y1="240" x2="360" y2="200" stroke="#06b6d4" stroke-width="1" stroke-dasharray="2,2"/>
+
+    <!-- 4. CONTENT (Blue) -->
+    <rect x="120" y="120" width="240" height="80" rx="4" fill="url(#content-grad)" stroke="#3b82f6" stroke-width="2" filter="url(#glow-blue)"/>
+    <text x="240" y="155" class="font-sans label-title" font-size="16" fill="#bfdbfe" text-anchor="middle">Content</text>
+    <text x="240" y="175" class="font-mono label-desc" fill="#93c5fd" text-anchor="middle">width × height</text>
+
+  </g>
+
+  <!-- ==============================================
+       SIDEBAR INFO PANELS
+       ============================================== -->
+  
+  <!-- Left Side: Margin / Border -->
+  <g transform="translate(30, 160)">
+    <!-- Margin Box -->
+    <text x="0" y="0" class="font-sans label-title" fill="#fcd34d">Margin</text>
+    <text x="0" y="18" class="font-sans label-desc" fill="#94a3b8">Spacing outside the element.</text>
+    <text x="0" y="32" class="font-sans label-desc" fill="#94a3b8">Transparent. Can collapse vertically.</text>
+    <path d="M 120 5 L 145 5" stroke="#f59e0b" stroke-width="1.5" fill="none" filter="url(#glow-amber)"/>
+
+    <!-- Border Box -->
+    <text x="0" y="120" class="font-sans label-title" fill="#fda4af">Border</text>
+    <text x="0" y="138" class="font-sans label-desc" fill="#94a3b8">The visible edge of the element.</text>
+    <text x="0" y="152" class="font-sans label-desc" fill="#94a3b8">Wraps the padding layer.</text>
+    <path d="M 120 125 L 185 125" stroke="#f43f5e" stroke-width="1.5" fill="none" filter="url(#glow-pink)"/>
+  </g>
+
+  <!-- Right Side: Padding / Content -->
+  <g transform="translate(680, 240)">
+    <!-- Padding Box -->
+    <text x="130" y="0" class="font-sans label-title" fill="#67e8f9" text-anchor="end">Padding</text>
+    <text x="130" y="18" class="font-sans label-desc" fill="#94a3b8" text-anchor="end">Internal space around content.</text>
+    <text x="130" y="32" class="font-sans label-desc" fill="#94a3b8" text-anchor="end">Backgrounds extend into it.</text>
+    <path d="M 0 5 L -20 5" stroke="#06b6d4" stroke-width="1.5" fill="none" filter="url(#glow-cyan)"/>
+
+    <!-- Content Box -->
+    <text x="130" y="120" class="font-sans label-title" fill="#bfdbfe" text-anchor="end">Content</text>
+    <text x="130" y="138" class="font-sans label-desc" fill="#94a3b8" text-anchor="end">The actual text or child nodes.</text>
+    <text x="130" y="152" class="font-sans label-desc" fill="#94a3b8" text-anchor="end">Sized by width/height properties.</text>
+    <path d="M 0 125 L -60 125" stroke="#3b82f6" stroke-width="1.5" fill="none" filter="url(#glow-blue)"/>
+  </g>
+
+</svg>

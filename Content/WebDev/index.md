@@ -36,6 +36,10 @@ None. This course starts from zero.
 The theory of the web: how browsers, servers, DNS, and HTTP work before you write any code.
 → [Start Unit](./00_web_foundations/index.md)
 
+### Unit 2 — HTML
+The structural language of the web. Document structure, the DOM, text, links, images, lists, tables, forms, semantic landmarks, the `<head>`, and accessibility basics.
+→ [Start Unit](./01_HTML/index.md)
+
 <!-- Future units added here as they are written -->
 
 ---

@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 460" role="img" aria-label="Glowing targeting reticles pointing from CSS selectors to HTML elements in a DOM tree">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="100%" stop-color="#18181b" />
+    </linearGradient>
+
+    <!-- Glowing Lines Filters -->
+    <filter id="glow-red" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Code Window Shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+
+    <!-- Arrowheads -->
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f43f5e" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3b82f6" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#10b981" />
+    </marker>
+
+    <style>
+      .font-sans { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+      .font-mono { font-family: "Fira Code", "JetBrains Mono", "Cascadia Code", ui-monospace, monospace; }
+      
+      /* HTML Syntax Highlighting Colors */
+      .html-tag { fill: #f472b6; }     /* Pink */
+      .html-attr { fill: #60a5fa; }    /* Blue */
+      .html-val { fill: #a7f3d0; }     /* Light Green */
+      .html-bracket { fill: #94a3b8; } /* Gray */
+      .html-text { fill: #f8fafc; }    /* White */
+      
+      /* Base Classes */
+      .title { font-size: 24px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; }
+      .card-title { font-size: 16px; font-weight: 700; fill: #f8fafc; }
+      .card-sub { font-size: 12px; font-weight: 500; fill: #94a3b8; text-transform: uppercase; }
+      .code-line { font-size: 15px; font-weight: 500; }
+      .target-value { font-size: 20px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="840" height="460" rx="16" fill="url(#bg)"/>
+
+  <!-- TItle -->
+  <text x="420" y="50" class="font-sans title" text-anchor="middle">DOM NODE TARGETING</text>
+
+  <!-- ==========================================
+       LEFT SIDE: CODE EDITOR WINDOW
+       ========================================== -->
+  <g transform="translate(40, 90)" filter="url(#shadow)">
+    <!-- Window Base -->
+    <rect width="440" height="300" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <!-- Window Header -->
+    <path d="M0,12 Q0,0 12,0 L428,0 Q440,0 440,12 L440,36 L0,36 Z" fill="#1e293b"/>
+    <circle cx="20" cy="18" r="6" fill="#ef4444"/>
+    <circle cx="40" cy="18" r="6" fill="#fbbf24"/>
+    <circle cx="60" cy="18" r="6" fill="#22c55e"/>
+    <text x="220" y="23" class="font-mono" font-size="12" fill="#64748b" text-anchor="middle">index.html</text>
+    
+    <!-- Code Content -->
+    <!-- Line 1: <nav id="main-nav"> -->
+    <g transform="translate(30, 80)" class="font-mono code-line">
+      <text x="0" y="0"><tspan class="html-bracket">&lt;</tspan><tspan class="html-tag">nav </tspan><tspan class="html-attr">id</tspan><tspan class="html-text">=</tspan><tspan class="html-val">"main-nav"</tspan><tspan class="html-bracket">&gt;</tspan></text>
+    </g>
+    <!-- Line 2:   <ul class="menu"> -->
+    <g transform="translate(30, 115)" class="font-mono code-line">
+      <text x="20" y="0"><tspan class="html-bracket">&lt;</tspan><tspan class="html-tag">ul </tspan><tspan class="html-attr">class</tspan><tspan class="html-text">=</tspan><tspan class="html-val">"menu"</tspan><tspan class="html-bracket">&gt;</tspan></text>
+    </g>
+    <!-- Line 3:     <li> -->
+    <g transform="translate(30, 150)" class="font-mono code-line">
+      <text x="40" y="0"><tspan class="html-bracket">&lt;</tspan><tspan class="html-tag">li</tspan><tspan class="html-bracket">&gt;</tspan></text>
+    </g>
+    <!-- Line 4:       <a href="/home">Home</a> -->
+    <g transform="translate(30, 185)" class="font-mono code-line">
+      <text x="60" y="0"><tspan class="html-bracket">&lt;</tspan><tspan class="html-tag">a </tspan><tspan class="html-attr">href</tspan><tspan class="html-text">=</tspan><tspan class="html-val">"/home"</tspan><tspan class="html-bracket">&gt;</tspan><tspan class="html-text">Home</tspan><tspan class="html-bracket">&lt;/</tspan><tspan class="html-tag">a</tspan><tspan class="html-bracket">&gt;</tspan></text>
+    </g>
+    <!-- Line 5:     </li> -->
+    <g transform="translate(30, 220)" class="font-mono code-line">
+      <text x="40" y="0"><tspan class="html-bracket">&lt;/</tspan><tspan class="html-tag">li</tspan><tspan class="html-bracket">&gt;</tspan></text>
+    </g>
+    <!-- Line 6:   </ul> -->
+    <g transform="translate(30, 255)" class="font-mono code-line">
+      <text x="20" y="0"><tspan class="html-bracket">&lt;/</tspan><tspan class="html-tag">ul</tspan><tspan class="html-bracket">&gt;</tspan></text>
+    </g>
+    <!-- Line 7: </nav> -->
+    <g transform="translate(30, 290)" class="font-mono code-line">
+      <text x="0" y="0"><tspan class="html-bracket">&lt;/</tspan><tspan class="html-tag">nav</tspan><tspan class="html-bracket">&gt;</tspan></text>
+    </g>
+  </g>
+
+  <!-- ==========================================
+       GLOWING TARGETING PATHS 
+       ========================================== -->
+  <!-- Target for ID (#main-nav) -->
+  <!-- Path starts at card, ends at exact word 'id="main-nav"' -->
+  <path d="M 520 135 L 480 135 L 480 166 L 270 166" fill="none" stroke="#f43f5e" stroke-width="2" filter="url(#glow-red)" marker-end="url(#arrow-red)"/>
+  
+  <!-- Target for CLASS (.menu) -->
+  <!-- Path starts at card, ends at exact word 'class="menu"' -->
+  <path d="M 520 240 L 305 240 L 305 201 L 285 201" fill="none" stroke="#3b82f6" stroke-width="2" filter="url(#glow-blue)" marker-end="url(#arrow-blue)"/>
+  
+  <!-- Target for TYPE (a) -->
+  <!-- Path starts at card, ends at exact '<a>' tag -->
+  <path d="M 520 345 L 480 345 L 480 271 L 180 271" fill="none" stroke="#10b981" stroke-width="2" filter="url(#glow-green)" marker-end="url(#arrow-green)"/>
+
+
+  <!-- ==========================================
+       RIGHT SIDE: SELECTOR CARDS
+       ========================================== -->
+  <!-- ID Selector Card -->
+  <g transform="translate(520, 100)">
+    <rect width="280" height="70" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" stroke-opacity="0.6"/>
+    <text x="16" y="28" class="font-sans card-sub" fill="#fca5a5">ID SELECTOR</text>
+    <text x="16" y="52" class="font-mono target-value" fill="#fb7185">#main-nav</text>
+  </g>
+
+  <!-- Class Selector Card -->
+  <g transform="translate(520, 205)">
+    <rect width="280" height="70" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" stroke-opacity="0.6"/>
+    <text x="16" y="28" class="font-sans card-sub" fill="#93c5fd">CLASS SELECTOR</text>
+    <text x="16" y="52" class="font-mono target-value" fill="#60a5fa">.menu</text>
+  </g>
+
+  <!-- Type Selector Card -->
+  <g transform="translate(520, 310)">
+    <rect width="280" height="70" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.6"/>
+    <text x="16" y="28" class="font-sans card-sub" fill="#6ee7b7">TYPE SELECTOR</text>
+    <text x="16" y="52" class="font-mono target-value" fill="#34d399">a</text>
+  </g>
+
+</svg>

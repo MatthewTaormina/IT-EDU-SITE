@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 460" role="img" aria-label="A glowing diagram demonstrating Block, Inline, and Inline-Block display behaviors in normal flow">
+  <defs>
+    <!-- Background -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="50%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="card-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#172554" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="card-green" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="card-amber" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#451a03" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="card-gray" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Glowing Lines Filters -->
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    
+    <!-- Shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+
+    <style>
+      .font-sans { font-family: system-ui, -apple-system, Roboto, sans-serif; }
+      .font-mono { font-family: "Fira Code", "JetBrains Mono", ui-monospace, monospace; }
+      .title { font-size: 26px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; }
+      .subtitle { font-size: 14px; font-weight: 500; fill: #94a3b8; letter-spacing: 1px; }
+      .card-title { font-size: 17px; font-weight: 700; fill: #f8fafc; text-anchor: middle; }
+      .card-desc { font-size: 12px; font-weight: 500; fill: #cbd5e1; text-anchor: middle; }
+      .text-flow { font-size: 12px; fill: #64748b; font-family: serif; font-style: italic; }
+      .tag { font-size: 13px; font-weight: 600; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="840" height="460" rx="16" fill="url(#bg)"/>
+
+  <!-- Subtle Grid Pattern overlay -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <path d="M0,40 L840,40 M0,80 L840,80 M0,120 L840,120 M0,160 L840,160 M0,200 L840,200 M0,240 L840,240 M0,280 L840,280 M0,320 L840,320 M0,360 L840,360 M0,400 L840,400 M0,440 L840,440" />
+    <path d="M40,0 L40,460 M80,0 L80,460 M120,0 L120,460 M160,0 L160,460 M200,0 L200,460 M240,0 L240,460 M280,0 L280,460 M320,0 L320,460 M360,0 L360,460 M400,0 L400,460 M440,0 L440,460 M480,0 L480,460 M520,0 L520,460 M560,0 L560,460 M600,0 L600,460 M640,0 L640,460 M680,0 L680,460 M720,0 L720,460 M760,0 L760,460 M800,0 L800,460" />
+  </g>
+
+  <!-- Headers -->
+  <text x="420" y="55" class="font-sans title" text-anchor="middle">CSS DISPLAY &amp; NORMAL FLOW</text>
+  <text x="420" y="80" class="font-sans subtitle" text-anchor="middle">THE BEHAVIOR OF ELEMENTS IN THE DOM</text>
+
+  <!-- ===============================
+       1. DISPLAY: BLOCK
+       =============================== -->
+  <g transform="translate(60, 120)" filter="url(#shadow)">
+    <!-- Main Card -->
+    <rect width="220" height="230" rx="16" fill="url(#card-blue)"/>
+    <rect width="220" height="230" rx="16" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-opacity="0.3"/>
+    
+    <path d="M0,16 Q0,0 16,0 L204,0 Q220,0 220,16 L220,50 L0,50 Z" fill="#3b82f6" fill-opacity="0.2"/>
+    <text x="110" y="32" class="font-mono card-title">display: block</text>
+    
+    <!-- Visualization Area -->
+    <g transform="translate(20, 70)">
+      <!-- Parent Container -->
+      <rect width="180" height="110" rx="4" fill="#0f172a" stroke="#475569" stroke-dasharray="4,2"/>
+      
+      <!-- Stacking blocks stretching full width -->
+      <rect x="10" y="10" width="160" height="24" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1" filter="url(#glow-blue)"/>
+      <text x="90" y="27" class="font-mono tag" fill="#93c5fd">&lt;div&gt;</text>
+      
+      <rect x="10" y="44" width="160" height="24" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1" filter="url(#glow-blue)"/>
+      <text x="90" y="61" class="font-mono tag" fill="#93c5fd">&lt;h1&gt;</text>
+      
+      <rect x="10" y="78" width="160" height="24" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1" filter="url(#glow-blue)"/>
+      <text x="90" y="95" class="font-mono tag" fill="#93c5fd">&lt;p&gt;</text>
+    </g>
+
+    <!-- Notes -->
+    <text x="110" y="200" class="font-sans card-desc">Stacks vertically</text>
+    <text x="110" y="218" class="font-sans card-desc">Stretches full width</text>
+  </g>
+
+  <!-- ===============================
+       2. DISPLAY: INLINE
+       =============================== -->
+  <g transform="translate(310, 120)" filter="url(#shadow)">
+    <!-- Main Card -->
+    <rect width="220" height="230" rx="16" fill="url(#card-green)"/>
+    <rect width="220" height="230" rx="16" fill="none" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.3"/>
+    
+    <path d="M0,16 Q0,0 16,0 L204,0 Q220,0 220,16 L220,50 L0,50 Z" fill="#10b981" fill-opacity="0.2"/>
+    <text x="110" y="32" class="font-mono card-title">display: inline</text>
+    
+    <!-- Visualization Area -->
+    <g transform="translate(20, 70)">
+      <!-- Parent Container -->
+      <rect width="180" height="110" rx="4" fill="#0f172a" stroke="#475569" stroke-dasharray="4,2"/>
+      
+      <!-- Text flow with highlights -->
+      <line x1="10" y1="20" x2="60" y2="20" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+      <rect x="68" y="10" width="70" height="20" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+      <text x="103" y="25" class="font-mono tag" fill="#6ee7b7">&lt;span&gt;</text>
+      <line x1="145" y1="20" x2="170" y2="20" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+
+      <line x1="10" y1="50" x2="100" y2="50" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+      <rect x="110" y="40" width="40" height="20" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+      <text x="130" y="55" class="font-mono tag" fill="#6ee7b7">&lt;a&gt;</text>
+      
+      <!-- Wrapped outline -->
+      <line x1="10" y1="80" x2="40" y2="80" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+      
+      <rect x="50" y="70" width="100" height="20" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+      <text x="100" y="85" class="font-mono tag" fill="#6ee7b7">&lt;strong&gt;</text>
+    </g>
+
+    <!-- Notes -->
+    <text x="110" y="200" class="font-sans card-desc">Flows inside text</text>
+    <text x="110" y="218" class="font-sans card-desc">Ignores width &amp; height</text>
+  </g>
+
+  <!-- ===============================
+       3. DISPLAY: INLINE-BLOCK
+       =============================== -->
+  <g transform="translate(560, 120)" filter="url(#shadow)">
+    <!-- Main Card -->
+    <rect width="220" height="230" rx="16" fill="url(#card-amber)"/>
+    <rect width="220" height="230" rx="16" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.3"/>
+    
+    <path d="M0,16 Q0,0 16,0 L204,0 Q220,0 220,16 L220,50 L0,50 Z" fill="#f59e0b" fill-opacity="0.2"/>
+    <text x="110" y="32" class="font-mono card-title" font-size="18">display: inline-block</text>
+    
+    <!-- Visualization Area -->
+    <g transform="translate(20, 70)">
+      <!-- Parent Container -->
+      <rect width="180" height="110" rx="4" fill="#0f172a" stroke="#475569" stroke-dasharray="4,2"/>
+      
+      <!-- Text flow with fixed-width boxes inside -->
+      <line x1="10" y1="20" x2="30" y2="20" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+      
+      <rect x="40" y="10" width="40" height="40" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+      <text x="60" y="35" class="font-mono tag" fill="#fcd34d">box</text>
+      
+      <line x1="90" y1="20" x2="110" y2="20" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+      
+      <rect x="120" y="10" width="40" height="40" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+      <text x="140" y="35" class="font-mono tag" fill="#fcd34d">box</text>
+      
+      <!-- Wraps to nextline -->
+      <rect x="10" y="60" width="40" height="40" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+      <text x="30" y="85" class="font-mono tag" fill="#fcd34d">box</text>
+      
+      <line x1="60" y1="70" x2="160" y2="70" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+    </g>
+
+    <!-- Notes -->
+    <text x="110" y="200" class="font-sans card-desc">Flows parallel to text</text>
+    <text x="110" y="218" class="font-sans card-desc">RESPECTS width &amp; height</text>
+  </g>
+
+  <!-- ===============================
+       4. DISPLAY: NONE (Bottom Banner)
+       =============================== -->
+  <g transform="translate(60, 370)" filter="url(#shadow)">
+    <rect width="720" height="60" rx="12" fill="url(#card-gray)"/>
+    <rect width="720" height="60" rx="12" fill="none" stroke="#475569" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="6,4"/>
+    
+    <text x="360" y="34" text-anchor="middle">
+      <tspan class="font-mono" font-size="18" fill="#e2e8f0" font-weight="700">display: none</tspan>
+      <tspan class="font-sans" font-size="16" fill="#94a3b8" font-weight="500"> — Removed from document layout entirely. Takes zero space.</tspan>
+    </text>
+  </g>
+
+</svg>

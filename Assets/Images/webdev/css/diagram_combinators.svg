@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 540" role="img" aria-label="A diagram showcasing CSS combinators using DOM trees">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="50%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <!-- Glowing Lines Filters -->
+    <filter id="glow-pink" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-violet" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    
+    <!-- Shadow for Cards -->
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+
+    <style>
+      .font-sans { font-family: system-ui, -apple-system, Roboto, sans-serif; }
+      .font-mono { font-family: "Fira Code", "JetBrains Mono", ui-monospace, monospace; }
+      .title { font-size: 26px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; }
+      .subtitle { font-size: 14px; font-weight: 500; fill: #94a3b8; letter-spacing: 1px; }
+      
+      /* Card Typography */
+      .card-title { font-size: 20px; font-weight: 700; }
+      .card-desc { font-size: 13px; font-weight: 500; fill: #94a3b8; }
+      
+      /* Node Typography */
+      .node-text { font-size: 13px; font-weight: 700; font-family: monospace; }
+      .node-target { fill: #f8fafc; } /* A Node */
+      .node-match { fill: #ffffff; } /* B Node matching */
+      .node-dim { fill: #64748b; } /* Irrelevant Node */
+      .node-parent { fill: #94a3b8; } /* Optional parent */
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="840" height="540" rx="16" fill="url(#bg)"/>
+
+  <!-- Subtle Grid Pattern -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <path d="M0,40 L840,40 M0,80 L840,80 M0,120 L840,120 M0,160 L840,160 M0,200 L840,200 M0,240 L840,240 M0,280 L840,280 M0,320 L840,320 M0,360 L840,360 M0,400 L840,400 M0,440 L840,440 M0,480 L840,480 M0,520 L840,520"/>
+  </g>
+
+  <!-- Main Headers -->
+  <text x="420" y="55" class="font-sans title" text-anchor="middle">CSS COMBINATORS</text>
+  <text x="420" y="80" class="font-sans subtitle" text-anchor="middle">DOM NODE TARGETING BY STRUCTURAL RELATIONSHIP</text>
+
+  <!-- ==============================================
+       GRID LAYOUT: 2x2
+       Top Left: Descendant
+       Top Right: Child
+       Bottom Left: Adjacent Sibling
+       Bottom Right: General Sibling
+       ============================================== -->
+
+  <!-- ==================================
+       1. DESCENDANT (Space) - PINK
+       ================================== -->
+  <g transform="translate(40, 110)" filter="url(#shadow)">
+    <!-- Base Card -->
+    <rect width="360" height="200" rx="12" fill="#1e111a" stroke="#f472b6" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="20" y="35" class="font-mono card-title" fill="#fbcfe8"><tspan fill="#f472b6">A B</tspan> (Descendant)</text>
+    <text x="20" y="55" class="font-sans card-desc">Matches any B inside A, no matter how deep.</text>
+
+    <!-- DOM Tree -->
+    <g transform="translate(20, 80)">
+      <!-- Lines -->
+      <path d="M 30 20 L 30 85 L 60 85" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 30 45 L 60 45" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 85 64 L 85 85" stroke="#334155" stroke-width="2" fill="none"/>
+      
+      <!-- Nodes -->
+      <!-- Node A: target root -->
+      <rect x="0" y="0" width="60" height="24" rx="4" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+      <text x="30" y="16" class="node-text node-target" text-anchor="middle">A</text>
+
+      <!-- Match 1: immediate child B -->
+      <rect x="60" y="33" width="60" height="24" rx="4" fill="#831843" stroke="#f472b6" stroke-width="1.5" filter="url(#glow-pink)"/>
+      <text x="90" y="49" class="node-text node-match" text-anchor="middle">B</text>
+
+      <!-- Irrelevant Child: span -->
+      <rect x="60" y="73" width="60" height="24" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="90" y="89" class="node-text node-dim" text-anchor="middle">span</text>
+
+      <!-- Match 2: grand-child B inside span -->
+      <!-- connector -->
+      <path d="M 120 85 L 140 85" stroke="#334155" stroke-width="2" fill="none"/>
+      <rect x="140" y="73" width="60" height="24" rx="4" fill="#831843" stroke="#f472b6" stroke-width="1.5" filter="url(#glow-pink)"/>
+      <text x="170" y="89" class="node-text node-match" text-anchor="middle">B</text>
+    </g>
+  </g>
+
+  <!-- ==================================
+       2. CHILD (>) - CYAN
+       ================================== -->
+  <g transform="translate(440, 110)" filter="url(#shadow)">
+    <!-- Base Card -->
+    <rect width="360" height="200" rx="12" fill="#0b1720" stroke="#22d3ee" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="20" y="35" class="font-mono card-title" fill="#cffafe"><tspan fill="#22d3ee">A > B</tspan> (Child)</text>
+    <text x="20" y="55" class="font-sans card-desc">Matches B only if it is a DIRECT child of A.</text>
+
+    <!-- DOM Tree -->
+    <g transform="translate(20, 80)">
+      <!-- Lines -->
+      <path d="M 30 20 L 30 85 L 60 85" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 30 45 L 60 45" stroke="#334155" stroke-width="2" fill="none"/>
+      
+      <!-- Nodes -->
+      <!-- Node A: target root -->
+      <rect x="0" y="0" width="60" height="24" rx="4" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+      <text x="30" y="16" class="node-text node-target" text-anchor="middle">A</text>
+
+      <!-- Match: immediate child B -->
+      <rect x="60" y="33" width="60" height="24" rx="4" fill="#083344" stroke="#22d3ee" stroke-width="1.5" filter="url(#glow-cyan)"/>
+      <text x="90" y="49" class="node-text node-match" text-anchor="middle">B</text>
+
+      <!-- Irrelevant Child: span -->
+      <rect x="60" y="73" width="60" height="24" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="90" y="89" class="node-text node-dim" text-anchor="middle">span</text>
+
+      <!-- NO Match: grand-child B inside span -->
+      <path d="M 120 85 L 140 85" stroke="#334155" stroke-width="2" fill="none"/>
+      <rect x="140" y="73" width="60" height="24" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1" stroke-dasharray="2,2"/>
+      <text x="170" y="89" class="node-text node-dim" text-anchor="middle">B</text>
+      <!-- X mark -->
+      <path d="M 165 80 L 175 98 M 175 80 L 165 98" stroke="#ef4444" stroke-width="2" opacity="0.8"/>
+    </g>
+  </g>
+
+  <!-- ==================================
+       3. ADJACENT SIBLING (+) - AMBER
+       ================================== -->
+  <g transform="translate(40, 330)" filter="url(#shadow)">
+    <!-- Base Card -->
+    <rect width="360" height="190" rx="12" fill="#1b140b" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="20" y="35" class="font-mono card-title" fill="#fef3c7"><tspan fill="#fbbf24">A + B</tspan> (Adjacent Sibling)</text>
+    <text x="20" y="55" class="font-sans card-desc">Matches B if it IMMEDIATELY follows A.</text>
+
+    <!-- DOM Tree -->
+    <g transform="translate(20, 70)">
+      <!-- Lines from common parent -->
+      <path d="M 20 20 L 20 100" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 20 35 L 50 35" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 20 65 L 50 65" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 20 95 L 50 95" stroke="#334155" stroke-width="2" fill="none"/>
+
+      <!-- Parent (optional visual context) -->
+      <rect x="0" y="0" width="60" height="20" rx="3" fill="#0f172a" stroke="#475569" stroke-dasharray="2,2" stroke-width="1"/>
+      <text x="30" y="14" class="node-text node-parent" text-anchor="middle" font-size="11">parent</text>
+
+      <!-- Node A: target root -->
+      <rect x="50" y="23" width="60" height="24" rx="4" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+      <text x="80" y="39" class="node-text node-target" text-anchor="middle">A</text>
+
+      <!-- Match: immediate B -->
+      <!-- connector visual showing + interaction -->
+      <path d="M 80 47 L 80 50 L 55 50 L 55 53 M 80 47 L 80 52 L 105 52 L 105 53" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.5" fill="none"/>
+      
+      <rect x="50" y="53" width="60" height="24" rx="4" fill="#451a03" stroke="#fbbf24" stroke-width="1.5" filter="url(#glow-amber)"/>
+      <text x="80" y="69" class="node-text node-match" text-anchor="middle">B</text>
+
+      <!-- NO Match: subsequent B -->
+      <rect x="50" y="83" width="60" height="24" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+      <text x="80" y="99" class="node-text node-dim" text-anchor="middle">B</text>
+    </g>
+  </g>
+
+  <!-- ==================================
+       4. GENERAL SIBLING (~) - VIOLET
+       ================================== -->
+  <g transform="translate(440, 330)" filter="url(#shadow)">
+    <!-- Base Card -->
+    <rect width="360" height="190" rx="12" fill="#160f20" stroke="#8b5cf6" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="20" y="35" class="font-mono card-title" fill="#ede9fe"><tspan fill="#8b5cf6">A ~ B</tspan> (General Sibling)</text>
+    <text x="20" y="55" class="font-sans card-desc">Matches ALL B nodes that follow A.</text>
+
+    <!-- DOM Tree -->
+    <g transform="translate(20, 70)">
+      <!-- Lines from common parent -->
+      <path d="M 20 20 L 20 100" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 20 25 L 50 25" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 20 50 L 50 50" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 20 75 L 50 75" stroke="#334155" stroke-width="2" fill="none"/>
+      <path d="M 20 100 L 50 100" stroke="#334155" stroke-width="2" fill="none"/>
+
+      <!-- Parent (optional visual context) -->
+      <rect x="0" y="0" width="60" height="20" rx="3" fill="#0f172a" stroke="#475569" stroke-dasharray="2,2" stroke-width="1"/>
+      <text x="30" y="14" class="node-text node-parent" text-anchor="middle" font-size="11">parent</text>
+
+      <!-- Node A: target root -->
+      <rect x="50" y="13" width="60" height="24" rx="4" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+      <text x="80" y="29" class="node-text node-target" text-anchor="middle">A</text>
+
+      <!-- Irrelevant intervening node -->
+      <rect x="50" y="38" width="60" height="24" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="80" y="54" class="node-text node-dim" text-anchor="middle">span</text>
+
+      <!-- Match 1: subsequent B -->
+      <rect x="50" y="63" width="60" height="24" rx="4" fill="#2e1065" stroke="#a78bfa" stroke-width="1.5" filter="url(#glow-violet)"/>
+      <text x="80" y="79" class="node-text node-match" text-anchor="middle">B</text>
+
+      <!-- Match 2: further subsequent B -->
+      <rect x="50" y="88" width="60" height="24" rx="4" fill="#2e1065" stroke="#a78bfa" stroke-width="1.5" filter="url(#glow-violet)"/>
+      <text x="80" y="104" class="node-text node-match" text-anchor="middle">B</text>
+      
+      <!-- Connective Bracket -->
+      <path d="M 115 25 L 125 25 L 125 100 L 115 100" stroke="#8b5cf6" stroke-opacity="0.3" stroke-width="1.5" fill="none"/>
+    </g>
+  </g>
+
+</svg>

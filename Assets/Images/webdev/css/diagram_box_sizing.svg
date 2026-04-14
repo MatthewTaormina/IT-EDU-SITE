@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 500" role="img" aria-label="A clear DevTools-style comparison of content-box and border-box sizing models.">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="50%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+
+    <style>
+      .font-sans { font-family: system-ui, -apple-system, Roboto, sans-serif; }
+      .font-mono { font-family: "Fira Code", "JetBrains Mono", ui-monospace, monospace; }
+      .title { font-size: 26px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; }
+      .subtitle { font-size: 14px; font-weight: 500; fill: #94a3b8; letter-spacing: 1px; }
+      
+      .box-title { font-size: 22px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; }
+      .box-desc { font-size: 14px; font-weight: 500; fill: #94a3b8; }
+      
+      /* DevTools Colors */
+      .fill-content { fill: #8cb4ff; fill-opacity: 0.2; stroke: #8cb4ff; stroke-width: 1; }
+      .fill-padding { fill: #c3e88d; fill-opacity: 0.15; stroke: #c3e88d; stroke-width: 1; stroke-dasharray: 4,4; }
+      .fill-border  { fill: #ffdf75; fill-opacity: 0.15; stroke: #ffdf75; stroke-width: 1; }
+      
+      .text-content { font-size: 15px; font-weight: 800; fill: #8cb4ff; }
+      .text-padding { font-size: 13px; font-weight: 700; fill: #c3e88d; }
+      .text-border  { font-size: 13px; font-weight: 700; fill: #ffdf75; }
+      
+      .math-total { font-size: 20px; font-weight: 800; }
+      .math-sub { font-size: 14px; font-weight: 600; fill: #94a3b8; }
+      
+      .badge-bad { fill: #ef4444; fill-opacity: 0.2; stroke: #ef4444; stroke-width: 1; }
+      .badge-text-bad { font-size: 13px; font-weight: 800; fill: #fca5a5; text-transform: uppercase; }
+      
+      .badge-good { fill: #10b981; fill-opacity: 0.2; stroke: #10b981; stroke-width: 1; }
+      .badge-text-good { font-size: 13px; font-weight: 800; fill: #6ee7b7; text-transform: uppercase; }
+    </style>
+  </defs>
+
+  <rect width="840" height="500" rx="16" fill="url(#bg)"/>
+
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <path d="M0,40 L840,40 M0,80 L840,80 M0,120 L840,120 M0,160 L840,160 M0,200 L840,200 M0,240 L840,240 M0,280 L840,280 M0,320 L840,320 M0,360 L840,360 M0,400 L840,400 M0,440 L840,440 M0,480 L840,480" />
+    <path d="M40,0 L40,500 M80,0 L80,500 M120,0 L120,500 M160,0 L160,500 M200,0 L200,500 M240,0 L240,500 M280,0 L280,500 M320,0 L320,500 M360,0 L360,500 M400,0 L400,500 M440,0 L440,500 M480,0 L480,500 M520,0 L520,500 M560,0 L560,500 M600,0 L600,500 M640,0 L640,500 M680,0 L680,500 M720,0 L720,500 M760,0 L760,500 M800,0 L800,500" />
+  </g>
+
+  <text x="420" y="55" class="font-sans title" text-anchor="middle">BOX-SIZING COMPARISON</text>
+  <text x="420" y="80" class="font-sans subtitle" text-anchor="middle">CSS RULE: width: 200px; padding: 20px; border: 10px;</text>
+
+  <!-- ==============================================
+       LEFT: CONTENT-BOX
+       ============================================== -->
+  <g transform="translate(60, 130)" filter="url(#shadow)">
+    <!-- Info Section -->
+    <text x="0" y="0" class="font-mono box-title">content-box</text>
+    <text x="0" y="20" class="font-sans box-desc">Width applies ONLY to content.</text>
+    <text x="0" y="40" class="font-sans box-desc">Padding &amp; borders are ADDED to it.</text>
+    
+    <rect x="0" y="55" width="105" height="24" rx="12" class="badge-bad"/>
+    <text x="52" y="72" class="font-sans badge-text-bad" text-anchor="middle">Unexpected</text>
+
+    <!-- DevTools Diagram Group -->
+    <g transform="translate(45, 120)">
+      <!-- Border Box -->
+      <rect x="0" y="0" width="280" height="150" class="fill-border"/>
+      <text x="10" y="16" class="font-sans text-border">border</text>
+      <!-- Horizontal top & bottom dimensions -->
+      <text x="140" y="16" class="font-mono text-border" text-anchor="middle">10</text>
+      <text x="140" y="143" class="font-mono text-border" text-anchor="middle">10</text>
+      <!-- Vertical left & right dimensions -->
+      <text x="10" y="80" class="font-mono text-border" text-anchor="middle">10</text>
+      <text x="270" y="80" class="font-mono text-border" text-anchor="middle">10</text>
+      
+      <!-- Padding Box -->
+      <rect x="30" y="25" width="220" height="100" class="fill-padding"/>
+      <text x="40" y="42" class="font-sans text-padding">padding</text>
+      <text x="140" y="42" class="font-mono text-padding" text-anchor="middle">20</text>
+      <text x="140" y="117" class="font-mono text-padding" text-anchor="middle">20</text>
+      <text x="40" y="80" class="font-mono text-padding" text-anchor="middle">20</text>
+      <text x="240" y="80" class="font-mono text-padding" text-anchor="middle">20</text>
+      
+      <!-- Content Box -->
+      <rect x="80" y="50" width="120" height="50" class="fill-content"/>
+      <text x="140" y="80" class="font-mono text-content" text-anchor="middle">200 × 50</text>
+
+      <!-- Dimensional Callouts -->
+      <path d="M 0 165 L 0 175 L 280 175 L 280 165" fill="none" stroke="#64748b" stroke-width="2"/>
+      <text x="140" y="195" class="font-sans math-total" fill="#fca5a5" text-anchor="middle">Total Width = 260px</text>
+      <text x="140" y="215" class="font-sans math-sub" text-anchor="middle">(200 + 20 + 20 + 10 + 10)</text>
+    </g>
+  </g>
+
+
+  <!-- ==============================================
+       RIGHT: BORDER-BOX
+       ============================================== -->
+  <g transform="translate(460, 130)" filter="url(#shadow)">
+    <!-- Info Section -->
+    <text x="0" y="0" class="font-mono box-title">border-box</text>
+    <text x="0" y="20" class="font-sans box-desc">Width is the TOTAL element width.</text>
+    <text x="0" y="40" class="font-sans box-desc">Content shrinks so bounds stay rigid.</text>
+    
+    <rect x="0" y="55" width="115" height="24" rx="12" class="badge-good"/>
+    <text x="57" y="72" class="font-sans badge-text-good" text-anchor="middle">PREDICTABLE</text>
+
+    <!-- DevTools Diagram Group -->
+    <g transform="translate(45, 120)">
+      <!-- Border Box -->
+      <!-- Width is restricted to the declared 200px. -->
+      <rect x="0" y="0" width="200" height="150" class="fill-border"/>
+      <text x="10" y="16" class="font-sans text-border">border</text>
+      <text x="100" y="16" class="font-mono text-border" text-anchor="middle">10</text>
+      <text x="100" y="143" class="font-mono text-border" text-anchor="middle">10</text>
+      <text x="10" y="80" class="font-mono text-border" text-anchor="middle">10</text>
+      <text x="190" y="80" class="font-mono text-border" text-anchor="middle">10</text>
+      
+      <!-- Padding Box -->
+      <!-- Restricted to width 180 (200 - 10 - 10) -->
+      <rect x="30" y="25" width="140" height="100" class="fill-padding"/>
+      <text x="40" y="42" class="font-sans text-padding">padding</text>
+      <text x="100" y="42" class="font-mono text-padding" text-anchor="middle">20</text>
+      <text x="100" y="117" class="font-mono text-padding" text-anchor="middle">20</text>
+      <text x="40" y="80" class="font-mono text-padding" text-anchor="middle">20</text>
+      <text x="160" y="80" class="font-mono text-padding" text-anchor="middle">20</text>
+      
+      <!-- Content Box -->
+      <!-- Restricted to width 140 (180 - 20 - 20) -->
+      <rect x="80" y="50" width="40" height="50" class="fill-content"/>
+      
+      <!-- We shrink the text size for content box slightly since it's only 40px wide here visually -->
+      <text x="100" y="80" class="font-mono text-content" font-size="12" text-anchor="middle">140×50</text>
+
+      <!-- Dimensional Callouts -->
+      <!-- Span the full 200px width -->
+      <path d="M 0 165 L 0 175 L 200 175 L 200 165" fill="none" stroke="#64748b" stroke-width="2"/>
+      <text x="100" y="195" class="font-sans math-total" fill="#6ee7b7" text-anchor="middle">Total Width = 200px</text>
+      <text x="100" y="215" class="font-sans math-sub" text-anchor="middle">(Exactly as you declared it)</text>
+    </g>
+  </g>
+
+</svg>

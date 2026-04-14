@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 180" role="img" aria-label="Flexbox alignment diagram showing justify-content options along the main axis and align-items options along the cross axis">
+  <defs>
+    <style>.lbl { font-family: ui-monospace, monospace; font-size: 11px; }</style>
+  </defs>
+
+  <!-- Title row labels -->
+  <text x="20" y="14" class="lbl" font-size="12" fill="#94a3b8">justify-content (main axis)</text>
+  <text x="310" y="14" class="lbl" font-size="12" fill="#94a3b8">align-items (cross axis)</text>
+
+  <!-- ── justify-content examples (left half) ───────── -->
+
+  <!-- flex-start -->
+  <rect x="20" y="22" width="130" height="44" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <rect x="24" y="30" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="56" y="30" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="88" y="30" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="75" y="78" class="lbl" fill="#64748b" text-anchor="middle">flex-start</text>
+
+  <!-- center -->
+  <rect x="160" y="22" width="130" height="44" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <rect x="179" y="30" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="211" y="30" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="243" y="30" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="225" y="78" class="lbl" fill="#64748b" text-anchor="middle">center</text>
+
+  <!-- space-between -->
+  <rect x="20" y="96" width="130" height="44" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <rect x="24" y="104" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="71" y="104" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="118" y="104" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="85" y="152" class="lbl" fill="#64748b" text-anchor="middle">space-between</text>
+
+  <!-- space-around -->
+  <rect x="160" y="96" width="130" height="44" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <rect x="168" y="104" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="211" y="104" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="254" y="104" width="28" height="28" rx="2" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="225" y="152" class="lbl" fill="#64748b" text-anchor="middle">space-around</text>
+
+  <!-- ── align-items examples (right half) ────────── -->
+
+  <!-- flex-start -->
+  <rect x="310" y="22" width="110" height="60" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <rect x="318" y="28" width="28" height="20" rx="2" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="350" y="28" width="28" height="36" rx="2" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="382" y="28" width="28" height="28" rx="2" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="365" y="96" class="lbl" fill="#64748b" text-anchor="middle">flex-start</text>
+
+  <!-- center -->
+  <rect x="430" y="22" width="110" height="60" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <rect x="438" y="42" width="28" height="20" rx="2" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="470" y="34" width="28" height="36" rx="2" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="502" y="38" width="28" height="28" rx="2" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="485" y="96" class="lbl" fill="#64748b" text-anchor="middle">center</text>
+
+  <!-- stretch -->
+  <rect x="310" y="110" width="110" height="60" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <rect x="318" y="116" width="28" height="48" rx="2" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="350" y="116" width="28" height="48" rx="2" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="382" y="116" width="28" height="48" rx="2" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="365" y="182" class="lbl" fill="#64748b" text-anchor="middle">stretch (default)</text>
+</svg>

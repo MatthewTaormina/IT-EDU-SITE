@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 260" role="img" aria-label="CSS Grid container showing named columns, rows, and a placed item spanning two columns">
+  <defs>
+    <style>.lbl { font-family: ui-monospace, monospace; font-size: 12px; }</style>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#a78bfa"/>
+    </marker>
+  </defs>
+
+  <!-- Container outline -->
+  <rect x="20" y="36" width="480" height="200" rx="6" fill="#0f172a" stroke="#a78bfa" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="20" y="24" class="lbl" fill="#a78bfa">grid container  (display: grid)</text>
+
+  <!-- Column lines -->
+  <line x1="180" y1="36" x2="180" y2="236" stroke="#334155" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="340" y1="36" x2="340" y2="236" stroke="#334155" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="500" y1="36" x2="500" y2="236" stroke="#334155" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Row line -->
+  <line x1="20" y1="136" x2="500" y2="136" stroke="#334155" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Items -->
+  <!-- Row 1, col 1-2 (spanning) -->
+  <rect x="26" y="42" width="308" height="88" rx="4" fill="#3b1f6b" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="180" y="92" class="lbl" fill="#c4b5fd" text-anchor="middle">item A  (column-span: 2)</text>
+
+  <!-- Row 1, col 3 -->
+  <rect x="346" y="42" width="148" height="88" rx="4" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="420" y="92" class="lbl" fill="#93c5fd" text-anchor="middle">item B</text>
+
+  <!-- Row 2, col 1 -->
+  <rect x="26" y="142" width="148" height="88" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="100" y="192" class="lbl" fill="#86efac" text-anchor="middle">item C</text>
+
+  <!-- Row 2, col 2 -->
+  <rect x="186" y="142" width="148" height="88" rx="4" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="260" y="192" class="lbl" fill="#93c5fd" text-anchor="middle">item D</text>
+
+  <!-- Row 2, col 3 -->
+  <rect x="346" y="142" width="148" height="88" rx="4" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="420" y="192" class="lbl" fill="#93c5fd" text-anchor="middle">item E</text>
+
+  <!-- Column track labels -->
+  <text x="100" y="248" class="lbl" fill="#64748b" text-anchor="middle">1fr</text>
+  <text x="260" y="248" class="lbl" fill="#64748b" text-anchor="middle">1fr</text>
+  <text x="420" y="248" class="lbl" fill="#64748b" text-anchor="middle">1fr</text>
+
+  <!-- gap annotation -->
+  <line x1="174" y1="188" x2="180" y2="188" stroke="#fbbf24" stroke-width="2"/>
+  <line x1="180" y1="188" x2="186" y2="188" stroke="#fbbf24" stroke-width="2"/>
+  <text x="180" y="180" class="lbl" font-size="10" fill="#fbbf24" text-anchor="middle">gap</text>
+</svg>
