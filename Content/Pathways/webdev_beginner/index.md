@@ -50,6 +50,14 @@ After Unit 4 and the capstone project, you should have a deployed portfolio webs
 
 ---
 
+## What Comes Next
+
+After completing this pathway, continue with:
+
+- **[Web Developer: Beginner to Professional Workflow](../webdev_intermediate/index.md)** — Git, async JavaScript, ES6+, browser APIs, CSS animations, and DevTools. This pathway bridges the gap between "I can build a static page" and "I work like a professional."
+
+---
+
 ## Recommended Tools & Environment
 
 Before starting, set up:
