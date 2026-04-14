@@ -5,6 +5,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 import rehypeHighlight from 'rehype-highlight';
+import rehypeCalloutBlocks from '@/lib/rehype-callout-blocks';
 import {
   getLessonContent,
   getCourseContent,
@@ -75,14 +76,14 @@ export default async function LessonPage({ params }: Props) {
       </header>
 
       {/* Lesson content */}
-      <article className="lesson-prose prose prose-slate max-w-none">
+      <article className="lesson-prose prose prose-slate dark:prose-invert max-w-none">
         <MDXRemote
           source={content}
           components={mdxComponents}
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],
-              rehypePlugins: [rehypeSlug, rehypeHighlight],
+              rehypePlugins: [rehypeSlug, rehypeHighlight, rehypeCalloutBlocks],
             },
           }}
         />

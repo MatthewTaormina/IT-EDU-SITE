@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
+import rehypeCalloutBlocks from '@/lib/rehype-callout-blocks';
 import { getProjectContent, getEntriesByType } from '@/lib/content';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import DifficultyBadge from '@/components/ui/DifficultyBadge';
@@ -56,14 +57,14 @@ export default async function ProjectPage({ params }: Props) {
         <p className="text-muted text-lg">{frontmatter.description}</p>
       </header>
 
-      <article className="prose prose-slate max-w-none">
+      <article className="prose prose-slate dark:prose-invert max-w-none">
         <MDXRemote
           source={content}
           components={mdxComponents}
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],
-              rehypePlugins: [rehypeSlug],
+              rehypePlugins: [rehypeSlug, rehypeCalloutBlocks],
             },
           }}
         />

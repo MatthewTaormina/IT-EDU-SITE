@@ -4,6 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 import rehypeHighlight from 'rehype-highlight';
+import rehypeCalloutBlocks from '@/lib/rehype-callout-blocks';
 import { getArticleContent, getEntriesByType } from '@/lib/content';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import { mdxComponents } from '@/components/mdx';
@@ -53,14 +54,14 @@ export default async function ArticlePage({ params }: Props) {
         </div>
       </header>
 
-      <article className="prose prose-slate max-w-none">
+      <article className="prose prose-slate dark:prose-invert max-w-none">
         <MDXRemote
           source={content}
           components={mdxComponents}
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],
-              rehypePlugins: [rehypeSlug, rehypeHighlight],
+              rehypePlugins: [rehypeSlug, rehypeHighlight, rehypeCalloutBlocks],
             },
           }}
         />
