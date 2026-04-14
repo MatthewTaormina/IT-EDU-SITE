@@ -6,6 +6,11 @@ related_topics:
   - "[[web-standards]]"
   - "[[core-competencies-fullstack]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "[[backend-stack]]; [[frontend-stack]] build tooling; basic terminal / [[language-fundamentals]] Tier 0"
+  concept: "Web infrastructure (static hosting, application platforms, DNS, HTTPS, Docker, CI/CD) is the operational layer that makes applications available to users; environment variable management and secrets hygiene are security-critical constraints enforced at this layer."
+  practical_application: "Configure a GitHub Actions workflow that runs tests on every PR and deploys to Render on merge to main; Dockerize a Node.js + PostgreSQL application with Docker Compose; map a custom domain with correct DNS records and HTTPS."
+  market_value: "High and rising — Docker + CI/CD is now expected at junior level (not just senior); infrastructure-as-code literacy (GitHub Actions, Dockerfile) is in ~45% of full-stack job postings (2025–2026)."
 ---
 
 ## Summary for AI Agents

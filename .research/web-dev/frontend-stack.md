@@ -7,6 +7,11 @@ related_topics:
   - "[[core-competencies-fullstack]]"
   - "[[programming-paradigms]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "[[language-fundamentals]]; [[programming-paradigms]] (functional + declarative required for React)"
+  concept: "The frontend stack is a layered runtime environment (HTML structure / CSS presentation / JS behavior) executed in the browser; the current production standard is HTML5 + CSS3 + TypeScript + React 18 + Vite, with accessibility (WCAG AA) as a non-negotiable quality gate."
+  practical_application: "Build and deploy a TypeScript + React SPA with: semantic HTML, responsive CSS Grid/Flexbox layout, async data fetching, component-level state management, keyboard accessibility, and a Vite production build with environment variable handling."
+  market_value: "Critical — React + TypeScript is required in ~67% of frontend job postings (2024–2026); accessibility compliance is a legal requirement in many jurisdictions; Vite fluency is expected at all levels."
 ---
 
 ## Summary for AI Agents

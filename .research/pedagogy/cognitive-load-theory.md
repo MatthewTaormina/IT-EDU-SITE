@@ -7,6 +7,11 @@ related_topics:
   - "[[programming-pedagogy]]"
   - "[[it-education-strategies]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "None — foundational learning science framework applicable from first curriculum design task"
+  concept: "Cognitive Load Theory posits that learning is constrained by working memory capacity (~4±2 chunks); effective instructional design minimizes extraneous load, controls intrinsic load through sequencing, and maximizes germane (schema-building) load."
+  practical_application: "Audit any lesson or lab for split-attention, redundancy, and over-complexity; apply chunking, worked examples, and spatial integration to reduce extraneous load before adding new concepts."
+  market_value: "High — CLT is the science behind why good courses outperform bad ones; essential for any team building scalable educational products or LLM-assisted tutoring systems."
 ---
 
 ## Summary for AI Agents

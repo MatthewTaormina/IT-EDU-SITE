@@ -7,6 +7,11 @@ related_topics:
   - "[[frontend-stack]]"
   - "[[backend-stack]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "[[language-fundamentals]] — must understand functions as first-class values before functional paradigm; must understand objects before OOP"
+  concept: "Programming paradigms (imperative, OOP, functional, declarative, event-driven) are mutually compatible thinking models; modern production systems use multiple paradigms deliberately; paradigm choice is a design decision, not a language constraint."
+  practical_application: "Identify the paradigm in use in any code review; justify paradigm choices in written design documents; refactor imperative loops to functional pipelines; decompose a UI component tree using the functional + declarative model."
+  market_value: "High — multi-paradigm literacy is table stakes for React/TypeScript (functional+declarative), Node.js (event-driven), and any LLM orchestration code (functional composition over mutable state)."
 ---
 
 ## Summary for AI Agents

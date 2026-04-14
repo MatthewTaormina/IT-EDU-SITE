@@ -7,6 +7,11 @@ related_topics:
   - "[[core-competencies-fullstack]]"
   - "[[it-education-strategies]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "None — foundational; no prior programming knowledge required"
+  concept: "Language fundamentals (types, variables, operators, control flow, functions, scope, closures, memory management, error handling) are the portable, language-agnostic substrate enabling reasoning about any general-purpose programming language."
+  practical_application: "Trace execution through unfamiliar code in any language using only first principles; debug scope and closure bugs; explain memory allocation patterns; write pure functions with explicit error handling."
+  market_value: "Critical — deficits in fundamentals are the single most common reason senior engineers fail technical interviews; also the prerequisite for AI-assisted coding (you must know what the LLM is generating)."
 ---
 
 ## Summary for AI Agents

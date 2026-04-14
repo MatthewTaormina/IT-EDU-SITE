@@ -7,6 +7,11 @@ related_topics:
   - "[[it-education-strategies]]"
   - "[[programming-pedagogy]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "Familiarity with learning objectives and basic instructional sequencing"
+  concept: "Scaffolding is temporary, targeted instructional support calibrated to the learner's Zone of Proximal Development, systematically faded as competency is demonstrated."
+  practical_application: "Implement tiered lab sequences (full worked example → skeleton code → blank problem) with explicit fading milestones and formative performance gates."
+  market_value: "Medium-High — Scaffold design is the core differentiator between bootcamps that produce job-ready graduates and those that produce tutorial-dependent learners."
 ---
 
 ## Summary for AI Agents

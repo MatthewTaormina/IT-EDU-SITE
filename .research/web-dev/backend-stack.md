@@ -7,6 +7,11 @@ related_topics:
   - "[[core-competencies-fullstack]]"
   - "[[software-engineering-principles]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "[[language-fundamentals]]; [[programming-paradigms]] (event-driven); [[frontend-stack]] for full-stack context"
+  concept: "The backend stack (Node.js + Express + PostgreSQL + Prisma + JWT) provides the server-side runtime, REST API surface, relational data persistence, and authentication layer; security (parameterized queries, bcrypt, env vars, input validation) is a foundational constraint, not an advanced topic."
+  practical_application: "Build a REST API with: authenticated endpoints (JWT + bcrypt), parameterized SQL queries via Prisma, input validation middleware (zod), structured error responses with correct HTTP status codes, and environment variable management."
+  market_value: "Critical — Node.js backend is the most common entry-level backend stack (2024–2026); SQL + ORM fluency is required at all levels; security deficiencies are the most common reason junior developers are rejected in code review."
 ---
 
 ## Summary for AI Agents

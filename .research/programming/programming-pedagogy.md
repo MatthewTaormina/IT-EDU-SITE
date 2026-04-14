@@ -8,6 +8,11 @@ related_topics:
   - "[[language-fundamentals]]"
   - "[[programming-paradigms]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "[[cognitive-load-theory]]; [[scaffolding]]; [[bloom-taxonomy]]"
+  concept: "Programming pedagogy is the research discipline covering how to teach programming effectively; key evidence-based strategies include the notional machine, PRIMM, faded worked examples, Parsons Problems, Peer Instruction, and live coding — all grounded in CLT and proven superior to passive instruction."
+  practical_application: "Re-sequence any programming lesson using PRIMM (Predict → Run → Investigate → Modify → Make); replace all blank-slate early labs with faded worked examples; create a Parsons Problem for every new algorithmic construct introduced."
+  market_value: "High for ed-tech, curriculum dev, bootcamp design — directly translates to measurable outcomes (pass rates, employer satisfaction); increasingly relevant as LLM tutors require pedagogically sound prompt designs."
 ---
 
 ## Summary for AI Agents

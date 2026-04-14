@@ -8,6 +8,11 @@ related_topics:
   - "[[programming-pedagogy]]"
   - "[[core-competencies-fullstack]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "Bloom's Taxonomy; basic understanding of the IT job market and common role types"
+  concept: "IT education requires concept-first sequencing, competency-based progression, authentic assessment, and deliberate bridging of the novice-to-practitioner gap using spiral curriculum and threshold concept identification."
+  practical_application: "Redesign any IT course sequence by: identifying threshold concepts, removing tool-specific memorization from assessments, replacing final exams with portfolio or live-coding rubrics, and mapping every unit to a durable employable skill."
+  market_value: "High — curriculum designers who apply IT-specific pedagogy produce measurably better hiring outcomes; directly relevant to ed-tech companies, bootcamps, and university CS/IT programs."
 ---
 
 ## Summary for AI Agents

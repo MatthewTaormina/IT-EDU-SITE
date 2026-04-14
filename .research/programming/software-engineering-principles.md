@@ -7,6 +7,11 @@ related_topics:
   - "[[backend-stack]]"
   - "[[it-education-strategies]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "[[programming-paradigms]] — SOLID assumes OOP context; functional principles require FP understanding; [[language-fundamentals]] for all"
+  concept: "Software engineering principles (DRY, YAGNI, KISS, SoC, SOLID, GoF patterns, Clean Code) are prescriptive design heuristics that govern maintainability, testability, and scalability of production codebases over time."
+  practical_application: "Conduct a code review identifying at least three principle violations (God Object, duplicated logic, tight coupling); propose refactors; write a short design doc justifying architectural choices against SOLID criteria."
+  market_value: "Critical at mid–senior level — SE principles are the language of architecture interviews, PR feedback, and technical design documents; expected in every non-entry engineering role."
 ---
 
 ## Summary for AI Agents

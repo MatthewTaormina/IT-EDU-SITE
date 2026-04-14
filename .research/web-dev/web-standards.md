@@ -6,6 +6,11 @@ related_topics:
   - "[[infrastructure]]"
   - "[[core-competencies-fullstack]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "[[frontend-stack]] basics; [[backend-stack]] HTTP knowledge"
+  concept: "Web standards (WHATWG HTML Living Standard, W3C CSS modules, ECMA-262, IETF HTTP, WCAG 2.1) define the interoperable, vendor-neutral behavior of all web technologies; standards literacy enables debugging across browser inconsistencies and compliance with legal accessibility requirements."
+  practical_application: "Diagnose a cross-browser CSS layout bug using the spec; write a WCAG AA accessibility audit against five success criteria; explain the HTTP/2 multiplexing benefit over HTTP/1.1 in the context of page load optimization."
+  market_value: "Medium-High — standards knowledge separates intermediate from senior developers; WCAG AA compliance is legally required in the EU, Canada, and increasingly in the US; HTTP/2–3 knowledge is required for performance engineering roles."
 ---
 
 ## Summary for AI Agents

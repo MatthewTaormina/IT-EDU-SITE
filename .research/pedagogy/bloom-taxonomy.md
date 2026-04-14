@@ -7,6 +7,11 @@ related_topics:
   - "[[it-education-strategies]]"
   - "[[programming-pedagogy]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "None — applies at all curriculum design stages"
+  concept: "Bloom's Revised Taxonomy (2001) classifies cognitive objectives across six levels (Remember → Create) paired with four knowledge types; enables measurable learning objective authoring and assessment alignment."
+  practical_application: "Write every learning objective as 'learner will [Bloom verb] [knowledge object]'; map each assessment task to the stated Bloom level; reject objectives using 'understand' or 'know' (not measurable)."
+  market_value: "High — Bloom alignment is required by most institutional accreditation bodies and is the standard language for curriculum review, course approval, and LMS metadata."
 ---
 
 ## Summary for AI Agents

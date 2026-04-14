@@ -1,0 +1,45 @@
+{
+  "$schema_version": "2.0.0",
+  "directory": ".research/validation",
+  "purpose": "Validation layer for the research knowledge base. Contains gap analysis, deprecation notices, and currency audits. Drives the research backlog and curriculum revision cycle.",
+  "documents": [
+    {
+      "id": "gap-analysis",
+      "path": ".research/validation/gap-analysis.md",
+      "terminal_objective": {
+        "prerequisite": "core-competencies-fullstack — requires baseline competency model to compare against",
+        "concept": "Gap analysis comparing internal research coverage against 2026 high-growth industry skill demands; classifies gaps as CRITICAL/HIGH/MEDIUM/LOW by severity.",
+        "practical_application": "Use the Priority Action Plan table to drive creation of new research documents; use the Heat Map to identify under-covered domains when scoping curriculum sprints.",
+        "market_value": "Critical — curriculum aligned to current market demand produces competitive graduates; this report drives the quarterly revision cycle."
+      },
+      "educational_assets": []
+    }
+  ],
+  "gap_summary": {
+    "critical_gaps": [
+      { "id": "GAP-001", "topic": "LLM API Integration", "action": "Create llm-api-integration.md" },
+      { "id": "GAP-002", "topic": "AI Agent Orchestration", "action": "Create agent-orchestration.md" },
+      { "id": "GAP-003", "topic": "Model Context Protocol (MCP)", "action": "Create mcp-model-context-protocol.md" },
+      { "id": "GAP-004", "topic": "Automated Testing Strategy", "action": "Create automated-testing.md" }
+    ],
+    "high_gaps": [
+      { "id": "GAP-005", "topic": "TypeScript Advanced Patterns", "action": "Expand frontend-stack.md" },
+      { "id": "GAP-006", "topic": "Observability and Production Monitoring", "action": "Create observability.md" },
+      { "id": "GAP-007", "topic": "Edge Computing and Serverless", "action": "Expand infrastructure.md" },
+      { "id": "GAP-008", "topic": "Vector Databases and Embeddings", "action": "Create vector-databases-embeddings.md" },
+      { "id": "GAP-009", "topic": "WebAssembly (WASM)", "action": "Expand web-standards.md or create webassembly.md" }
+    ],
+    "medium_gaps": [
+      { "id": "GAP-010", "topic": "Rust for Systems/CLI", "action": "Add Rust section to language-fundamentals.md" },
+      { "id": "GAP-011", "topic": "Security — OWASP Top 10 and Supply Chain", "action": "Create web-security.md" },
+      { "id": "GAP-012", "topic": "Real-Time Communication", "action": "Expand backend-stack.md" },
+      { "id": "GAP-013", "topic": "Container Orchestration (Kubernetes Basics)", "action": "Expand infrastructure.md" }
+    ],
+    "low_gaps": [
+      { "id": "GAP-014", "topic": "GraphQL Currency", "action": "No action needed" },
+      { "id": "GAP-015", "topic": "Go Language", "action": "No action needed" }
+    ],
+    "last_reviewed": "2026-04-14",
+    "next_review_due": "2026-07-14"
+  }
+}

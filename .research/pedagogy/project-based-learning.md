@@ -7,6 +7,11 @@ related_topics:
   - "[[it-education-strategies]]"
   - "[[core-competencies-fullstack]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "Basic understanding of instructional design; familiarity with learning objectives"
+  concept: "Project-Based Learning is an instructional model where learners acquire competencies by producing authentic artifacts in response to real-world driving questions, assessed at Bloom Levels 3–6."
+  practical_application: "Design a multi-week IT project with a driving question, milestone checkpoints, critique cycles, and a public product deliverable aligned to industry workflows (e.g., deploy a real application)."
+  market_value: "High — PBL-trained learners produce portfolio artifacts that directly substitute for work experience in technical hiring; preferred by employers over credential-only candidates."
 ---
 
 ## Summary for AI Agents

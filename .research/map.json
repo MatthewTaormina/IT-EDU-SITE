@@ -1,10 +1,12 @@
 {
   "meta": {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "last_updated": "2026-04-14",
-    "description": "Flattened research node graph for the .research/ knowledge base. Optimized for RAG retrieval and agent navigation.",
-    "total_nodes": 16,
-    "domains": ["pedagogy", "programming", "web-dev", "indexes"]
+    "description": "Flattened research node graph for the .research/ Instructional Knowledge Engine. Optimized for RAG retrieval and agent navigation. Every node includes a terminal_objective block.",
+    "total_nodes": 17,
+    "domains": ["pedagogy", "programming", "web-dev", "indexes", "validation"],
+    "engine_version": "2.0.0",
+    "agent_entry_point": ".research/README_AGENT.md"
   },
   "nodes": [
     {
@@ -150,6 +152,15 @@
       "description": "Directed relationship graph showing all inbound and outbound links between research nodes. Includes relationship density summary table identifying the most central nodes in the graph.",
       "tags": ["index", "cross-reference", "graph", "adjacency", "research-navigation"],
       "related_nodes": ["master-index"]
+    },
+    {
+      "id": "gap-analysis",
+      "domain": "validation",
+      "path": ".research/validation/gap-analysis.md",
+      "title": "2026 Tech Trend Gap Analysis",
+      "description": "Validates internal research coverage against 2026 high-growth industry skill demands. Classifies 15 gaps as CRITICAL/HIGH/MEDIUM/LOW. Priority action plan for new research document creation. CRITICAL gaps: Automated Testing, LLM API Integration, MCP, Agent Orchestration.",
+      "tags": ["validation", "gap-analysis", "2026-tech-trends", "high-growth-skills", "curriculum-audit"],
+      "related_nodes": ["core-competencies-fullstack", "programming-paradigms", "backend-stack", "infrastructure", "frontend-stack"]
     }
   ],
   "edges": [
@@ -183,6 +194,11 @@
     { "from": "frontend-stack", "to": "infrastructure", "relationship": "deployed-via" },
     { "from": "backend-stack", "to": "web-standards", "relationship": "communicates-via" },
     { "from": "backend-stack", "to": "infrastructure", "relationship": "deployed-via" },
-    { "from": "master-index", "to": "cross-reference-map", "relationship": "companion-to" }
+    { "from": "master-index", "to": "cross-reference-map", "relationship": "companion-to" },
+    { "from": "gap-analysis", "to": "core-competencies-fullstack", "relationship": "validates-against" },
+    { "from": "gap-analysis", "to": "programming-paradigms", "relationship": "identifies-gaps-in" },
+    { "from": "gap-analysis", "to": "backend-stack", "relationship": "identifies-gaps-in" },
+    { "from": "gap-analysis", "to": "infrastructure", "relationship": "identifies-gaps-in" },
+    { "from": "gap-analysis", "to": "frontend-stack", "relationship": "identifies-gaps-in" }
   ]
 }

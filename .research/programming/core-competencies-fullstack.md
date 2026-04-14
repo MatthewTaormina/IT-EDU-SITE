@@ -9,6 +9,11 @@ related_topics:
   - "[[it-education-strategies]]"
   - "[[programming-paradigms]]"
 last_updated: "2026-04-14"
+terminal_objective:
+  prerequisite: "None — this is the curriculum scoping reference; used to map content to employment targets"
+  concept: "Full-stack web development competency is a 7-tier progression (Tier 0 foundations → Tier 6 professional skills) covering frontend, backend, DevOps, and professional engineering practices; tiers are prerequisites for each other."
+  practical_application: "Use this map to: assess learner placement tier, identify gaps between current curriculum and a target role, prioritize what to teach next, and scope capstone project requirements by tier."
+  market_value: "Critical — maps directly to 2025–2026 hiring criteria; Tier 0–3 covers entry-level roles ($65–95k); Tier 4–5 covers mid-level ($95–130k); Tier 6 mastery required for senior ($130k+)."
 ---
 
 ## Summary for AI Agents
