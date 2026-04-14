@@ -1,14 +1,27 @@
 ---
-title: "Courses"
-description: "All available courses on the IT Learning Hub. Structured learning paths from foundations to advanced topics."
+title: "Content Hub"
+description: "All learning content on the IT Learning Hub — courses, units, lessons, projects, articles, and learning pathways."
 hide_table_of_contents: true
 pagination_next: null
 pagination_prev: null
 ---
 
-# Courses
+# Content Hub
 
-Structured, progressive courses covering the full stack of modern IT. Each course is divided into units and lessons — work in order, the foundations always come first.
+The IT Learning Hub organises content into seven independent entity types. Each type is independently addressable and can be cross-referenced by any other type.
+
+---
+
+## Content Types
+
+| Type | What it is | Where to start |
+| :--- | :--- | :--- |
+| **Pathway** | Curated, goal-oriented sequence of courses and projects | [Pathways →](/courses/Pathways/webdev_beginner/) |
+| **Course** | Discipline-scoped curriculum of units and lessons | [Courses →](/courses/Courses/webdev/) |
+| **Unit** | Topic cluster of lessons (and optionally sub-units) | Browse via a Course |
+| **Lesson** | Single focused concept — completable in one sitting | Browse via a Unit |
+| **Project** | Applied deliverable — build something real | [Projects →](/courses/Projects/webdev_capstone_portfolio/) |
+| **Article** | Blog-style deep-dive; cites external sources freely | [Articles →](/courses/Articles/internet_vs_web) |
 
 ---
 
@@ -20,7 +33,7 @@ Structured, progressive courses covering the full stack of modern IT. Each cours
 
 ### 🌐 Web Development
 
-**Beginner → Advanced** &nbsp;·&nbsp; 1 unit available
+**Beginner → Advanced**
 
 From the theory of how the web works to building modern full-stack applications — HTML, CSS, JavaScript, APIs, and beyond.
 
@@ -29,7 +42,7 @@ From the theory of how the web works to building modern full-stack applications 
 - HTML, CSS, and JavaScript from scratch
 - REST APIs, frameworks, and modern tooling
 
-[**Start Course →**](/courses/WebDev)
+[**Start Course →**](/courses/Courses/webdev/)
 
 </div>
 

@@ -66,15 +66,20 @@ const config: Config = {
       items: [
         {
           to: '/courses',
-          label: 'Courses',
+          label: 'Content Hub',
           position: 'left',
         },
         {
-          // Directly links into the Web Development course
           type: 'docSidebar',
-          sidebarId: 'webdevSidebar',
+          sidebarId: 'coursesSidebar',
           position: 'left',
-          label: 'Web Development',
+          label: 'Courses',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'articlesSidebar',
+          position: 'left',
+          label: 'Articles',
         },
       ],
     },
@@ -86,7 +91,16 @@ const config: Config = {
           items: [
             {
               label: 'Web Development',
-              to: '/courses/WebDev',
+              to: '/courses/Courses/webdev/',
+            },
+          ],
+        },
+        {
+          title: 'Articles',
+          items: [
+            {
+              label: 'Internet vs Web',
+              to: '/courses/Articles/internet_vs_web',
             },
           ],
         },

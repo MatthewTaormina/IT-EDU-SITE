@@ -1,0 +1,1136 @@
+[
+  {
+    "slug": "internet_vs_web",
+    "type": "article",
+    "title": "The Internet and the Web Are Not the Same Thing",
+    "description": "A deep-dive into the distinction between the Internet as a global network infrastructure and the World Wide Web as one application that runs on top of it — plus the history of how that confusion became so common.",
+    "path": "Articles/internet_vs_web.md",
+    "tags": [
+      "internet",
+      "web",
+      "history",
+      "networking",
+      "http"
+    ],
+    "author": "IT Learning Hub",
+    "published_date": "2026-04-14"
+  },
+  {
+    "slug": "webdev",
+    "type": "course",
+    "title": "Web Development",
+    "description": "From the theory of how the web works to building full-stack applications — HTML, CSS, JavaScript, and beyond.",
+    "path": "Courses/webdev/index.md",
+    "difficulty": "Beginner to Advanced",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_00_web_foundations_01_the_internet",
+    "type": "lesson",
+    "title": "The Internet",
+    "description": "The Internet is the global network that lets a browser on your laptop talk to a server on the other side of the world. This lesson covers what web developers need to know about it — no networking d...",
+    "path": "Lessons/webdev_00_web_foundations_01_the_internet.md",
+    "tags": [
+      "internet",
+      "client-server",
+      "ip-address",
+      "port"
+    ]
+  },
+  {
+    "slug": "webdev_00_web_foundations_02_the_web",
+    "type": "lesson",
+    "title": "The World Wide Web",
+    "description": "The Web is an information system built *on top of* the Internet. Understanding what the Web actually is — and what it isn't — gives you the right mental model before touching a single line of code.",
+    "path": "Lessons/webdev_00_web_foundations_02_the_web.md",
+    "tags": [
+      "web",
+      "www",
+      "hypertext",
+      "hyperlinks",
+      "http",
+      "tim-berners-lee"
+    ]
+  },
+  {
+    "slug": "webdev_00_web_foundations_03_web_browsers",
+    "type": "lesson",
+    "title": "Web Browsers",
+    "description": "A browser is more than a window to the web — it is a complex software platform that fetches, interprets, and renders code into the visual pages you see. Understanding what it does (and enforces) ma...",
+    "path": "Lessons/webdev_00_web_foundations_03_web_browsers.md",
+    "tags": [
+      "browser",
+      "rendering",
+      "sandbox",
+      "devtools",
+      "dom",
+      "browser-engine",
+      "parsing"
+    ]
+  },
+  {
+    "slug": "webdev_00_web_foundations_04_web_servers",
+    "type": "lesson",
+    "title": "Web Servers",
+    "description": "A web server is the entity that receives your browser's request and sends back a resource. The term has two meanings — a physical machine and a software program — and understanding both gives you a...",
+    "path": "Lessons/webdev_00_web_foundations_04_web_servers.md",
+    "tags": [
+      "server",
+      "static",
+      "dynamic",
+      "data-center",
+      "nginx",
+      "apache",
+      "load-balancer",
+      "cdn"
+    ]
+  },
+  {
+    "slug": "webdev_00_web_foundations_05_urls",
+    "type": "lesson",
+    "title": "URLs",
+    "description": "A URL is the precise, structured address of any resource on the web. Understanding every component of its anatomy gives you the ability to read, write, and debug any web address — and understand ex...",
+    "path": "Lessons/webdev_00_web_foundations_05_urls.md",
+    "tags": [
+      "url",
+      "uri",
+      "protocol",
+      "host",
+      "path",
+      "query-string",
+      "fragment",
+      "port"
+    ]
+  },
+  {
+    "slug": "webdev_00_web_foundations_06_http",
+    "type": "lesson",
+    "title": "HTTP",
+    "description": "HTTP (HyperText Transfer Protocol) is the language browsers and servers use to communicate. Every resource you have ever loaded on the web arrived via an HTTP exchange. Understanding how it works r...",
+    "path": "Lessons/webdev_00_web_foundations_06_http.md",
+    "tags": [
+      "http",
+      "https",
+      "request",
+      "response",
+      "status-codes",
+      "headers",
+      "methods",
+      "stateless"
+    ]
+  },
+  {
+    "slug": "webdev_00_web_foundations_07_dns",
+    "type": "lesson",
+    "title": "DNS",
+    "description": "DNS (Domain Name System) translates human-readable domain names into the IP addresses computers use to find each other. Without DNS, every URL would be a string of numbers. Understanding DNS explai...",
+    "path": "Lessons/webdev_00_web_foundations_07_dns.md",
+    "tags": [
+      "dns",
+      "domain",
+      "name-resolution",
+      "ip-address",
+      "records",
+      "ttl"
+    ]
+  },
+  {
+    "slug": "webdev_00_web_foundations_08_core_technologies",
+    "type": "lesson",
+    "title": "Core Technologies: HTML, CSS & JavaScript",
+    "description": "Every web page is assembled from exactly three technologies, each with a distinct and non-overlapping job. This lesson introduces their roles — what each one *is* and *why* all three are needed — w...",
+    "path": "Lessons/webdev_00_web_foundations_08_core_technologies.md",
+    "tags": [
+      "html",
+      "css",
+      "javascript",
+      "separation-of-concerns",
+      "dom"
+    ]
+  },
+  {
+    "slug": "webdev_00_web_foundations_09_how_a_page_loads",
+    "type": "lesson",
+    "title": "How a Page Loads",
+    "description": "This is the capstone for the Web Foundations unit. Everything covered in previous lessons — DNS, HTTP, servers, browsers, URLs, and core technologies — converges here. By the end, you will have a c...",
+    "path": "Lessons/webdev_00_web_foundations_09_how_a_page_loads.md",
+    "tags": [
+      "page-load",
+      "rendering",
+      "dom",
+      "cssom",
+      "ssr",
+      "csr",
+      "script-loading",
+      "defer",
+      "async"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_01_document_structure",
+    "type": "lesson",
+    "title": "Document Structure",
+    "description": "Before you write a single visible element, every HTML document needs a skeleton — a specific set of outer tags that tell the browser what kind of document it is and where different types of content...",
+    "path": "Lessons/webdev_01_html_01_document_structure.md",
+    "tags": [
+      "html",
+      "doctype",
+      "document-structure",
+      "head",
+      "body"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_02_the_dom_revisited",
+    "type": "lesson",
+    "title": "The DOM — Your Working Model",
+    "description": "When the browser reads an HTML file, it does not keep it as raw text. It builds a tree of objects — the DOM. Understanding the DOM is not optional; it is the single most important mental model in w...",
+    "path": "Lessons/webdev_01_html_02_the_dom_revisited.md",
+    "tags": [
+      "dom",
+      "document-object-model",
+      "browser",
+      "devtools",
+      "nodes"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_03_text_elements",
+    "type": "lesson",
+    "title": "Text Elements",
+    "description": "Most of what ends up on a web page is text. HTML provides a rich set of elements for marking up that text — not to control how it looks, but to communicate what it *means*. A heading is not large t...",
+    "path": "Lessons/webdev_01_html_03_text_elements.md",
+    "tags": [
+      "html",
+      "headings",
+      "paragraphs",
+      "text",
+      "semantic",
+      "inline-elements"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_04_links_and_navigation",
+    "type": "lesson",
+    "title": "Links & Navigation",
+    "description": "The \\\"HT\\\" in HTML stands for HyperText — and hypertext means links. The ability to connect documents together is what turned a file-sharing protocol into the World Wide Web. The `<a>` element is how...",
+    "path": "Lessons/webdev_01_html_04_links_and_navigation.md",
+    "tags": [
+      "html",
+      "anchor",
+      "links",
+      "navigation",
+      "urls",
+      "href"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_05_images_and_media",
+    "type": "lesson",
+    "title": "Images & Media",
+    "description": "Images are one of the most common elements on the web — and one of the most commonly misused. The `<img>` element is simple on the surface, but `alt` text is a first-class accessibility and SEO obl...",
+    "path": "Lessons/webdev_01_html_05_images_and_media.md",
+    "tags": [
+      "html",
+      "images",
+      "img",
+      "alt-text",
+      "figure",
+      "media",
+      "video",
+      "audio"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_06_lists",
+    "type": "lesson",
+    "title": "Lists",
+    "description": "Lists are one of the most frequently used structures on the web — navigation menus, search results, article feeds, feature bullet points, and step-by-step instructions are all lists underneath thei...",
+    "path": "Lessons/webdev_01_html_06_lists.md",
+    "tags": [
+      "html",
+      "lists",
+      "ul",
+      "ol",
+      "dl",
+      "semantic"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_07_tables",
+    "type": "lesson",
+    "title": "Tables",
+    "description": "Tables are for **tabular data** — information that has meaning because of its row-and-column relationship. They are not for layout. This lesson covers the full table element set, spanning cells, pr...",
+    "path": "Lessons/webdev_01_html_07_tables.md",
+    "tags": [
+      "html",
+      "tables",
+      "table",
+      "thead",
+      "tbody",
+      "th",
+      "td",
+      "accessibility"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_08_forms",
+    "type": "lesson",
+    "title": "Forms",
+    "description": "Forms are the primary mechanism through which users send data to a server — login credentials, search queries, registrations, orders, messages. Every form input must have a label. Every form must h...",
+    "path": "Lessons/webdev_01_html_08_forms.md",
+    "tags": [
+      "html",
+      "forms",
+      "input",
+      "label",
+      "validation",
+      "accessibility",
+      "fieldset"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_09_semantic_html",
+    "type": "lesson",
+    "title": "Semantic HTML",
+    "description": "Semantic HTML means choosing elements that describe the *meaning* of your content, not just its appearance. A `<div>` and a `<main>` can look identical on screen — but only `<main>` tells browsers,...",
+    "path": "Lessons/webdev_01_html_09_semantic_html.md",
+    "tags": [
+      "html",
+      "semantic",
+      "landmarks",
+      "header",
+      "main",
+      "footer",
+      "article",
+      "section",
+      "aside",
+      "accessibility",
+      "seo"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_10_the_head",
+    "type": "lesson",
+    "title": "The <head> Element",
+    "description": "The `<head>` is invisible to the user but critical to everything else — the browser's rendering decisions, mobile layout, search engine snippets, social media previews, and performance all begin he...",
+    "path": "Lessons/webdev_01_html_10_the_head.md",
+    "tags": [
+      "html",
+      "head",
+      "metadata",
+      "meta",
+      "title",
+      "seo",
+      "open-graph",
+      "viewport"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_11_accessibility_basics",
+    "type": "lesson",
+    "title": "Accessibility Basics",
+    "description": "Accessibility is not a feature you add at the end — it is a quality of the HTML you write from the start. Most of what makes a page accessible is simply correct semantic HTML, properly associated l...",
+    "path": "Lessons/webdev_01_html_11_accessibility_basics.md",
+    "tags": [
+      "html",
+      "accessibility",
+      "a11y",
+      "aria",
+      "keyboard-navigation",
+      "screen-reader",
+      "contrast"
+    ]
+  },
+  {
+    "slug": "webdev_01_html_12_putting_it_together",
+    "type": "lesson",
+    "title": "Putting It Together",
+    "description": "You have learned every significant HTML element. Now you will use all of them — without guidance. This is a challenge, not a tutorial. There is no step-by-step walkthrough. You are given a target, ...",
+    "path": "Lessons/webdev_01_html_12_putting_it_together.md",
+    "tags": [
+      "html",
+      "challenge",
+      "project",
+      "semantic",
+      "capstone"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_01_foundations_01_how_css_works",
+    "type": "lesson",
+    "title": "How CSS Works",
+    "description": "CSS does not act directly on the HTML file — it acts on the DOM. Understanding how a browser processes a stylesheet, and the three different ways to attach CSS to a document, is the first step to w...",
+    "path": "Lessons/webdev_02_css_01_foundations_01_how_css_works.md",
+    "tags": [
+      "css",
+      "stylesheet",
+      "link",
+      "external",
+      "internal",
+      "inline",
+      "render-pipeline"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_01_foundations_02_syntax_and_rules",
+    "type": "lesson",
+    "title": "Syntax & Rules",
+    "description": "A CSS file is a sequence of rules. Each rule has a selector and a block of declarations. Getting this anatomy right — and understanding shorthands, comments, and common value types — is the prerequ...",
+    "path": "Lessons/webdev_02_css_01_foundations_02_syntax_and_rules.md",
+    "tags": [
+      "css",
+      "syntax",
+      "rules",
+      "declarations",
+      "properties",
+      "values",
+      "shorthand"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_01_foundations_03_the_cascade",
+    "type": "lesson",
+    "title": "The Cascade & Inheritance",
+    "description": "CSS stands for *Cascading* Style Sheets — the cascade is the algorithm that decides which rule wins when two rules could both apply to the same element. Inheritance is the mechanism by which some p...",
+    "path": "Lessons/webdev_02_css_01_foundations_03_the_cascade.md",
+    "tags": [
+      "css",
+      "cascade",
+      "specificity",
+      "inheritance",
+      "origin",
+      "computed-value"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_02_selectors_01_type_class_id",
+    "type": "lesson",
+    "title": "Type, Class & ID Selectors",
+    "description": "The three fundamental selector types — type, class, and ID — cover the majority of daily CSS targeting. Getting their semantics right (not just their syntax) prevents specificity problems and keeps...",
+    "path": "Lessons/webdev_02_css_02_selectors_01_type_class_id.md",
+    "tags": [
+      "css",
+      "selectors",
+      "type",
+      "class",
+      "id",
+      "attribute"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_02_selectors_02_combinators",
+    "type": "lesson",
+    "title": "Combinators",
+    "description": "Combinators let you target elements based on their relationship to other elements in the DOM tree — not just what they are, but *where* they are. The four CSS combinators map directly to the parent...",
+    "path": "Lessons/webdev_02_css_02_selectors_02_combinators.md",
+    "tags": [
+      "css",
+      "selectors",
+      "combinators",
+      "descendant",
+      "child",
+      "sibling"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_02_selectors_03_pseudo_classes",
+    "type": "lesson",
+    "title": "Pseudo-classes",
+    "description": "Pseudo-classes let you style elements based on their *state* or *structural position* — without adding extra classes to the HTML. They are how you create hover effects, styled focus outlines, zebra...",
+    "path": "Lessons/webdev_02_css_02_selectors_03_pseudo_classes.md",
+    "tags": [
+      "css",
+      "pseudo-classes",
+      "hover",
+      "focus",
+      "nth-child",
+      "state-selectors"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_02_selectors_04_pseudo_elements",
+    "type": "lesson",
+    "title": "Pseudo-elements",
+    "description": "Pseudo-elements target specific *parts* of an element — not the whole element, but a sub-part such as the first line, the first letter, the space before it, or the space after it. They are written ...",
+    "path": "Lessons/webdev_02_css_02_selectors_04_pseudo_elements.md",
+    "tags": [
+      "css",
+      "pseudo-elements",
+      "before",
+      "after",
+      "first-line",
+      "placeholder"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_02_selectors_05_specificity",
+    "type": "lesson",
+    "title": "Specificity",
+    "description": "Specificity is the scoring system CSS uses to decide which rule wins when two rules target the same element. Understanding it means you can predict exactly which style will apply — and fix the inev...",
+    "path": "Lessons/webdev_02_css_02_selectors_05_specificity.md",
+    "tags": [
+      "css",
+      "specificity",
+      "cascade",
+      "important",
+      "layers"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_03_box_model_01_content_padding_border_margin",
+    "type": "lesson",
+    "title": "Content, Padding, Border & Margin",
+    "description": "Every HTML element is rendered as a rectangular box with four layers of space stacked outward from the centre. These four layers — content, padding, border, and margin — interact to determine every...",
+    "path": "Lessons/webdev_02_css_03_box_model_01_content_padding_border_margin.md",
+    "tags": [
+      "css",
+      "box-model",
+      "padding",
+      "border",
+      "margin",
+      "content"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_03_box_model_02_box_sizing",
+    "type": "lesson",
+    "title": "box-sizing",
+    "description": "`box-sizing` is the single most impactful CSS property you will set exactly once, globally, and then forget. The difference between `content-box` (the default) and `border-box` (the universal stand...",
+    "path": "Lessons/webdev_02_css_03_box_model_02_box_sizing.md",
+    "tags": [
+      "css",
+      "box-sizing",
+      "border-box",
+      "content-box",
+      "width",
+      "sizing"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_03_box_model_03_display_and_flow",
+    "type": "lesson",
+    "title": "Display & Normal Flow",
+    "description": "Before Flexbox and Grid, browsers arranged elements using **normal flow** — the default layout algorithm. Understanding how `block` and `inline` elements behave in that flow is essential context fo...",
+    "path": "Lessons/webdev_02_css_03_box_model_03_display_and_flow.md",
+    "tags": [
+      "css",
+      "display",
+      "block",
+      "inline",
+      "normal-flow",
+      "formatting-context"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_04_layout_01_flexbox_01_flex_container",
+    "type": "lesson",
+    "title": "The Flex Container",
+    "description": "Flexbox begins with one declaration: `display: flex`. That single property turns an element into a flex container and activates the flex layout model for all its direct children. Every other flex p...",
+    "path": "Lessons/webdev_02_css_04_layout_01_flexbox_01_flex_container.md",
+    "tags": [
+      "css",
+      "flexbox",
+      "flex-container",
+      "flex-direction",
+      "flex-wrap",
+      "gap"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_04_layout_01_flexbox_02_flex_items",
+    "type": "lesson",
+    "title": "Flex Items",
+    "description": "Flex items are the direct children of a flex container. They have their own set of properties that control how they grow to fill available space, how they shrink when space is tight, what their bas...",
+    "path": "Lessons/webdev_02_css_04_layout_01_flexbox_02_flex_items.md",
+    "tags": [
+      "css",
+      "flexbox",
+      "flex-grow",
+      "flex-shrink",
+      "flex-basis",
+      "flex"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_04_layout_01_flexbox_03_alignment",
+    "type": "lesson",
+    "title": "Alignment",
+    "description": "Flexbox's alignment system is what makes it so powerful for UI layout. Six properties — three on the container and one on individual items — give you precise, axis-aware control over how items are ...",
+    "path": "Lessons/webdev_02_css_04_layout_01_flexbox_03_alignment.md",
+    "tags": [
+      "css",
+      "flexbox",
+      "alignment",
+      "justify-content",
+      "align-items",
+      "align-content"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_04_layout_01_flexbox_04_common_patterns",
+    "type": "lesson",
+    "title": "Common Flexbox Patterns",
+    "description": "Flexbox theory becomes useful when applied to real UI problems. This lesson covers the most common, production-relevant Flexbox patterns — navbar layout, card rows, perfect centring, and sidebar la...",
+    "path": "Lessons/webdev_02_css_04_layout_01_flexbox_04_common_patterns.md",
+    "tags": [
+      "css",
+      "flexbox",
+      "patterns",
+      "navbar",
+      "card-layout",
+      "centering"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_04_layout_02_grid_01_grid_container",
+    "type": "lesson",
+    "title": "The Grid Container",
+    "description": "`display: grid` turns an element into a grid container. You then define how many columns and rows you want, how wide they are, and how much space between them. The browser places items automaticall...",
+    "path": "Lessons/webdev_02_css_04_layout_02_grid_01_grid_container.md",
+    "tags": [
+      "css",
+      "grid",
+      "grid-container",
+      "grid-template",
+      "fr",
+      "gap"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_04_layout_02_grid_02_grid_items",
+    "type": "lesson",
+    "title": "Grid Items",
+    "description": "By default, grid items are placed automatically — the browser fills columns left to right, wrapping to new rows. But Grid also lets you place items *explicitly* by specifying exactly which column a...",
+    "path": "Lessons/webdev_02_css_04_layout_02_grid_02_grid_items.md",
+    "tags": [
+      "css",
+      "grid",
+      "grid-items",
+      "grid-column",
+      "grid-row",
+      "span",
+      "placement"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_04_layout_02_grid_03_template_areas",
+    "type": "lesson",
+    "title": "Template Areas",
+    "description": "`grid-template-areas` lets you design your page layout as a visual ASCII-style map — except instead of characters, you use area names. Each named area corresponds to one or more grid cells, and gri...",
+    "path": "Lessons/webdev_02_css_04_layout_02_grid_03_template_areas.md",
+    "tags": [
+      "css",
+      "grid",
+      "template-areas",
+      "named-areas",
+      "page-layout"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_04_layout_02_grid_04_common_patterns",
+    "type": "lesson",
+    "title": "Common Grid Patterns",
+    "description": "Grid patterns are the bedrock of modern web layout. This lesson covers the most important real-world Grid applications — responsive card grids, the classic page layout, and the holy grail — all com...",
+    "path": "Lessons/webdev_02_css_04_layout_02_grid_04_common_patterns.md",
+    "tags": [
+      "css",
+      "grid",
+      "patterns",
+      "page-layout",
+      "card-grid",
+      "holy-grail"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_05_typography_and_colour_01_typography",
+    "type": "lesson",
+    "title": "Typography",
+    "description": "Typography is the arrangement of text to make it readable, legible, and visually appealing. In CSS, this means choosing fonts, setting sizes, managing line length, and controlling vertical rhythm. ...",
+    "path": "Lessons/webdev_02_css_05_typography_and_colour_01_typography.md",
+    "tags": [
+      "css",
+      "typography",
+      "font-family",
+      "font-size",
+      "line-height",
+      "google-fonts",
+      "rem"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_05_typography_and_colour_02_colour_and_background",
+    "type": "lesson",
+    "title": "Colour & Background",
+    "description": "CSS has five colour syntaxes, several background properties, and a gradient system that can produce almost any smooth transition. Understanding HSL in particular will make choosing and adjusting co...",
+    "path": "Lessons/webdev_02_css_05_typography_and_colour_02_colour_and_background.md",
+    "tags": [
+      "css",
+      "colour",
+      "background",
+      "hex",
+      "rgb",
+      "hsl",
+      "gradient",
+      "opacity"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_05_typography_and_colour_03_custom_properties",
+    "type": "lesson",
+    "title": "Custom Properties",
+    "description": "CSS custom properties (often called CSS variables) let you define a value once and reference it throughout a stylesheet. They are dynamic — they participate in the cascade and inheritance, change a...",
+    "path": "Lessons/webdev_02_css_05_typography_and_colour_03_custom_properties.md",
+    "tags": [
+      "css",
+      "custom-properties",
+      "variables",
+      "theming",
+      "dark-mode",
+      "design-tokens"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_06_responsive_01_viewport",
+    "type": "lesson",
+    "title": "The Viewport & Meta Tag",
+    "description": "Before CSS responsive techniques can work, the browser must be told to use the device's actual pixel width — not simulate a desktop. That job belongs to a single HTML `<meta>` tag. Without it, even...",
+    "path": "Lessons/webdev_02_css_06_responsive_01_viewport.md",
+    "tags": [
+      "css",
+      "responsive",
+      "viewport",
+      "meta-tag",
+      "mobile"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_06_responsive_02_media_queries",
+    "type": "lesson",
+    "title": "Media Queries",
+    "description": "Media queries are CSS conditional blocks — styles inside them only apply when a condition (typically viewport width) is true. They are the primary tool for breakpoint-based layout changes. This les...",
+    "path": "Lessons/webdev_02_css_06_responsive_02_media_queries.md",
+    "tags": [
+      "css",
+      "responsive",
+      "media-queries",
+      "breakpoints",
+      "mobile-first",
+      "prefers-color-scheme"
+    ]
+  },
+  {
+    "slug": "webdev_02_css_06_responsive_03_fluid_sizing",
+    "type": "lesson",
+    "title": "Fluid Sizing",
+    "description": "Media queries are binary — they apply or don't at a fixed threshold. Fluid sizing is continuous — values scale smoothly across the entire viewport range. Modern CSS functions `min()`, `max()`, and ...",
+    "path": "Lessons/webdev_02_css_06_responsive_03_fluid_sizing.md",
+    "tags": [
+      "css",
+      "responsive",
+      "fluid",
+      "clamp",
+      "min",
+      "max",
+      "intrinsic-layout"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_01_foundations_01_introduction",
+    "type": "lesson",
+    "title": "Introduction to JavaScript",
+    "description": "JavaScript is the programming language of the Web. While HTML defines content and CSS defines presentation, JavaScript specifies *behaviour*. In this lesson you will attach a script to an HTML docu...",
+    "path": "Lessons/webdev_03_js_basics_01_foundations_01_introduction.md",
+    "tags": [
+      "javascript",
+      "foundations",
+      "script-tag",
+      "console",
+      "defer"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_01_foundations_02_variables_and_data_types",
+    "type": "lesson",
+    "title": "Variables & Data Types",
+    "description": "A variable is a named container for a value. JavaScript has three keywords for declaring variables — `let`, `const`, and the legacy `var` — and five primitive data types that values can belong to. ...",
+    "path": "Lessons/webdev_03_js_basics_01_foundations_02_variables_and_data_types.md",
+    "tags": [
+      "javascript",
+      "variables",
+      "let",
+      "const",
+      "data-types",
+      "primitives"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_01_foundations_03_operators",
+    "type": "lesson",
+    "title": "Operators & Expressions",
+    "description": "An *expression* is any piece of JavaScript that produces a value. Operators are the symbols that combine values into expressions: arithmetic operators produce numbers, comparison operators produce ...",
+    "path": "Lessons/webdev_03_js_basics_01_foundations_03_operators.md",
+    "tags": [
+      "javascript",
+      "operators",
+      "expressions",
+      "template-literals",
+      "comparison",
+      "logical"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_02_control_flow_01_conditionals",
+    "type": "lesson",
+    "title": "Conditionals",
+    "description": "Conditionals let your program make decisions. The `if`/`else` construct evaluates a condition — any expression that produces a truthy or falsy value — and executes different code depending on the r...",
+    "path": "Lessons/webdev_03_js_basics_02_control_flow_01_conditionals.md",
+    "tags": [
+      "javascript",
+      "conditionals",
+      "if-else",
+      "truthy-falsy",
+      "ternary"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_02_control_flow_02_loops",
+    "type": "lesson",
+    "title": "Loops",
+    "description": "Loops repeat a block of code. JavaScript provides several loop constructs: the `for` loop gives you precise control over the iteration counter, `while` runs while a condition holds, and `for...of` ...",
+    "path": "Lessons/webdev_03_js_basics_02_control_flow_02_loops.md",
+    "tags": [
+      "javascript",
+      "loops",
+      "for",
+      "while",
+      "for-of",
+      "break",
+      "continue"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_02_control_flow_03_switch",
+    "type": "lesson",
+    "title": "Switch Statements",
+    "description": "The `switch` statement compares a single expression against multiple fixed values using strict equality. It can be cleaner than a long `if/else if` chain when you're branching on many possible valu...",
+    "path": "Lessons/webdev_03_js_basics_02_control_flow_03_switch.md",
+    "tags": [
+      "javascript",
+      "switch",
+      "control-flow",
+      "fall-through"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_03_functions_01_function_declarations",
+    "type": "lesson",
+    "title": "Function Declarations",
+    "description": "A function groups a set of statements under a name so they can be called (invoked) as many times as needed. Functions accept **parameters** as inputs and can produce an output via `return`. The `fu...",
+    "path": "Lessons/webdev_03_js_basics_03_functions_01_function_declarations.md",
+    "tags": [
+      "javascript",
+      "functions",
+      "parameters",
+      "return",
+      "hoisting",
+      "default-parameters"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_03_functions_02_arrow_functions",
+    "type": "lesson",
+    "title": "Arrow Functions",
+    "description": "Arrow functions — introduced in ES6 — are a more compact syntax for writing functions. They are the dominant style in modern JavaScript for callbacks, array methods, and short utility functions. Th...",
+    "path": "Lessons/webdev_03_js_basics_03_functions_02_arrow_functions.md",
+    "tags": [
+      "javascript",
+      "arrow-functions",
+      "es6",
+      "implicit-return",
+      "this"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_03_functions_03_scope_and_closures",
+    "type": "lesson",
+    "title": "Scope & Closures",
+    "description": "Scope defines where a variable is accessible. JavaScript has three levels — global, function, and block. Closures are a natural consequence of how scope works: a function \\\"closes over\\\" the variable...",
+    "path": "Lessons/webdev_03_js_basics_03_functions_03_scope_and_closures.md",
+    "tags": [
+      "javascript",
+      "scope",
+      "closures",
+      "block-scope",
+      "lexical-scope"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_04_data_structures_01_arrays",
+    "type": "lesson",
+    "title": "Arrays",
+    "description": "An array is an ordered, zero-indexed collection of values. Arrays are the most frequently used data structure in JavaScript. This lesson covers creating and indexing arrays, the mutating methods fo...",
+    "path": "Lessons/webdev_03_js_basics_04_data_structures_01_arrays.md",
+    "tags": [
+      "javascript",
+      "arrays",
+      "map",
+      "filter",
+      "reduce",
+      "spread"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_04_data_structures_02_objects",
+    "type": "lesson",
+    "title": "Objects",
+    "description": "An object is an unordered collection of **key-value pairs** (called properties). Objects model real-world entities — a user, a product, a configuration — by grouping related data under named keys. ...",
+    "path": "Lessons/webdev_03_js_basics_04_data_structures_02_objects.md",
+    "tags": [
+      "javascript",
+      "objects",
+      "destructuring",
+      "spread",
+      "dot-notation",
+      "bracket-notation"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_04_data_structures_03_json",
+    "type": "lesson",
+    "title": "JSON",
+    "description": "JSON (JavaScript Object Notation) is a text format for representing structured data. It is the standard format for exchanging data between web APIs and browsers. In this lesson you will learn the r...",
+    "path": "Lessons/webdev_03_js_basics_04_data_structures_03_json.md",
+    "tags": [
+      "javascript",
+      "json",
+      "fetch",
+      "stringify",
+      "parse",
+      "api"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_05_the_dom_01_dom_selection",
+    "type": "lesson",
+    "title": "DOM Selection",
+    "description": "Before you can change anything on the page, you need to *select* the element you want to change. JavaScript provides several methods to find elements in the DOM — from the modern and flexible `quer...",
+    "path": "Lessons/webdev_03_js_basics_05_the_dom_01_dom_selection.md",
+    "tags": [
+      "javascript",
+      "dom",
+      "querySelector",
+      "getElementById",
+      "NodeList"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_05_the_dom_02_dom_manipulation",
+    "type": "lesson",
+    "title": "DOM Manipulation",
+    "description": "Once you have selected an element, you can read and change everything about it: its text content, its HTML structure, its CSS classes, its attributes, and even its existence in the document. This l...",
+    "path": "Lessons/webdev_03_js_basics_05_the_dom_02_dom_manipulation.md",
+    "tags": [
+      "javascript",
+      "dom",
+      "manipulation",
+      "classList",
+      "createElement",
+      "innerHTML",
+      "textContent"
+    ]
+  },
+  {
+    "slug": "webdev_03_js_basics_05_the_dom_03_events",
+    "type": "lesson",
+    "title": "Events",
+    "description": "JavaScript makes pages interactive by *listening* for events — user actions like clicks, key presses, and form submissions — and running code in response. This lesson covers `addEventListener`, the...",
+    "path": "Lessons/webdev_03_js_basics_05_the_dom_03_events.md",
+    "tags": [
+      "javascript",
+      "events",
+      "addEventListener",
+      "event-object",
+      "event-delegation",
+      "preventDefault"
+    ]
+  },
+  {
+    "slug": "webdev_beginner",
+    "type": "pathway",
+    "title": "Web Developer: Zero to Employable",
+    "description": "A complete, opinionated sequence from no-code beginner to job-ready junior web developer. Covers the theory of how the web works, HTML, CSS, JavaScript, and ends with a real portfolio project.",
+    "path": "Pathways/webdev_beginner/index.md",
+    "difficulty": "Beginner",
+    "tags": [
+      "web",
+      "html",
+      "css",
+      "javascript",
+      "beginner",
+      "fullstack"
+    ]
+  },
+  {
+    "slug": "webdev_capstone_portfolio",
+    "type": "project",
+    "title": "Capstone Project",
+    "description": "Apply everything from HTML Basics, CSS Basics, and JS Basics to build a real personal portfolio website from scratch.",
+    "path": "Projects/webdev_capstone_portfolio/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_00_web_foundations",
+    "type": "unit",
+    "title": "Web Foundations",
+    "description": "The theory of how the web works — infrastructure, protocols, and core technologies. No coding required.",
+    "path": "Units/webdev_00_web_foundations/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_01_html",
+    "type": "unit",
+    "title": "HTML",
+    "description": "Learn to write valid, semantic, accessible HTML — the structural language of the web. From the document skeleton to forms, tables, and semantic landmarks.",
+    "path": "Units/webdev_01_html/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_02_css",
+    "type": "unit",
+    "title": "CSS",
+    "description": "Master CSS — from syntax and the cascade through selectors, the box model, Flexbox, Grid, typography, colour, and responsive design.",
+    "path": "Units/webdev_02_css/index.md",
+    "difficulty": "Beginner to Intermediate",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_02_css_01_foundations",
+    "type": "unit",
+    "title": "CSS Foundations",
+    "description": "How CSS works — linking stylesheets, the syntax of rules, and the cascade.",
+    "path": "Units/webdev_02_css_01_foundations/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_02_css_02_selectors",
+    "type": "unit",
+    "title": "Selectors & Specificity",
+    "description": "The targeting language of CSS — how to select exactly what you want and predict which rule wins.",
+    "path": "Units/webdev_02_css_02_selectors/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_02_css_03_box_model",
+    "type": "unit",
+    "title": "The Box Model",
+    "description": "Every element is a box — four layers of space that determine how things are sized and spaced.",
+    "path": "Units/webdev_02_css_03_box_model/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_02_css_04_layout",
+    "type": "unit",
+    "title": "Layout",
+    "description": "The two modern CSS layout systems: Flexbox for one-dimensional layouts, Grid for two-dimensional layouts.",
+    "path": "Units/webdev_02_css_04_layout/index.md",
+    "difficulty": "Intermediate",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_02_css_04_layout_01_flexbox",
+    "type": "unit",
+    "title": "Flexbox",
+    "description": "One-dimensional layout — arranging items along a row or column axis.",
+    "path": "Units/webdev_02_css_04_layout_01_flexbox/index.md",
+    "difficulty": "Intermediate",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_02_css_04_layout_02_grid",
+    "type": "unit",
+    "title": "Grid",
+    "description": "Two-dimensional layout — placing items in rows and columns simultaneously.",
+    "path": "Units/webdev_02_css_04_layout_02_grid/index.md",
+    "difficulty": "Intermediate",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_02_css_05_typography_and_colour",
+    "type": "unit",
+    "title": "Typography & Colour",
+    "description": "Fonts, text properties, colour models, backgrounds, and CSS custom properties.",
+    "path": "Units/webdev_02_css_05_typography_and_colour/index.md",
+    "difficulty": "Beginner to Intermediate",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_02_css_06_responsive",
+    "type": "unit",
+    "title": "Responsive Design",
+    "description": "Making CSS layouts adapt to any screen size — viewport units, media queries, fluid sizing.",
+    "path": "Units/webdev_02_css_06_responsive/index.md",
+    "difficulty": "Intermediate",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_03_js_basics",
+    "type": "unit",
+    "title": "JavaScript Basics",
+    "description": "From your first script tag to full DOM interactivity — the complete beginner JavaScript unit.",
+    "path": "Units/webdev_03_js_basics/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_03_js_basics_01_foundations",
+    "type": "unit",
+    "title": "JS Foundations",
+    "description": "How JavaScript works in the browser, how to declare variables, the primitive data types, and how to write expressions with operators.",
+    "path": "Units/webdev_03_js_basics_01_foundations/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_03_js_basics_02_control_flow",
+    "type": "unit",
+    "title": "Control Flow",
+    "description": "Conditionals, loops, and switch statements — how to dictate the logical path of a JavaScript program.",
+    "path": "Units/webdev_03_js_basics_02_control_flow/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_03_js_basics_03_functions",
+    "type": "unit",
+    "title": "Functions",
+    "description": "Declarations, arrow functions, scope, and closures — how to encapsulate and reuse logic in JavaScript.",
+    "path": "Units/webdev_03_js_basics_03_functions/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_03_js_basics_04_data_structures",
+    "type": "unit",
+    "title": "Data Structures",
+    "description": "Arrays, objects, and JSON — how to store, organise, and transfer collections of data in JavaScript.",
+    "path": "Units/webdev_03_js_basics_04_data_structures/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  },
+  {
+    "slug": "webdev_03_js_basics_05_the_dom",
+    "type": "unit",
+    "title": "The DOM",
+    "description": "Selecting elements, mutating the page, and responding to user events — how JavaScript connects to HTML and CSS.",
+    "path": "Units/webdev_03_js_basics_05_the_dom/index.md",
+    "difficulty": "Beginner",
+    "domain": "WebDev"
+  }
+]

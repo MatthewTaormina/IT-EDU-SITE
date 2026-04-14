@@ -10,114 +10,218 @@ This skill governs the creation of all educational content for the **IT EDU SITE
 
 ---
 
-## 1. Content Hierarchy
+## 1. Content Model — Seven First-Class Entity Types
 
-The platform uses a strict four-level hierarchy. Each level is a directory or file.
+The platform uses a **graph model**: every content type is its own independently addressable entity. Containment is expressed through `references` fields in frontmatter, not filesystem nesting. No entity is "owned by" another.
+
+| Type | File Pattern | Purpose |
+| :--- | :--- | :--- |
+| **Learning Pathway** | `Pathways/<slug>/index.md` | Curated, goal-oriented sequence referencing Courses and/or Projects |
+| **Course** | `Courses/<slug>/index.md` | Discipline-scoped curriculum referencing Units, Lessons, and/or Projects |
+| **Unit** | `Units/<slug>/index.md` | Topic cluster referencing other Units and/or Lessons (recursive nesting allowed) |
+| **Lesson** | `Lessons/<slug>.md` | Single focused concept; standalone deliverable |
+| **Project** | `Projects/<slug>/index.md` | Applied, hands-on deliverable; referenceable from Pathways, Courses, or Units |
+| **Article** | `Articles/<slug>.md` | Blog-style deep-dive; not tied to any course; may freely cite external sources |
+| **Catalog** | `catalog.json` | Machine-readable search index generated from frontmatter; **never edit by hand** |
+
+### Relationship Rules
 
 ```
-Learning Pathway
-└── Course
-    └── Lesson Plan  (index.md in a topic folder)
-        └── Lesson   (a standalone .md page)
+Learning Pathway  ──references──▶  Course | Project
+Course            ──references──▶  Unit | Lesson | Project
+Unit              ──references──▶  Unit | Lesson   (recursive nesting OK)
+Article           ──standalone──   (no parent required; links to any entity or external URL)
 ```
 
-| Level | Also Called | File Pattern | Purpose |
-| :--- | :--- | :--- | :--- |
-| **Learning Pathway** | Track, Roadmap | `pathway.md` or top-level `README.md` | Groups related courses into a goal-oriented sequence |
-| **Course** | Module, Domain | `course_name/index.md` | Groups lesson plans around a single discipline |
-| **Lesson Plan** | Unit, Topic | `topic_name/index.md` | Organizes a cluster of related lessons with learning objectives |
-| **Lesson** | Page, Article | `lesson_name.md` | Delivers a single, focused concept |
+### Directory Structure
 
-### Directory & File Naming Convention
+```
+Content/
+├── catalog.json                              ← generated search index (never edit by hand)
+├── index.md                                  ← site landing page
+├── Pathways/
+│   └── webdev_beginner/
+│       └── index.md                          ← type: pathway
+├── Courses/
+│   └── webdev/
+│       └── index.md                          ← type: course
+├── Units/
+│   └── webdev_00_web_foundations/
+│       ├── index.md                          ← type: unit
+│       └── review.md
+├── Lessons/
+│   └── webdev_00_web_foundations_01_the_internet.md   ← type: lesson
+├── Projects/
+│   └── webdev_capstone_portfolio/
+│       └── index.md                          ← type: project
+└── Articles/
+    └── internet_vs_web.md                    ← type: article
+```
+
+### Catalog Regeneration
+
+Whenever content is added, modified, or removed, regenerate `catalog.json` by running the catalog generator script from the repo root. The catalog is the single source of truth for search and filtering in the future website. It is built by scanning all frontmatter.
+
+Each catalog entry contains at minimum:
+
+```json
+{
+  "slug": "webdev_00_web_foundations_01_the_internet",
+  "type": "lesson",
+  "title": "The Internet",
+  "description": "The Internet is the global network...",
+  "path": "Lessons/webdev_00_web_foundations_01_the_internet.md",
+  "difficulty": "Beginner",
+  "tags": ["internet", "client-server", "ip-address"]
+}
+```
+
+---
+
+## 2. Naming Conventions
+
 - All **lowercase**, words separated by **underscores**.
-- All directories and files **must** be prefixed with a two-digit number and underscore: `00_web_foundations/`, `01_the_internet.md`
-- This prefix controls sort order so the curriculum sequence is always visible in the filesystem.
-- No spaces, no hyphens, no uppercase in the name portion.
-- **Every content folder must contain an `index.md`** — no folder should exist without one.
-
-### index.md by Level
-
-| Level | index.md Purpose |
-| :--- | :--- |
-| **Course folder** (e.g. `WebDev/`) | Course hub: summary, objectives, prerequisites, list of all units with one-line descriptions |
-| **Lesson Plan folder** (e.g. `00_web_foundations/`) | Unit hub: learning objectives, prerequisites, lesson list, core terminology glossary |
-
-### review.md Standard
-
-Every lesson plan folder must also contain a `review.md` file. It is the **final file** in the unit and serves as a consolidation checkpoint before the learner moves on.
-
-**Required sections:**
-
-| Section | Purpose |
-| :--- | :--- |
-| **What You Covered** | One-sentence summary of every lesson in the unit |
-| **Key Terms** | Glossary of every important term introduced, with concise definitions |
-| **Quick Check** | 5–10 short-answer questions the learner should be able to answer without looking. No multiple choice — questions should require recall and synthesis |
-| **Common Misconceptions** | 3–5 things learners frequently get wrong, corrected plainly |
-| **What Comes Next** | One-paragraph bridge to the next unit, explaining what prior knowledge will be used |
-
-### Cross-References
-
-- Lessons **must** cross-reference related lessons within the same unit using relative markdown links: `[Lesson 06: HTTP](./06_http.md)`
-- Lessons **may** cross-reference lessons in other units where genuinely relevant
-- Cross-references should be inline (at the point of relevance) not collected at the bottom
-
-### Optional Resources
-
-Every lesson ends with an **## Optional Resources** section — the final section before the file ends. Third-party links are allowed and encouraged here.
-
-**Lesson-level resources** (in each `.md` lesson file):
-```markdown
-## Optional Resources
-
-- [Title](https://url) — one-sentence description of what it covers and why it's worth reading
-```
-
-**Unit-level resources** (collected in `review.md` under a `## Further Reading` section):
-- Aggregated list of the best resources across the whole unit
-- Include authoritative references: MDN, web.dev, RFCs, official docs
+- Lesson and Unit slugs **must** be prefixed with their domain and path to ensure global uniqueness:
+  - **Domain prefix:** `webdev_`, `networking_`, `security_`, etc.
+  - **Unit slug:** `webdev_00_web_foundations`
+  - **Lesson slug:** `webdev_00_web_foundations_01_the_internet`
+- Directory and file names for new content **must** include a two-digit numeric prefix: `00_`, `01_`, etc. This prefix controls sort order.
+- No spaces, no hyphens, no uppercase in names.
+- **Every index directory must contain an `index.md`** — no folder should exist without one.
 
 ---
 
-## 2. Frontmatter (Metadata)
+## 3. Frontmatter (Metadata)
 
-Every `.md` file **must** begin with a YAML frontmatter block.
+Every `.md` file **must** begin with a YAML frontmatter block. The `type` field is mandatory on all files.
 
-### Lesson Plan (`index.md`) Frontmatter
+### Learning Pathway (`Pathways/<slug>/index.md`)
+
 ```yaml
 ---
-title: "Topic Display Name"
-description: "One sentence summary for SEO and navigation."
-domain: "WebDev | Networking | OS | Hardware | Algorithms | ..."
-difficulty: "Beginner | Intermediate | Advanced"
+type: pathway
+title: "Web Developer: Zero to Employable"
+description: "One sentence summary."
+difficulty: Beginner | Intermediate | Advanced
+estimated_hours: 60
+tags: [web, fullstack]
+goal: "What the learner will achieve upon completion."
+audience: "Who this is for and what they are assumed to know."
+references:
+  - type: course
+    slug: webdev
+  - type: project
+    slug: webdev_capstone_portfolio
+---
+```
+
+### Course (`Courses/<slug>/index.md`)
+
+```yaml
+---
+type: course
+title: "Web Development"
+description: "One sentence summary."
+domain: WebDev | Networking | OS | Hardware | Algorithms | Security
+difficulty: Beginner | Intermediate | Advanced
+tags: [html, css, javascript]
 prerequisites:
-  - "Prerequisite topic or concept"
-learning_objectives:
-  - "By the end of this unit, the learner will be able to ..."
+  - slug: intro-to-computers
+references:
+  - type: unit
+    slug: webdev_00_web_foundations
+  - type: unit
+    slug: webdev_01_html
+  - type: project
+    slug: webdev_capstone_portfolio
 ---
 ```
 
-### Lesson Frontmatter
+### Unit (`Units/<slug>/index.md`)
+
 ```yaml
 ---
-title: "Lesson Display Name"
-lesson_plan: "Parent Lesson Plan Title"
-order: 1
+type: unit
+title: "Web Foundations"
+description: "One sentence summary."
+difficulty: Beginner | Intermediate | Advanced
+tags: [internet, web, http]
+prerequisites:
+  - slug: intro-networking
+references:
+  - type: unit
+    slug: webdev_02_css_04_layout_01_flexbox   # sub-unit example
+  - type: lesson
+    slug: webdev_00_web_foundations_01_the_internet
+  - type: lesson
+    slug: webdev_00_web_foundations_02_the_web
+---
+```
+
+### Lesson (`Lessons/<slug>.md`)
+
+```yaml
+---
+type: lesson
+title: "The Internet"
+description: "One sentence summary."
+difficulty: Beginner | Intermediate | Advanced
 duration_minutes: 15
 tags:
-  - keyword1
-  - keyword2
+  - internet
+  - client-server
+  - ip-address
+---
+```
+
+### Project (`Projects/<slug>/index.md`)
+
+```yaml
+---
+type: project
+title: "Capstone Project — Personal Portfolio Website"
+description: "One sentence summary."
+difficulty: Beginner | Intermediate | Advanced
+tags: [html, css, javascript, portfolio]
+skills_practiced: [html-structure, css-layout, js-events, git]
+deliverable: "A deployed static website with at least 3 pages."
+prerequisites:
+  - slug: webdev_01_html
+  - slug: webdev_02_css
+  - slug: webdev_03_js_basics
+---
+```
+
+### Article (`Articles/<slug>.md`)
+
+```yaml
+---
+type: article
+title: "The Internet and the Web Are Not the Same Thing"
+description: "One sentence summary."
+author: "Author Name"
+published_date: "2026-04-14"
+tags:
+  - internet
+  - web
+  - history
+related_content:
+  - type: lesson
+    slug: webdev_00_web_foundations_01_the_internet
+external_references:
+  - title: "How the Web Works — MDN"
+    url: "https://developer.mozilla.org/..."
 ---
 ```
 
 ---
 
-## 3. Lesson Plan Structure (`index.md`)
+## 4. Unit Structure (`Units/<slug>/index.md`)
 
-A Lesson Plan is the landing page for a topic. It should read like a course syllabus.
+A Unit is the landing page for a topic. It reads like a course syllabus.
 
 ```markdown
-# [Topic Title]
+# [Unit Title]
 
 > **Unit Summary:** One or two sentences describing what this unit covers and why it matters.
 
@@ -130,8 +234,8 @@ By the end of this unit, you will be able to:
 - Link or name of required prior knowledge
 
 ## Lessons in this Unit
-1. [Lesson 1 Title](./lesson_1.md)
-2. [Lesson 2 Title](./lesson_2.md)
+1. [Lesson 1 Title](../../Lessons/<slug>.md)
+2. [Lesson 2 Title](../../Lessons/<slug>.md)
 
 ## Core Terminology
 A quick-reference glossary for the unit's key terms.
@@ -146,12 +250,26 @@ Definition in one to two sentences.
 
 ---
 
-> **Unit Insight:** A closing thought or "big picture" takeaway connecting this unit to real-world IT work.
+> **Unit Insight:** A closing thought or "big picture" takeaway.
 ```
+
+### review.md Standard
+
+Every Unit folder must contain a `review.md`. It is the final file in the unit.
+
+**Required sections:**
+
+| Section | Purpose |
+| :--- | :--- |
+| **What You Covered** | One-sentence summary of every lesson in the unit |
+| **Key Terms** | Glossary of every important term introduced |
+| **Quick Check** | 5–10 short-answer questions (no multiple choice) |
+| **Common Misconceptions** | 3–5 things learners frequently get wrong, corrected plainly |
+| **What Comes Next** | One-paragraph bridge to the next unit |
 
 ---
 
-## 4. Lesson Structure (standalone `.md`)
+## 5. Lesson Structure (`Lessons/<slug>.md`)
 
 A Lesson delivers a single, focused concept. It should be completable in one sitting.
 
@@ -167,31 +285,146 @@ Clear, direct prose. No jargon without definition. Use analogies for abstract id
 Step-by-step breakdown, diagrams, or tables where appropriate.
 
 ## [EXAMPLES]
-(See Section 5 for formatting conventions)
+(See Section 7 for formatting conventions)
 
 ## [CHALLENGES]
-(See Section 5 for formatting conventions)
+(See Section 7 for formatting conventions)
 
 ## Key Takeaways
 - Bullet summary of the 3–5 most important points.
 
 ## Further Reading / Research Questions
-(See Section 5 for formatting conventions)
+(See Section 7 for formatting conventions)
 ```
 
 ---
 
-## 5. Educational Element Conventions
+## 6. Article Structure (`Articles/<slug>.md`)
 
-These are the standard "callout" blocks used throughout all content. Consistency is critical for future website rendering.
+An Article is a standalone blog-style piece. It is not part of a course sequence.
+
+```markdown
+# [Article Title]
+
+> **Article Summary:** What this article covers in one sentence.
 
 ---
 
+## [Section 1]
+...prose...
+
+## [Section 2]
+...
+
+---
+
+## Key Takeaways
+- Bullet summary of the main points.
+
+## Optional Resources
+- [Title](https://url) — description of what it covers and why it's worth reading
+```
+
+Articles **may**:
+- Cite external sources freely (in `external_references` frontmatter and inline links)
+- Reference internal lessons, units, or courses (in `related_content` frontmatter and inline links)
+- Cover topics from multiple domains
+
+Articles **must not**:
+- Be structured as a lesson (no strict "How It Works / Challenges" format required)
+- Require prerequisite reading to be understood (they are self-contained)
+
+---
+
+## 7. Course Structure (`Courses/<slug>/index.md`)
+
+A Course is a navigational hub — it organizes, it does not teach directly.
+
+```markdown
+# [Course Title]
+
+> **Course Summary:** What this course covers, who it is for, and what the learner will achieve.
+
+## Course Objectives
+By the end of this course, you will be able to:
+- High-level objective 1
+- High-level objective 2
+
+## Prerequisites
+- [Prior Course or Concept](../../Courses/<slug>/)
+
+## Curriculum
+### Unit 1: [Unit Title]
+Brief description. → [Start Unit](../../Units/<slug>/)
+
+### Unit 2: [Unit Title]
+...
+```
+
+---
+
+## 8. Learning Pathway Structure (`Pathways/<slug>/index.md`)
+
+A Learning Pathway is a curated, goal-oriented sequence of courses.
+
+```markdown
+# Learning Pathway: [Pathway Name]
+
+> **Who this is for:** [Target audience]
+> **Goal:** [What the learner achieves upon completion]
+> **Estimated Time:** [Total hours]
+
+## Pathway Overview
+
+| Step | Content | Type | Skills Gained |
+| :--- | :--- | :--- | :--- |
+| 1 | [Course Name](../../Courses/<slug>/) | Course | Skill A |
+| 2 | [Project Name](../../Projects/<slug>/) | Project | Skill B |
+
+## Milestones
+Describe 2–3 concrete checkpoints that mark meaningful progress.
+
+## Recommended Tools & Environment
+List any software, accounts, or setup required before starting.
+```
+
+---
+
+## 9. Cross-References
+
+- Use **relative markdown links** for all internal cross-references.
+- Cross-references should be **inline** (at the point of relevance), not collected at the bottom.
+- The `references` frontmatter field is for the search catalog — it does not replace prose links.
+
+**Relative path rules:**
+
+| Linking from | Linking to | Example relative path |
+| :--- | :--- | :--- |
+| `Lessons/<slug>.md` | Another lesson | `./other-lesson-slug.md` |
+| `Units/<slug>/index.md` | A lesson | `../../Lessons/<lesson-slug>.md` |
+| `Courses/<slug>/index.md` | A unit | `../../Units/<unit-slug>/` |
+| `Pathways/<slug>/index.md` | A course | `../../Courses/<course-slug>/` |
+| `Pathways/<slug>/index.md` | A project | `../../Projects/<project-slug>/` |
+| Any file | An article | `../../Articles/<article-slug>` |
+
+### Optional Resources
+
+Every lesson ends with an **## Optional Resources** section. Third-party links are allowed and encouraged here.
+
+```markdown
+## Optional Resources
+
+- [Title](https://url) — one-sentence description of what it covers and why it's worth reading
+```
+
+Unit-level resources are collected in `review.md` under a `## Further Reading` section.
+
+---
+
+## 10. Educational Element Conventions
+
 ### ✅ Example
 
-Use for concrete demonstrations, code samples, and real-world applications.
-
-**Markdown:**
 ```markdown
 > **Example — [Short Label]:**
 > [Explanation or code demonstrating the concept.]
@@ -201,69 +434,54 @@ Use for concrete demonstrations, code samples, and real-world applications.
 > ```
 ```
 
-**Rule:** Every abstract concept must have at least one Example immediately following it. Never leave a definition floating without a concrete case.
+**Rule:** Every abstract concept must have at least one Example immediately following it.
 
 ---
 
 ### 🔬 Research Question
 
-Use to prompt independent thinking and exploration beyond the lesson material.
-
-**Markdown:**
 ```markdown
 > **Research Question:** [Open-ended question that encourages the learner to explore further.]
 >
 > *Hint: Try searching for [keyword] or [related tool/technology].*
 ```
 
-**Rule:** Include 1–3 Research Questions at the end of each lesson. They should not be answerable from the lesson content alone.
+**Rule:** Include 1–3 Research Questions at the end of each lesson.
 
 ---
 
 ### 💡 Tip
 
-Use for best practices, professional shortcuts, and "good to know" information.
-
-**Markdown:**
 ```markdown
 > **💡 Tip:** [Practical advice or shortcut that improves understanding or workflow.]
 ```
 
-**Rule:** Tips are positive — they point toward a better way of doing something. Do not use Tips to warn about dangers.
+**Rule:** Tips are positive — they point toward a better way. Do not use Tips to warn about dangers.
 
 ---
 
 ### ⚠️ Warning
 
-Use for common mistakes, gotchas, and misconceptions that learners frequently encounter.
-
-**Markdown:**
 ```markdown
 > **⚠️ Warning:** [Description of a common mistake, and how to avoid it.]
 ```
 
-**Rule:** Warnings are reactive — they appear near the concept they protect against. Never cluster Warnings at the end of a section.
+**Rule:** Warnings appear near the concept they protect against. Never cluster them at the end.
 
 ---
 
 ### 🚨 Alert (Critical / Breaking)
 
-Use sparingly for security risks, data-loss scenarios, or concepts where getting it wrong has serious consequences.
-
-**Markdown:**
 ```markdown
-> **🚨 Alert:** [Critical information. This is non-negotiable or carries serious risk.]
+> **🚨 Alert:** [Critical information. Non-negotiable or carries serious risk.]
 ```
 
-**Rule:** Use fewer than one Alert per lesson on average. If everything is critical, nothing is.
+**Rule:** Use fewer than one Alert per lesson on average.
 
 ---
 
 ### 🏆 Challenge
 
-Use for hands-on exercises, projects, and activities that let learners apply the concept.
-
-**Markdown:**
 ```markdown
 ## Challenge: [Challenge Title]
 
@@ -285,65 +503,11 @@ Use for hands-on exercises, projects, and activities that let learners apply the
 > **💡 Hint:** A nudge without giving away the solution.
 ```
 
-**Rule:** Every Lesson Plan (`index.md`) should end with at least one Challenge that synthesizes the unit's objectives.
+**Rule:** Every Unit `index.md` should end with at least one Challenge that synthesizes the unit's objectives.
 
 ---
 
-## 6. Course Structure (`course_name/index.md`)
-
-A Course is a navigational hub — it does not teach directly, it organizes.
-
-```markdown
-# [Course Title]
-
-> **Course Summary:** What this course covers, who it is for, and what the learner will achieve.
-
-## Course Objectives
-By the end of this course, you will be able to:
-- High-level objective 1
-- High-level objective 2
-
-## Prerequisites
-- [Prior Course or Concept](../path/to/course)
-
-## Curriculum
-### Unit 1: [Lesson Plan Title]
-Brief description of the unit. → [Start Unit](./unit_1_folder/index.md)
-
-### Unit 2: [Lesson Plan Title]
-...
-```
-
----
-
-## 7. Learning Pathway Structure
-
-A Learning Pathway is a curated, goal-oriented sequence of courses.
-
-```markdown
-# Learning Pathway: [Pathway Name]
-
-> **Who this is for:** [Target audience and assumed starting knowledge.]
-> **Goal:** [What the learner will be able to do upon completion.]
-> **Estimated Time:** [Total hours]
-
-## Pathway Overview
-
-| Step | Course | Duration | Skills Gained |
-| :--- | :--- | :--- | :--- |
-| 1 | [Course Name](./path) | ~X hrs | Skill A, Skill B |
-| 2 | [Course Name](./path) | ~X hrs | Skill C |
-
-## Milestones
-Describe 2–3 concrete checkpoints that mark meaningful progress.
-
-## Recommended Tools & Environment
-List any software, accounts, or setup the learner needs before starting.
-```
-
----
-
-## 8. Writing Style Guide
+## 11. Writing Style Guide
 
 | Principle | Rule |
 | :--- | :--- |
@@ -354,12 +518,10 @@ List any software, accounts, or setup the learner needs before starting.
 | **Passive Voice** | Avoid. Prefer "The server sends a response" over "A response is sent." |
 | **Placeholders** | Forbidden. Never write "content goes here" or "TBD." |
 | **Scope Creep** | Each lesson teaches ONE concept. Split if necessary. |
-| **ASCII Art** | **Forbidden.** Never use ASCII diagrams (`───`, `│`, `▼`, box-drawing characters). |
-| **Diagrams** | Use **Mermaid** (for flow/sequence/graph logic) or **SVG** (for spatial/architectural layouts). SVG is preferred for anything that benefits from precise layout or styling. Save SVG files in the global `Assets/Images/<course>/<topic>/` folder and reference with a root-relative or relative path. Every lesson that explains a flow, structure, architecture, or anatomy **must** include at least one diagram. |
+| **ASCII Art** | **Forbidden.** Never use ASCII diagrams. |
+| **Diagrams** | Use **Mermaid** (flow/sequence/graph) or **SVG** (spatial/architectural). Every lesson that explains a flow, structure, or anatomy **must** include at least one diagram. |
 
 ### Visual Content Standards
-
-Every lesson should ask: *"Is there a concept here that a picture makes clearer than words alone?"* If yes, a diagram is required.
 
 **Always diagram:**
 - Any multi-step process or flow (request-response, DNS resolution, page load)
@@ -367,36 +529,24 @@ Every lesson should ask: *"Is there a concept here that a picture makes clearer 
 - Any structure with labeled parts (URL anatomy, HTTP message structure)
 - Any layered model (Internet vs Web, HTML/CSS/JS layers)
 
-**Diagram types by use case:**
-
 | Use Case | Preferred Format |
 | :--- | :--- |
 | Flow (A → B → C) | SVG or Mermaid `graph TD` |
 | Sequence (time-ordered back-and-forth) | Mermaid `sequenceDiagram` |
 | Architecture (components and relationships) | SVG |
 | Anatomy (labeled parts of a thing) | SVG |
-| Concept illustration (making abstract ideas tangible, human, engaging) | AI-generated image |
-| Comparison / taxonomy | Markdown table (no diagram needed) |
-
-**Two visual tracks:**
-
-- **SVG** — use for technical diagrams that require precision, labels, and editability. Save to `Assets/Images/<course>/<topic>/`. Reference: `![alt](../path/to/diagram.svg)`
-- **AI-generated image** — use for conceptual illustrations that make lessons feel human and engaging (e.g., a server room, a person debugging, an abstract network). Generate with the image tool, copy to `Assets/Images/<course>/<topic>/`, and reference in markdown. Use for section openers or to break up dense technical text.
-
-**Rule of thumb:** If it needs labels and arrows → SVG. If it should *feel* like something → AI image.
+| Concept illustration | AI-generated image |
+| Comparison / taxonomy | Markdown table |
 
 **SVG style conventions:**
-- Use `viewBox` and no fixed `width`/`height` so diagrams scale responsively
+- Use `viewBox` and no fixed `width`/`height` (responsive scaling)
 - Font: `system-ui, -apple-system, sans-serif`
 - Arrow color: `#6b7280` (neutral gray)
-- Use distinct fill colors per node type (blue = client, amber = gateway/proxy, green = server/backend)
-- Always include a descriptive `alt` text in the markdown reference
+- Blue = client, amber = gateway/proxy, green = server/backend
 
 ---
 
-## 9. Difficulty Labeling
-
-Label every piece of content consistently.
+## 12. Difficulty Labeling
 
 | Label | Assumes | Example Content |
 | :--- | :--- | :--- |
@@ -406,30 +556,27 @@ Label every piece of content consistently.
 
 ---
 
-## 10. Quick Checklist Before Saving Any File
+## 13. Quick Checklist Before Saving Any File
 
-- [ ] Frontmatter is present and complete
+- [ ] Frontmatter is present, complete, and includes `type:`
+- [ ] `references:` field lists all direct child entities (for Units and Courses)
 - [ ] All technical terms are **bolded** on first use and defined
 - [ ] Every abstract concept has at least one **Example** block
 - [ ] At least one **💡 Tip** or **⚠️ Warning** is present where relevant
 - [ ] No spelling errors, no placeholder text
-- [ ] File is named `00_lowercase_underscores` with correct numeric prefix
+- [ ] File is named `00_lowercase_underscores` with correct numeric prefix and domain prefix
 - [ ] The lesson is scoped to ONE concept
-- [ ] Complexity is appropriate to depth layer (see §11)
+- [ ] `catalog.json` has been regenerated after adding/modifying files
 
 ---
 
-## 11. Pedagogical Philosophy
-
-This platform targets **deep understanding, not pattern copying.** Learners should be able to reason about systems, not just follow recipes.
+## 14. Pedagogical Philosophy
 
 ### Core Principle: Progressive Complexity
+
 Start with a simplified, working mental model. Then incrementally add real complexity, edge cases, and "under the hood" detail. Never lead with the enterprise-level or fully-optimized version of a concept.
 
-> **Example:** Introduce an HTML document as "a file the browser reads" before explaining it as a tree of nested nodes (the DOM). Both are true — but the second requires the first to land.
-
 ### Depth Layers
-Every concept passes through three layers, across separate lessons or sections:
 
 | Layer | Goal | Tone |
 | :--- | :--- | :--- |
@@ -437,39 +584,38 @@ Every concept passes through three layers, across separate lessons or sections:
 | **2 — How It Works** | Explain the mechanism. What actually happens. | Precise, still friendly |
 | **3 — Under the Hood** | Expose the internals. Data structures, protocols, specs. | Technical, rigorous |
 
-Do not skip Layer 1 to get to Layer 3 faster. Learners who skip Layer 1 become pattern-copiers.
-
 ### Cognitive Load Rules
 
 | Practice Area | Mandatory | Prohibited |
 | :--- | :--- | :--- |
-| **Content Formatting** | Strict hierarchies, bullet points, semantic code blocks. | Decorative images, tangential anecdotes, cluttered layouts. |
-| **Pacing & Flow** | If a learner is blocked, offer a parallel unblocked task in the same domain. | Forcing strict linear progression when it creates a bottleneck. |
-| **Feedback Design** | Explain *why* an error occurs based on the likely mistake. | Giving the final answer immediately on failure. Generic "incorrect" messages. |
-| **Complex Systems** | Start with a simplified functioning model, then add complexity and edge cases. | Introducing the fully-optimized or enterprise solution before the basic mechanism is understood. |
+| **Content Formatting** | Strict hierarchies, bullet points, semantic code blocks. | Decorative images, tangential anecdotes. |
+| **Pacing & Flow** | If a learner is blocked, offer a parallel unblocked task. | Forcing strict linear progression when it creates a bottleneck. |
+| **Feedback Design** | Explain *why* an error occurs. | Generic "incorrect" messages; giving the answer immediately. |
+| **Complex Systems** | Start with a simplified functioning model. | Introducing the enterprise solution before the basic mechanism is understood. |
 
 ### Analogy Policy
+
 - Every concept that cannot be directly observed **requires** an analogy.
-- Analogies must be retired once the technical vocabulary is established — don't let the analogy become a crutch.
-- When the real mechanism differs from the analogy, **say so explicitly** and explain the difference.
+- Analogies must be retired once the technical vocabulary is established.
+- When the real mechanism differs from the analogy, **say so explicitly**.
 
 ---
 
-## 12. AI Authoring Workflow
+## 15. AI Authoring Workflow
 
-When creating or restructuring content, always follow this sequence. **Never skip ahead without explicit user approval.**
+**Never skip ahead without explicit user approval.**
 
 ### Step 1 — Plan (Structural Outline)
 Present the full directory/file tree with names, numbering, and a one-line description of each file. Wait for approval.
 
 ### Step 2 — Stub (Frontmatter + Skeleton)
-Create files with valid frontmatter and section headings only. No prose content yet. Wait for approval or a signal to expand.
+Create files with valid frontmatter and section headings only. No prose content yet. Wait for approval.
 
 ### Step 3 — Expand (One File at a Time)
-Write full content for one file at a time. Use progressive expansion within each file: introduce the Layer 1 (high-level) content first, then seek approval before adding Layer 2/3 depth.
+Write full content for one file at a time. Use progressive expansion: introduce Layer 1 content first, seek approval before adding Layer 2/3 depth.
 
 ### Rules
 - **Never output multiple fully-written files in a single response.**
 - **Always present a plan and wait for approval before creating files.**
 - When in doubt about scope, ask — don't assume.
-- Stubs are always preferable to placeholders. A stub has real structure; a placeholder has fake content.
+- Stubs are always preferable to placeholders.
