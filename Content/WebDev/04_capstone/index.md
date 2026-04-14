@@ -65,6 +65,7 @@ No frameworks. No libraries. No CSS resets from CDNs. Everything you need, you a
 
 1. [Client Brief & Wireframes](./01_brief.md)
 2. [Technical Requirements & Acceptance Criteria](./02_requirements.md)
+3. [Client Asset Pack — images, copy, colours & fonts](./03_starter_kit.md)
 
 ---
 

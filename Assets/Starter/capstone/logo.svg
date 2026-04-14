@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 72" role="img" aria-label="Maya Chen Graphic Design logo">
+  <!-- Monogram mark -->
+  <circle cx="36" cy="36" r="30" fill="#1a1a2e"/>
+  <text x="36" y="43" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="21" font-weight="700"
+        fill="#ffffff" letter-spacing="1">MC</text>
+
+  <!-- Divider -->
+  <line x1="76" y1="12" x2="76" y2="60" stroke="#d0d0d8" stroke-width="1"/>
+
+  <!-- Wordmark -->
+  <text x="92" y="34"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="20" font-weight="700"
+        fill="#1a1a2e" letter-spacing="0.5">Maya Chen</text>
+
+  <!-- Tagline -->
+  <text x="93" y="52"
+        font-family="ui-sans-serif, system-ui, sans-serif"
+        font-size="9.5" font-weight="400"
+        fill="#6b7280" letter-spacing="3.5">GRAPHIC DESIGN</text>
+</svg>
