@@ -3,8 +3,8 @@
     "version": "2.0.0",
     "last_updated": "2026-04-14",
     "description": "Flattened research node graph for the .knowledge/ Instructional Knowledge Engine. Optimized for RAG retrieval and agent navigation. Every node includes a terminal_objective block.",
-    "total_nodes": 17,
-    "domains": ["pedagogy", "programming", "web-dev", "indexes", "validation"],
+    "total_nodes": 18,
+    "domains": ["pedagogy", "programming", "web-dev", "git", "indexes", "validation"],
     "engine_version": "2.0.0",
     "agent_entry_point": ".knowledge/README_AGENT.md"
   },
@@ -154,6 +154,15 @@
       "related_nodes": ["master-index"]
     },
     {
+      "id": "git_best_practices",
+      "domain": "git",
+      "path": ".knowledge/git/git-best-practices.md",
+      "title": "Git Best Practices",
+      "description": "Atomic commits, Conventional Commits specification, commit message quality, branching strategies (Git Flow / GitHub Flow / trunk-based), staging with git add -p, interactive rebase, annotated tags, SemVer, .gitignore hygiene, pre-commit hooks, PR workflow, and common mistakes.",
+      "tags": ["git", "version-control", "atomic-commits", "conventional-commits", "branching", "rebase", "pull-request", "semantic-versioning", "git-hygiene"],
+      "related_nodes": ["software-engineering-principles", "core-competencies-fullstack", "infrastructure"]
+    },
+    {
       "id": "gap-analysis",
       "domain": "validation",
       "path": ".knowledge/validation/gap-analysis.md",
@@ -199,6 +208,9 @@
     { "from": "gap-analysis", "to": "programming-paradigms", "relationship": "identifies-gaps-in" },
     { "from": "gap-analysis", "to": "backend-stack", "relationship": "identifies-gaps-in" },
     { "from": "gap-analysis", "to": "infrastructure", "relationship": "identifies-gaps-in" },
-    { "from": "gap-analysis", "to": "frontend-stack", "relationship": "identifies-gaps-in" }
+    { "from": "gap-analysis", "to": "frontend-stack", "relationship": "identifies-gaps-in" },
+    { "from": "git_best_practices", "to": "software-engineering-principles", "relationship": "operationalises" },
+    { "from": "git_best_practices", "to": "core-competencies-fullstack", "relationship": "professional-skill-within" },
+    { "from": "git_best_practices", "to": "infrastructure", "relationship": "prerequisite-for" }
   ]
 }

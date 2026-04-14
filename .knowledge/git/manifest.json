@@ -1,0 +1,62 @@
+{
+  "$schema_version": "2.0.0",
+  "domain": "git",
+  "path": ".knowledge/git",
+  "purpose": "Professional Git workflow practices: atomic commits, Conventional Commits, branching strategy, staging, history rewriting, tagging, hygiene, and pull request workflow.",
+  "last_updated": "2026-04-14",
+  "documents": [
+    {
+      "id": "git_best_practices",
+      "path": ".knowledge/git/git-best-practices.md",
+      "title": "Git Best Practices",
+      "type": "research",
+      "description": "Comprehensive guide to atomic commits, conventional commits, branching strategy, staging, history rewriting, tagging, hygiene, PR workflow, and common mistakes in professional Git usage.",
+      "tags": [
+        "git",
+        "version-control",
+        "atomic-commits",
+        "conventional-commits",
+        "branching",
+        "git-flow",
+        "trunk-based-development",
+        "rebase",
+        "pull-request",
+        "code-review",
+        "semantic-versioning",
+        "git-hygiene"
+      ],
+      "prerequisites": ["version_control_basics"],
+      "related_nodes": [
+        "software-engineering-principles",
+        "core-competencies-fullstack",
+        "infrastructure"
+      ],
+      "terminal_objective": {
+        "prerequisite": "Basic git commands (init, add, commit, push, pull, branch, merge)",
+        "concept": "Professional Git usage is a system of conventions — atomic commits, structured messages, principled branching, clean history, and collaborative review — that makes a codebase's change history a first-class engineering artifact: readable, debuggable, and deployable at any point.",
+        "practical_application": "Author an atomic commit with a Conventional Commits message; rebase an in-progress feature branch interactively to squash and reword commits before opening a PR; configure a pre-commit hook that runs lint and type-check; create an annotated tag following semantic versioning; write a PR description that links a closing issue.",
+        "market_value": "High — professional Git hygiene is universally expected at all experience levels; Conventional Commits is the standard in OSS and enterprise CI/CD pipelines; recruiters and hiring managers read commit histories during portfolio review."
+      }
+    }
+  ],
+  "educational_asset_templates": [
+    {
+      "type": "lab",
+      "title": "Atomic Commit Workshop",
+      "description": "Given a dirty working tree with three mixed changes, use git add -p to craft three separate atomic commits with correct Conventional Commits messages.",
+      "deliverable": "Three commits visible in git log --oneline: one feat, one fix, one refactor — each containing only the relevant hunks"
+    },
+    {
+      "type": "lab",
+      "title": "Interactive Rebase Cleanup",
+      "description": "Given a branch with five WIP commits, use git rebase -i to squash them into two clean, well-named commits before opening a pull request.",
+      "deliverable": "A clean two-commit history with properly formatted Conventional Commits messages, pushed to a feature branch"
+    },
+    {
+      "type": "project",
+      "title": "Release Tagging and Changelog",
+      "description": "Apply Conventional Commits retroactively to a small project, tag a v1.0.0 release with an annotated tag, and generate a CHANGELOG.md using standard-version or release-please.",
+      "deliverable": "An annotated v1.0.0 tag pushed to remote; a generated CHANGELOG.md committed to the repository"
+    }
+  ]
+}

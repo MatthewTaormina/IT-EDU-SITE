@@ -35,6 +35,13 @@
       "purpose": "Navigation and cross-reference indexes for agent graph traversal"
     },
     {
+      "id": "git",
+      "path": ".knowledge/git",
+      "manifest": ".knowledge/git/manifest.json",
+      "document_count": 1,
+      "purpose": "Professional Git workflow: atomic commits, Conventional Commits, branching strategy, history rewriting, tagging, hygiene, and PR process"
+    },
+    {
       "id": "validation",
       "path": ".knowledge/validation",
       "manifest": ".knowledge/validation/manifest.json",
@@ -44,7 +51,7 @@
   ],
   "agent_entry_point": ".knowledge/README_AGENT.md",
   "graph_entry_point": ".knowledge/map.json",
-  "total_documents": 17,
+  "total_documents": 18,
   "critical_gaps": ["GAP-001", "GAP-002", "GAP-003", "GAP-004"],
   "next_review_due": "2026-07-14"
 }
