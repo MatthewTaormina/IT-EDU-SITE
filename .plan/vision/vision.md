@@ -21,7 +21,7 @@ IT EDU SITE solves this by providing:
 
 | Dimension | Status |
 |-----------|--------|
-| Web Dev pathway | ✅ Launched (`webdev_beginner`) — ~60 hrs, HTML/CSS/JS + Capstone |
+| Front-End Basics (web) pathway | ✅ Launched (`webdev_beginner`) — ~60 hrs, HTML/CSS/JS + Capstone |
 | Networking pathway | 🔲 Planned |
 | Security pathway | 🔲 Planned |
 | Python pathway | 🔲 Planned |
