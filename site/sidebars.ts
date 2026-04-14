@@ -251,6 +251,118 @@ const sidebars: SidebarsConfig = {
     },
   ],
 
+  // ── FrontEndIntermediate course ───────────────────────────────────────────────
+  webdevIntermediateCourseSidebar: [
+    {
+      type: 'category',
+      label: 'Front-End Intermediate (web)',
+      link: { type: 'doc', id: 'Courses/webdev_intermediate/index' },
+      items: [
+        // ── Unit 00 — Git & CLI ────────────────────────────────────────────────
+        {
+          type: 'category',
+          label: 'Unit 1 — Git & CLI',
+          link: { type: 'doc', id: 'Units/webdev_int_00_git_and_cli/index' },
+          items: [
+            'Lessons/webdev_int_00_git_and_cli_01_the_terminal',
+            'Lessons/webdev_int_00_git_and_cli_02_git_fundamentals',
+            'Lessons/webdev_int_00_git_and_cli_03_remotes_and_github',
+            'Lessons/webdev_int_00_git_and_cli_04_branching_and_merging',
+            'Lessons/webdev_int_00_git_and_cli_05_npm_basics',
+            'Units/webdev_int_00_git_and_cli/review',
+          ],
+        },
+        // ── Unit 01 — Async JS ────────────────────────────────────────────────
+        {
+          type: 'category',
+          label: 'Unit 2 — Async JavaScript',
+          link: { type: 'doc', id: 'Units/webdev_int_01_async_js/index' },
+          items: [
+            'Lessons/webdev_int_01_async_js_01_the_event_loop',
+            'Lessons/webdev_int_01_async_js_02_callbacks',
+            'Lessons/webdev_int_01_async_js_03_promises',
+            'Lessons/webdev_int_01_async_js_04_async_await',
+            'Lessons/webdev_int_01_async_js_05_fetch_api',
+            'Lessons/webdev_int_01_async_js_06_rest_api_consumption',
+            'Units/webdev_int_01_async_js/review',
+          ],
+        },
+        // ── Unit 02 — ES6+ ────────────────────────────────────────────────────
+        {
+          type: 'category',
+          label: 'Unit 3 — ES6+ Modern JavaScript',
+          link: { type: 'doc', id: 'Units/webdev_int_02_es6_plus/index' },
+          items: [
+            'Lessons/webdev_int_02_es6_plus_01_destructuring',
+            'Lessons/webdev_int_02_es6_plus_02_spread_and_rest',
+            'Lessons/webdev_int_02_es6_plus_03_modules',
+            'Lessons/webdev_int_02_es6_plus_04_optional_chaining_and_nullish',
+            'Lessons/webdev_int_02_es6_plus_05_modern_array_methods',
+            'Units/webdev_int_02_es6_plus/review',
+          ],
+        },
+        // ── Unit 03 — Browser APIs ────────────────────────────────────────────
+        {
+          type: 'category',
+          label: 'Unit 4 — Browser APIs & Storage',
+          link: { type: 'doc', id: 'Units/webdev_int_03_browser_apis/index' },
+          items: [
+            'Lessons/webdev_int_03_browser_apis_01_web_storage',
+            'Lessons/webdev_int_03_browser_apis_02_history_api',
+            'Lessons/webdev_int_03_browser_apis_03_url_and_query_params',
+            'Lessons/webdev_int_03_browser_apis_04_intersection_observer',
+            'Units/webdev_int_03_browser_apis/review',
+          ],
+        },
+        // ── Unit 04 — CSS Transitions ─────────────────────────────────────────
+        {
+          type: 'category',
+          label: 'Unit 5 — CSS Transitions & Animations',
+          link: { type: 'doc', id: 'Units/webdev_int_04_css_transitions/index' },
+          items: [
+            'Lessons/webdev_int_04_css_transitions_01_transitions',
+            'Lessons/webdev_int_04_css_transitions_02_transforms',
+            'Lessons/webdev_int_04_css_transitions_03_animations',
+            'Lessons/webdev_int_04_css_transitions_04_accessibility',
+            'Units/webdev_int_04_css_transitions/review',
+          ],
+        },
+        // ── Unit 05 — DevTools ────────────────────────────────────────────────
+        {
+          type: 'category',
+          label: 'Unit 6 — Browser DevTools',
+          link: { type: 'doc', id: 'Units/webdev_int_05_devtools/index' },
+          items: [
+            'Lessons/webdev_int_05_devtools_01_elements_panel',
+            'Lessons/webdev_int_05_devtools_02_console',
+            'Lessons/webdev_int_05_devtools_03_network_panel',
+            'Lessons/webdev_int_05_devtools_04_sources_and_debugger',
+            'Units/webdev_int_05_devtools/review',
+          ],
+        },
+        // ── Link to capstone project (separate sidebar) ───────────────────────
+        {
+          type: 'link',
+          label: '🎓 Capstone — Data SPA',
+          href: '/courses/Projects/webdev_intermediate_capstone/',
+        },
+      ],
+    },
+  ],
+
+  // ── FrontEndIntermediate capstone project ─────────────────────────────────────
+  webdevIntermediateProjectSidebar: [
+    {
+      type: 'category',
+      label: 'Capstone — Data SPA',
+      link: { type: 'doc', id: 'Projects/webdev_intermediate_capstone/index' },
+      items: [
+        'Projects/webdev_intermediate_capstone/brief',
+        'Projects/webdev_intermediate_capstone/requirements',
+      ],
+    },
+  ],
+
   // Articles pages intentionally have no sidebar — they render as standalone
   // reading pages matching the catalog pattern used by Pathways/Courses/Projects.
 };
