@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   description:
     'Free, structured learning pathways from zero knowledge to job-ready web development skills.',
-  metadataBase: new URL('https://it-learning-hub.netlify.app'),
+  metadataBase: new URL('https://it-edu-website.netlify.app'),
 };
 
 export default function RootLayout({
@@ -29,9 +29,16 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="flex flex-col min-h-full">
+        {/* Skip link — WCAG 2.4.1 / AODA: first focusable element on every page */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:font-medium focus:shadow-lg"
+        >
+          Skip to main content
+        </a>
         <ThemeProvider>
           <Nav />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" className="flex-1">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

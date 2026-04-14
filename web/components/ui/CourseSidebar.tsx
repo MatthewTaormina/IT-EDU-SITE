@@ -64,7 +64,7 @@ export default function CourseSidebar({ tree, courseTitle, courseHref }: Props) 
         aria-label="Show course sidebar"
         title="Show sidebar"
       >
-        <svg className="w-4 h-4 text-muted group-hover:text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg aria-hidden="true" className="w-4 h-4 text-muted group-hover:text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -87,7 +87,7 @@ export default function CourseSidebar({ tree, courseTitle, courseHref }: Props) 
           aria-label="Hide sidebar"
           title="Hide sidebar"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg aria-hidden="true" className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
@@ -167,6 +167,7 @@ function NavItems({
             >
               {/* chevron */}
               <svg
+                aria-hidden="true"
                 className={`w-3 h-3 shrink-0 transition-transform duration-200 ${isCollapsed ? '' : 'rotate-90'}`}
                 fill="none"
                 stroke="currentColor"

@@ -10,6 +10,7 @@ export default function Footer() {
         <nav className="flex gap-6" aria-label="Footer">
           <Link href="/pathways" className="hover:text-foreground transition-colors">Pathways</Link>
           <Link href="/learn" className="hover:text-foreground transition-colors">Courses</Link>
+          <Link href="/projects" className="hover:text-foreground transition-colors">Projects</Link>
           <Link href="/articles" className="hover:text-foreground transition-colors">Articles</Link>
           <Link href="/resources" className="hover:text-foreground transition-colors">Resources</Link>
         </nav>

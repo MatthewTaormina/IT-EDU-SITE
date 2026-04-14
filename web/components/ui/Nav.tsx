@@ -43,6 +43,15 @@ export default function Nav() {
   // Close mobile menu on route change
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
+  // Close mobile menu on Esc — WCAG 2.1.2 (no keyboard trap)
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape' && mobileOpen) setMobileOpen(false);
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [mobileOpen]);
+
   function hide() {
     setPinned(true);
     setVisible(false);
@@ -98,7 +107,7 @@ export default function Nav() {
               aria-label="Hide navigation bar"
               title="Hide nav bar"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg aria-hidden="true" className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
               </svg>
             </button>
@@ -106,10 +115,12 @@ export default function Nav() {
             {/* Hamburger (mobile) */}
             <button
               className="md:hidden p-2 rounded-md text-muted hover:text-foreground"
-              aria-label="Toggle menu"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav"
               onClick={() => setMobileOpen((v) => !v)}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 ) : (
@@ -122,7 +133,7 @@ export default function Nav() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <nav className="md:hidden border-t border-border bg-surface px-4 py-3 flex flex-col gap-1" aria-label="Mobile navigation">
+          <nav id="mobile-nav" className="md:hidden border-t border-border bg-surface px-4 py-3 flex flex-col gap-1" aria-label="Mobile navigation">
             {navLinks.map(({ href, label }) => {
               const active = pathname === href || pathname.startsWith(href + '/');
               return (
@@ -151,7 +162,7 @@ export default function Nav() {
           className="fixed top-0 left-1/2 -translate-x-1/2 z-50 px-4 py-1 bg-surface border border-border border-t-0 rounded-b-lg text-xs font-medium text-muted hover:text-foreground shadow-md transition-colors"
           aria-label="Show navigation bar"
         >
-          <svg className="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg aria-hidden="true" className="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
           Show nav
