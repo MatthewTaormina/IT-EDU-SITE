@@ -12,13 +12,13 @@ This skill governs the creation of all educational content for the **IT EDU SITE
 
 ## 1. Content Hierarchy
 
-The platform uses a strict four-level hierarchy. Each level is a directory or file.
+The platform uses a strict four-level instructional hierarchy **and** one parallel content type for practice.
 
 ```
-Learning Pathway
-└── Course
-    └── Lesson Plan  (index.md in a topic folder)
-        └── Lesson   (a standalone .md page)
+Learning Pathway          Independent Project
+└── Course                (standalone — not nested under any course)
+    └── Lesson Plan
+        └── Lesson
 ```
 
 | Level | Also Called | File Pattern | Purpose |
@@ -27,6 +27,11 @@ Learning Pathway
 | **Course** | Module, Domain | `course_name/index.md` | Groups lesson plans around a single discipline |
 | **Lesson Plan** | Unit, Topic | `topic_name/index.md` | Organizes a cluster of related lessons with learning objectives |
 | **Lesson** | Page, Article | `lesson_name.md` | Delivers a single, focused concept |
+| **Independent Project** | Practice Project, Portfolio Project | `Projects/<slug>/index.md` | Standalone, real-world-style assignment not tied to any specific course |
+
+### Navigation & Discovery
+
+> **Important:** Courses and Pathways are **not** exposed as top-level navigation tabs. Because the catalog will eventually contain too many courses to list in a nav bar, content is discovered exclusively through a **central Course and Pathway Catalog** page that provides **search and filter** capabilities (by domain, difficulty, duration, skills, etc.). The top-level navigation links only to the Catalog, the Projects index, and site-level pages (About, Home). Individual course or pathway pages are never placed directly in the main navigation.
 
 ### Directory & File Naming Convention
 - All **lowercase**, words separated by **underscores**.
@@ -343,7 +348,210 @@ List any software, accounts, or setup the learner needs before starting.
 
 ---
 
-## 8. Writing Style Guide
+## 8. Independent Projects
+
+Independent Projects are a **standalone content type** — they sit parallel to Courses and Pathways, not inside them. Their purpose is to give learners an opportunity to practice skills and build a portfolio without being attached to a specific course.
+
+### Core Principle: Simulated Real-World Assignments
+
+Every Independent Project **must** be framed as a realistic professional job assignment or an agile/Jira-style ticket. The learner should feel as though they have just been handed real work by a manager, stakeholder, or client. This means:
+
+- Using first-person professional language (the project "speaks" to the learner as a colleague or manager would).
+- Including authentic-feeling communications (emails, Slack/Teams messages, or meeting notes) that provide the brief and context.
+- Avoiding any language that signals this is a tutorial exercise (e.g., do not write "In this lesson, you will learn…").
+
+### Directory & File Structure
+
+All Independent Projects live under `Content/Projects/`. Each project is a self-contained folder.
+
+```
+Content/
+└── Projects/
+    ├── index.md                          # Project catalog / listing page
+    └── <slug>/                           # e.g., 01_portfolio_landing_page/
+        ├── index.md                      # Project hub (overview + all links)
+        ├── communications/
+        │   └── 01_kickoff_email.md       # Simulated email, Slack message, or meeting note
+        ├── prd.md                        # Product Requirements Document
+        ├── assets/
+        │   ├── design_mock.png           # Design mocks, wireframes, reference images
+        │   └── ...
+        ├── starter/
+        │   └── ...                       # Starter files: initial codebase or templates
+        └── content.md                    # The actual ticket / assignment description
+```
+
+**Naming rules:** Follow the same lowercase-underscore and numeric-prefix convention as the rest of the content hierarchy (e.g., `01_portfolio_landing_page/`).
+
+### Required Components
+
+Every Independent Project **must** include all five of the following components:
+
+| Component | File(s) | Description |
+| :--- | :--- | :--- |
+| **Professional Communications** | `communications/*.md` | One or more simulated emails, chat messages, or meeting notes from a fictional manager, stakeholder, or client. Must read as authentic workplace communication. |
+| **PRD (Product Requirements Document)** | `prd.md` | A concise document defining the problem, goals, success criteria, scope, and constraints — mirroring a real-world PRD or design brief. |
+| **Assets** | `assets/` | Supporting files: wireframes, design mocks, reference screenshots, brand guidelines, or any image the learner should reference while working. |
+| **Starter Files** | `starter/` | An initial codebase, boilerplate, template, or set of partial files the learner builds upon. May be an empty scaffold for open-ended projects. |
+| **Content (Ticket / Assignment)** | `content.md` | The core assignment description, written as a Jira ticket, GitHub Issue, or work order. Includes acceptance criteria in checkbox format. |
+
+### Frontmatter for Independent Projects
+
+#### Project Hub (`index.md`)
+```yaml
+---
+title: "Project Display Name"
+description: "One-sentence summary of what the project builds or solves."
+difficulty: "Beginner | Intermediate | Advanced"
+skills:
+  - "Skill or technology exercised"
+estimated_hours: 4
+domain: "WebDev | Networking | ..."
+---
+```
+
+#### Ticket / Assignment (`content.md`)
+```yaml
+---
+title: "Ticket Title (e.g., PROJ-42: Build Responsive Landing Page)"
+type: "Independent Project"
+status: "Open"
+priority: "Medium | High | Critical"
+estimated_hours: 4
+---
+```
+
+### Project Hub Structure (`index.md`)
+
+```markdown
+# [Project Title]
+
+> **Assignment Brief:** One or two sentences describing the fictional scenario and what you have been asked to deliver.
+
+## Background
+Context about the fictional company, team, or client. Makes the scenario feel real.
+
+## Your Task
+A plain-language summary of what the learner must build or deliver.
+
+## What You'll Practice
+- Skill or technology 1
+- Skill or technology 2
+
+## Project Files
+- 📧 [Kickoff Communications](./communications/01_kickoff_email.md)
+- 📄 [PRD](./prd.md)
+- 🖼 [Assets](./assets/)
+- 🗂 [Starter Files](./starter/)
+- 🎫 [Assignment Ticket](./content.md)
+
+## Acceptance Criteria
+- [ ] Criterion 1
+- [ ] Criterion 2
+```
+
+### Content (Ticket) Structure (`content.md`)
+
+Write this file as a Jira ticket or GitHub Issue. Do **not** write it as a lesson.
+
+```markdown
+# [PROJ-XX: Ticket Title]
+
+**Priority:** Medium  
+**Estimate:** 4 hours  
+**Reporter:** [Fictional manager name], Engineering Manager  
+**Assignee:** You
+
+---
+
+## Description
+Brief, professional description of the task — written as a colleague would write it, not as a teacher.
+
+## Acceptance Criteria
+- [ ] The page renders correctly on mobile (≤ 375px) and desktop (≥ 1280px).
+- [ ] All images include descriptive `alt` text.
+- [ ] The HTML validates with zero errors on the W3C validator.
+
+## Out of Scope
+- Backend integration
+- User authentication
+
+## Notes / References
+- See the attached PRD for full requirements.
+- Design mocks are in `/assets/design_mock.png`.
+```
+
+### PRD Structure (`prd.md`)
+
+```markdown
+# Product Requirements Document: [Feature / Project Name]
+
+**Version:** 1.0  
+**Author:** [Fictional PM or stakeholder name]  
+**Status:** Approved
+
+---
+
+## Problem Statement
+What problem does this project solve, and for whom?
+
+## Goals & Success Metrics
+| Goal | Success Metric |
+| :--- | :--- |
+| Goal 1 | Measurable outcome |
+
+## Scope
+### In Scope
+- Feature or deliverable 1
+
+### Out of Scope
+- Excluded work
+
+## Requirements
+### Functional Requirements
+- FR-01: ...
+
+### Non-Functional Requirements
+- NFR-01: Performance, accessibility, or other constraints
+
+## Constraints & Assumptions
+- Any known limitations or assumptions
+
+## Open Questions
+- Questions that would realistically exist in a real project
+```
+
+### Professional Communications Guidelines
+
+Simulated communications must feel genuine. Follow these rules:
+
+- **Use realistic names** for fictional personas (manager, PM, client) — be consistent across a project.
+- **Mimic real formats:** Emails have Subject, From, To, Date, and a professional sign-off. Slack messages are short, informal, and may use emoji sparingly.
+- **Provide just enough context** — do not over-explain or insert tutorial language. The learner should have to read between the lines as a real professional would.
+- **Do not spoil the solution** in the communications. They frame the problem; they do not solve it.
+
+> **Example — Kickoff Email:**
+>
+> ```
+> From: Sarah Chen <s.chen@pixelforge.io>
+> To: dev-team@pixelforge.io
+> Subject: 🚀 PROJ-42: Landing page refresh — kicking off this week
+>
+> Hey team,
+>
+> Quick note: marketing needs the new landing page live before the product launch on the 28th.
+> I've attached the PRD and the Figma mocks. Let me know if you have questions — I'm available
+> for a 15-min sync Thursday afternoon if needed.
+>
+> Key ask: mobile-first, and make sure it clears the accessibility audit we discussed last sprint.
+>
+> Thanks,
+> Sarah
+> ```
+
+---
+
+## 9. Writing Style Guide
 
 | Principle | Rule |
 | :--- | :--- |
@@ -394,7 +602,7 @@ Every lesson should ask: *"Is there a concept here that a picture makes clearer 
 
 ---
 
-## 9. Difficulty Labeling
+## 10. Difficulty Labeling
 
 Label every piece of content consistently.
 
@@ -406,7 +614,7 @@ Label every piece of content consistently.
 
 ---
 
-## 10. Quick Checklist Before Saving Any File
+## 11. Quick Checklist Before Saving Any File
 
 - [ ] Frontmatter is present and complete
 - [ ] All technical terms are **bolded** on first use and defined
@@ -415,11 +623,11 @@ Label every piece of content consistently.
 - [ ] No spelling errors, no placeholder text
 - [ ] File is named `00_lowercase_underscores` with correct numeric prefix
 - [ ] The lesson is scoped to ONE concept
-- [ ] Complexity is appropriate to depth layer (see §11)
+- [ ] Complexity is appropriate to depth layer (see §12)
 
 ---
 
-## 11. Pedagogical Philosophy
+## 12. Pedagogical Philosophy
 
 This platform targets **deep understanding, not pattern copying.** Learners should be able to reason about systems, not just follow recipes.
 
@@ -455,7 +663,7 @@ Do not skip Layer 1 to get to Layer 3 faster. Learners who skip Layer 1 become p
 
 ---
 
-## 12. AI Authoring Workflow
+## 13. AI Authoring Workflow
 
 When creating or restructuring content, always follow this sequence. **Never skip ahead without explicit user approval.**
 
