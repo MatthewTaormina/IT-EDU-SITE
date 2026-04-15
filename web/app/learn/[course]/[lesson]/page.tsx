@@ -99,7 +99,7 @@ export default async function LessonPage({ params }: Props) {
             href={prev.href}
             className="group flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors max-w-[45%]"
           >
-            <span className="text-lg">←</span>
+            <span className="text-lg" aria-hidden="true">←</span>
             <span className="truncate">
               <span className="block text-xs mb-0.5">Previous</span>
               <span className="group-hover:text-primary transition-colors">{prev.title}</span>
@@ -118,7 +118,7 @@ export default async function LessonPage({ params }: Props) {
               <span className="block text-xs mb-0.5">Next</span>
               <span className="group-hover:text-primary transition-colors">{next.title}</span>
             </span>
-            <span className="text-lg shrink-0">→</span>
+            <span className="text-lg shrink-0" aria-hidden="true">→</span>
           </Link>
         ) : (
           <div />

@@ -58,7 +58,7 @@ export default async function PathwayPage({ params }: Props) {
         <p className="text-muted text-lg mb-4">{frontmatter.description}</p>
         {frontmatter.goal && (
           <p className="text-sm bg-primary-light text-primary border border-primary/20 rounded-lg px-4 py-3 max-w-2xl">
-            🎯 <strong>Goal:</strong> {frontmatter.goal}
+            <span aria-hidden="true">🎯 </span><strong>Goal:</strong> {frontmatter.goal}
           </p>
         )}
         {frontmatter.estimated_hours && (

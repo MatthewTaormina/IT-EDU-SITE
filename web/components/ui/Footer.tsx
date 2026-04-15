@@ -7,7 +7,7 @@ export default function Footer() {
         <p>
           &copy; {new Date().getFullYear()} IT Learning Hub — free &amp; open-source
         </p>
-        <nav className="flex gap-6" aria-label="Footer">
+        <nav className="flex gap-6" aria-label="Footer navigation">
           <Link href="/pathways" className="hover:text-foreground transition-colors">Pathways</Link>
           <Link href="/learn" className="hover:text-foreground transition-colors">Courses</Link>
           <Link href="/projects" className="hover:text-foreground transition-colors">Projects</Link>

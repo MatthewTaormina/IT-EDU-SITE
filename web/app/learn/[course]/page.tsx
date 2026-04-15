@@ -63,9 +63,9 @@ export default async function CoursePage({ params }: Props) {
         {firstLesson && (
           <Link
             href={firstLesson.href}
-            className="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
+            className="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dk transition-colors"
           >
-            Start Course →
+            Start Course <span aria-hidden="true">→</span>
           </Link>
         )}
       </div>
@@ -96,7 +96,7 @@ export default async function CoursePage({ params }: Props) {
                             href={lesson.href}
                             className="flex items-center gap-2 px-5 py-3 hover:bg-background transition-colors text-sm"
                           >
-                            <span className="text-muted">›</span>
+                            <span className="text-muted" aria-hidden="true">›</span>
                             {lesson.title}
                           </Link>
                         </li>

@@ -67,7 +67,7 @@ export default function HomePage() {
             <p className="text-muted mt-1">Curated sequences from beginner to employable.</p>
           </div>
           <Link href="/pathways" className="text-sm text-primary font-medium hover:underline">
-            All pathways →
+            All pathways <span aria-hidden="true">→</span>
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -94,7 +94,7 @@ export default function HomePage() {
               <p className="text-muted mt-1">Standalone deep-dives you can take in any order.</p>
             </div>
             <Link href="/learn" className="text-sm text-primary font-medium hover:underline">
-              All courses →
+              All courses <span aria-hidden="true">→</span>
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -133,7 +133,7 @@ export default function HomePage() {
             },
           ].map(({ step, title, body }) => (
             <div key={step} className="text-center">
-              <div className="w-10 h-10 rounded-full bg-primary-light text-primary text-sm font-bold flex items-center justify-center mx-auto mb-4">
+              <div className="w-10 h-10 rounded-full bg-primary-light text-primary text-sm font-bold flex items-center justify-center mx-auto mb-4" aria-hidden="true">
                 {step}
               </div>
               <h3 className="font-semibold mb-2">{title}</h3>
