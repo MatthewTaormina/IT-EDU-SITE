@@ -1,0 +1,26 @@
+{
+  "name": "agent-tools-mcp",
+  "version": "1.0.0",
+  "description": "MCP server providing calculation, layout, and knowledge-base tools for IT EDU SITE agents",
+  "private": true,
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node22 --outfile=dist/index.js --external:mathjs",
+    "build:full": "esbuild src/index.ts --bundle --platform=node --target=node22 --outfile=dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.0",
+    "mathjs": "^15.0.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
