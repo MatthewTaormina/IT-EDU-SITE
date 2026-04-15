@@ -1,0 +1,46 @@
+{
+  "path": "/var",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "api",
+      "type": "dir"
+    },
+    {
+      "name": "cache",
+      "type": "dir"
+    },
+    {
+      "name": "lib",
+      "type": "dir"
+    },
+    {
+      "name": "log",
+      "type": "dir"
+    },
+    {
+      "name": "mail",
+      "type": "dir"
+    },
+    {
+      "name": "run",
+      "type": "dir"
+    },
+    {
+      "name": "spool",
+      "type": "dir"
+    },
+    {
+      "name": "tickets",
+      "type": "dir"
+    },
+    {
+      "name": "tmp",
+      "type": "dir"
+    },
+    {
+      "name": "www",
+      "type": "dir"
+    }
+  ]
+}

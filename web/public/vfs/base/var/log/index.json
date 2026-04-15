@@ -1,0 +1,5 @@
+{
+  "path": "/var/log",
+  "layer": "base",
+  "entries": []
+}

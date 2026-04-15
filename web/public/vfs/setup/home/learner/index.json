@@ -1,0 +1,20 @@
+{
+  "path": "/home/learner",
+  "layer": "setup",
+  "entries": [
+    {
+      "name": "Desktop",
+      "type": "dir"
+    },
+    {
+      "name": "exercises",
+      "type": "dir"
+    },
+    {
+      "name": "README.md",
+      "type": "file",
+      "size": 516,
+      "readOnly": true
+    }
+  ]
+}

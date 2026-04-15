@@ -1,0 +1,11 @@
+GETTING STARTED
+===============
+
+1. Open a terminal and try: ls, cd, cat, mkdir, nano
+2. Run 'git init' inside any directory to start a git repo
+3. Open the Text Editor to create and edit files with a GUI
+4. Use the Browser to look up MDN documentation
+5. Check Email for your welcome message
+
+Tip: Your files persist for the duration of this browser session.
+Refreshing the page reloads from this default state.

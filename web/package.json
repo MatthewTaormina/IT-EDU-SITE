@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "vfs:base": "node scripts/dump-base-vfs.mjs && node scripts/generate-vfs-manifests.mjs --layer base --src tmp/vfs-base --out public/vfs/base",
+    "vfs:setup": "node scripts/generate-vfs-manifests.mjs --layer setup --src public/desktop-states/default/vfs.json --out public/vfs/setup",
+    "vfs:active": "node scripts/generate-vfs-manifests.mjs --layer active --out public/vfs/active",
+    "vfs:all": "npm run vfs:base && npm run vfs:setup && npm run vfs:active"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",

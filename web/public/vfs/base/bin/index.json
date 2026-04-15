@@ -1,0 +1,66 @@
+{
+  "path": "/bin",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "bash",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "cat",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "cp",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "echo",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "ls",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "mkdir",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "mv",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "rm",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "sh",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "touch",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    }
+  ]
+}

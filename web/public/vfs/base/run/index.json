@@ -1,0 +1,10 @@
+{
+  "path": "/run",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "lock",
+      "type": "dir"
+    }
+  ]
+}

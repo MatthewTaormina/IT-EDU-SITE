@@ -1,0 +1,10 @@
+{
+  "path": "/usr/share",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "doc",
+      "type": "dir"
+    }
+  ]
+}

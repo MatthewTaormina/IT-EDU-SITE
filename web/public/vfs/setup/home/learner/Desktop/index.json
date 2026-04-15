@@ -1,0 +1,12 @@
+{
+  "path": "/home/learner/Desktop",
+  "layer": "setup",
+  "entries": [
+    {
+      "name": "getting-started.txt",
+      "type": "file",
+      "size": 413,
+      "readOnly": true
+    }
+  ]
+}

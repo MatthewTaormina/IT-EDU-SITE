@@ -1,0 +1,18 @@
+{
+  "path": "/home/learner/exercises",
+  "layer": "setup",
+  "entries": [
+    {
+      "name": "01-hello",
+      "type": "dir"
+    },
+    {
+      "name": "02-files",
+      "type": "dir"
+    },
+    {
+      "name": "03-git",
+      "type": "dir"
+    }
+  ]
+}

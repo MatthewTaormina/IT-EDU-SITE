@@ -1,0 +1,14 @@
+{
+  "path": "/usr/local",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "bin",
+      "type": "dir"
+    },
+    {
+      "name": "lib",
+      "type": "dir"
+    }
+  ]
+}

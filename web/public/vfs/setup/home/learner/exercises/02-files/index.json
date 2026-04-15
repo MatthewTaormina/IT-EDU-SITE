@@ -1,0 +1,12 @@
+{
+  "path": "/home/learner/exercises/02-files",
+  "layer": "setup",
+  "entries": [
+    {
+      "name": "README.md",
+      "type": "file",
+      "size": 241,
+      "readOnly": true
+    }
+  ]
+}

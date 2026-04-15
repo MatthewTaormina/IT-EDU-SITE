@@ -1,0 +1,24 @@
+{
+  "path": "/sbin",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "init",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "reboot",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    },
+    {
+      "name": "shutdown",
+      "type": "file",
+      "size": 0,
+      "readOnly": true
+    }
+  ]
+}

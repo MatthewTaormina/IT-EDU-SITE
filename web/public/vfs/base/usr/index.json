@@ -1,0 +1,26 @@
+{
+  "path": "/usr",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "bin",
+      "type": "dir"
+    },
+    {
+      "name": "lib",
+      "type": "dir"
+    },
+    {
+      "name": "local",
+      "type": "dir"
+    },
+    {
+      "name": "sbin",
+      "type": "dir"
+    },
+    {
+      "name": "share",
+      "type": "dir"
+    }
+  ]
+}

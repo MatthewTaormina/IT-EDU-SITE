@@ -1,0 +1,42 @@
+{
+  "path": "/etc",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "fstab",
+      "type": "file",
+      "size": 210,
+      "readOnly": true
+    },
+    {
+      "name": "hostname",
+      "type": "file",
+      "size": 8,
+      "readOnly": true
+    },
+    {
+      "name": "motd",
+      "type": "file",
+      "size": 92,
+      "readOnly": true
+    },
+    {
+      "name": "os-release",
+      "type": "file",
+      "size": 114,
+      "readOnly": true
+    },
+    {
+      "name": "passwd",
+      "type": "file",
+      "size": 77,
+      "readOnly": true
+    },
+    {
+      "name": "shells",
+      "type": "file",
+      "size": 18,
+      "readOnly": true
+    }
+  ]
+}
