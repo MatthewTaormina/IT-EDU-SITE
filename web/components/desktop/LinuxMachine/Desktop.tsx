@@ -14,26 +14,26 @@
  *   • The wallpaper div uses role="presentation" — it is purely decorative.
  */
 
-import { useCallback, useRef, type KeyboardEvent } from 'react';
+import { useCallback, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { useKernel, useMachineState } from './MachineContext';
 import type { AppId } from './MachineTypes';
+import { TerminalIcon, BrowserIcon, EmailIcon, TextEditorIcon } from './AppIcons';
 
 // ─── Icon registry ────────────────────────────────────────────────────────────
 
 interface AppIconSpec {
   id: AppId;
   label: string;
-  /** Unicode symbol shown inside the icon tile — no implicit AT meaning */
-  symbol: string;
+  icon: ReactNode;
   defaultTitle: string;
 }
 
 const DESKTOP_ICONS: readonly AppIconSpec[] = [
-  { id: 'terminal',    label: 'Terminal',    symbol: '>_', defaultTitle: 'Terminal'     },
-  { id: 'browser',     label: 'Browser',     symbol: '⊕',  defaultTitle: 'Web Browser'  },
-  { id: 'email',       label: 'Email',       symbol: '✉',  defaultTitle: 'Inbox'        },
-  { id: 'text-editor', label: 'Text Editor', symbol: '≡',  defaultTitle: 'New Document' },
-] as const;
+  { id: 'terminal',    label: 'Terminal',    icon: <TerminalIcon className="w-7 h-7" />,   defaultTitle: 'Terminal'     },
+  { id: 'browser',     label: 'Browser',     icon: <BrowserIcon className="w-7 h-7" />,    defaultTitle: 'Web Browser'  },
+  { id: 'email',       label: 'Email',       icon: <EmailIcon className="w-7 h-7" />,      defaultTitle: 'Inbox'        },
+  { id: 'text-editor', label: 'Text Editor', icon: <TextEditorIcon className="w-7 h-7" />, defaultTitle: 'New Document' },
+];
 
 // ─── Icon button ──────────────────────────────────────────────────────────────
 
@@ -64,12 +64,12 @@ function DesktopIcon({ spec, onOpen }: DesktopIconProps) {
         aria-hidden="true"
         className={[
           'flex items-center justify-center',
-          'w-12 h-12 rounded-xl text-xl font-mono font-bold',
+          'w-12 h-12 rounded-xl',
           'bg-[#1c2a3a] border border-[#30465c]',
           'text-[#79b8ff]',
         ].join(' ')}
       >
-        {spec.symbol}
+        {spec.icon}
       </span>
       {/* Label */}
       <span className="text-[11px] leading-tight text-center text-[#c9d1d9] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">

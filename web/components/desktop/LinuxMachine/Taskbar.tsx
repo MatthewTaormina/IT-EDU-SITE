@@ -21,25 +21,27 @@ import {
   useCallback,
   useRef,
   type KeyboardEvent,
+  type ReactNode,
 } from 'react';
 import { useKernel, useMachineState } from './MachineContext';
 import type { AppId, WindowEntry } from './MachineTypes';
+import { TerminalIcon, BrowserIcon, EmailIcon, TextEditorIcon } from './AppIcons';
 
 // ─── App launcher specs ───────────────────────────────────────────────────────
 
 interface LauncherSpec {
   id: AppId;
   label: string;
-  symbol: string;
+  icon: ReactNode;
   defaultTitle: string;
 }
 
 const LAUNCHERS: readonly LauncherSpec[] = [
-  { id: 'terminal',    label: 'Terminal',    symbol: '>_', defaultTitle: 'Terminal'    },
-  { id: 'browser',     label: 'Browser',     symbol: '⊕',  defaultTitle: 'Web Browser' },
-  { id: 'email',       label: 'Email',       symbol: '✉',  defaultTitle: 'Inbox'       },
-  { id: 'text-editor', label: 'Text Editor', symbol: '≡',  defaultTitle: 'New Document'},
-] as const;
+  { id: 'terminal',    label: 'Terminal',    icon: <TerminalIcon className="w-5 h-5" />,    defaultTitle: 'Terminal'     },
+  { id: 'browser',     label: 'Browser',     icon: <BrowserIcon className="w-5 h-5" />,     defaultTitle: 'Web Browser'  },
+  { id: 'email',       label: 'Email',       icon: <EmailIcon className="w-5 h-5" />,       defaultTitle: 'Inbox'        },
+  { id: 'text-editor', label: 'Text Editor', icon: <TextEditorIcon className="w-5 h-5" />,  defaultTitle: 'New Document' },
+];
 
 // ─── Clock ────────────────────────────────────────────────────────────────────
 
@@ -135,7 +137,7 @@ export function Taskbar() {
             ].join(' ')}
             onClick={() => kernel.openWindow(spec.id, spec.defaultTitle)}
           >
-            <span aria-hidden="true">{spec.symbol}</span>
+            {spec.icon}
           </button>
         ))}
       </div>
