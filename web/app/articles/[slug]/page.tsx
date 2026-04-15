@@ -49,12 +49,12 @@ export default async function ArticlePage({ params }: Props) {
         <div className="flex gap-3 text-sm text-muted flex-wrap">
           {frontmatter.author && <span>By {frontmatter.author}</span>}
           {frontmatter.published_date && (
-            <span>· {new Date(frontmatter.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            <span>· <time dateTime={frontmatter.published_date}>{new Date(frontmatter.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time></span>
           )}
         </div>
       </header>
 
-      <article className="prose prose-slate dark:prose-invert max-w-none">
+      <article className="lesson-prose prose prose-slate dark:prose-invert max-w-none">
         <MDXRemote
           source={content}
           components={mdxComponents}
