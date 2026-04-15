@@ -3,7 +3,7 @@
   "hostname": "sandbox",
   "user": "learner",
   "browserAllowedSites": [
-    "duckduckgo.com",
+    "google.com",
     "developer.mozilla.org",
     "en.wikipedia.org"
   ],
