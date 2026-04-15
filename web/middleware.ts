@@ -93,25 +93,39 @@ function injectBaseTag(html: string, pageUrl: string): string {
 // ─── Navigation intercept script injection ────────────────────────────────────
 
 /**
- * Script injected into every proxied HTML page.
- * Intercepts anchor clicks in capture phase and forwards the destination URL
- * to the parent BrowserApp via postMessage so the in-app navigation history
- * and URL bar stay in sync instead of the iframe navigating on its own.
- * window.name is set to the BrowserApp windowId by the React component, which
- * lets the parent listener ignore messages from unrelated browser windows.
+ * Build the nav intercept script for a specific page URL.
+ *
+ * The original URL is embedded as a string literal (BASE) so relative hrefs
+ * are always resolved against the correct external origin — even when a CSR
+ * framework (React, Next.js, Vue, …) removes or replaces the injected
+ * `<base href>` tag during client-side hydration.
+ *
+ * Using `new URL(raw, BASE)` rather than `a.href` makes the intercept
+ * independent of whatever the page does to `<head>` after initial parse.
  */
-const NAV_INTERCEPT_SCRIPT =
-  "(function(){document.addEventListener('click',function(e){" +
-  "var a=e.target.closest('a[href]');if(!a)return;" +
-  "var raw=a.getAttribute('href');if(!raw||raw.charAt(0)==='#')return;" +
-  "var href=a.href||raw;if(/^javascript:/i.test(href))return;" +
-  "e.preventDefault();" +
-  "window.parent.postMessage({type:'browser-navigate',href:href,windowId:window.name},'*');" +
-  "},true);})();";
+function buildNavInterceptScript(pageUrl: string): string {
+  // JSON.stringify produces a correctly escaped JS string literal.
+  // Extra escaping prevents `</script>` sequences in the URL from ending the tag.
+  const safe = JSON.stringify(pageUrl)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
+  return (
+    "(function(){var BASE=" + safe + ";" +
+    "document.addEventListener('click',function(e){" +
+    "var a=e.target.closest('a[href]');if(!a)return;" +
+    "var raw=a.getAttribute('href');if(!raw||raw.charAt(0)==='#')return;" +
+    "var href;try{href=new URL(raw,BASE).href;}catch(x){href=raw;}" +
+    "if(/^javascript:/i.test(href))return;" +
+    "e.preventDefault();" +
+    "window.parent.postMessage({type:'browser-navigate',href:href,windowId:window.name},'*');" +
+    "},true);})();"
+  );
+}
 
 /** Inject the nav intercept script before `</head>` (or prepend if no head). */
-function injectNavScript(html: string): string {
-  const tag = `<script>${NAV_INTERCEPT_SCRIPT}</script>`;
+function injectNavScript(html: string, pageUrl: string): string {
+  const tag = `<script>${buildNavInterceptScript(pageUrl)}</script>`;
   const idx = html.indexOf('</head>');
   if (idx !== -1) return html.slice(0, idx) + tag + html.slice(idx);
   return tag + html;
@@ -216,7 +230,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   if (isHtml) {
     const html       = new TextDecoder('utf-8', { fatal: false }).decode(bodyBuffer);
     const withBase   = injectBaseTag(html, finalUrl);
-    responseBody     = injectNavScript(withBase);
+    responseBody     = injectNavScript(withBase, finalUrl);
     finalContentType = 'text/html; charset=utf-8';
   } else {
     responseBody     = bodyBuffer;
