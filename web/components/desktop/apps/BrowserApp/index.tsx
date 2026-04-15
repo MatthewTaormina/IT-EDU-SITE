@@ -348,15 +348,32 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
   // ── Listen for in-iframe link clicks forwarded via postMessage ──────────
   useEffect(() => {
     function handleMessage(e: MessageEvent): void {
-      if (!e.data || e.data.type !== 'browser-navigate') return;
-      if (e.data.windowId !== windowId) return;
-      const href = e.data.href;
-      if (typeof href !== 'string' || !href) return;
-      navigate(href);
+      if (!e.data || e.data.windowId !== windowId) return;
+
+      if (e.data.type === 'browser-navigate') {
+        const href = e.data.href;
+        if (typeof href !== 'string' || !href) return;
+        navigate(href);
+        return;
+      }
+
+      // Same-page fragment scroll: update URL bar + push history without
+      // reloading the iframe (the browser has already scrolled natively).
+      if (e.data.type === 'browser-hashchange') {
+        const href = e.data.href;
+        if (typeof href !== 'string' || !href) return;
+        const url = normalizeUrl(href);
+        const newHistory = [...navHistory.slice(0, historyIdx + 1), url];
+        const newIdx = newHistory.length - 1;
+        setNavHistory(newHistory);
+        setHistoryIdx(newIdx);
+        setUrlInput(url);
+        syncKernel(newHistory, newIdx);
+      }
     }
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [navigate, windowId]);
+  }, [navigate, navHistory, historyIdx, syncKernel, windowId]);
 
   // ── URL bar handlers ─────────────────────────────────────────────────────
   const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>): void => {
