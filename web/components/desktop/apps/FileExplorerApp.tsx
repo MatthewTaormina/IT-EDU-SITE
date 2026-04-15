@@ -28,7 +28,7 @@
  * • All icons are aria-hidden; visible text labels accompany them.
  */
 
-import { useState, useCallback, useEffect, useRef, type KeyboardEvent } from 'react';
+import { useState, useCallback, useEffect, useRef, useMemo, type KeyboardEvent } from 'react';
 import { useKernel, useMachineState } from '../LinuxMachine/MachineContext';
 import type { FileExplorerAppState, VFSOrigin } from '../LinuxMachine/MachineTypes';
 
@@ -314,14 +314,6 @@ interface DirectoryTreeProps {
 }
 
 function DirectoryTree({ vfs, cwd, kernel, onNavigate }: DirectoryTreeProps) {
-  // Build the set of top-level dirs (direct children of /)
-  const topDirs = Array.from(vfs.keys())
-    .filter(p => {
-      const parts = p.split('/').filter(Boolean);
-      return parts.length === 1 && (vfs.get(p) as { kind?: string })?.kind === 'dir';
-    })
-    .sort();
-
   return (
     <nav aria-label="Directory tree" style={{ padding: '0.5rem 0' }}>
       <ul role="tree" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
@@ -360,13 +352,16 @@ function TreeNode({ path, label, level, cwd, vfs, kernel, onNavigate, defaultExp
     if (isActive) setExpanded(true);
   }, [isActive]);
 
-  const children = Array.from(vfs.keys())
-    .filter(p => {
-      const parent = path === '/' ? '' : path;
-      const rel = p.slice(parent.length);
-      return rel.startsWith('/') && rel.indexOf('/', 1) === -1 && (vfs.get(p) as { kind?: string })?.kind === 'dir';
-    })
-    .sort();
+  const children = useMemo(() =>
+    Array.from(vfs.keys())
+      .filter(p => {
+        const parent = path === '/' ? '' : path;
+        const rel = p.slice(parent.length);
+        return rel.startsWith('/') && rel.indexOf('/', 1) === -1 && (vfs.get(p) as { kind?: string })?.kind === 'dir';
+      })
+      .sort(),
+    [vfs, path],
+  );
 
   const indent = level * 12;
   const isCwd  = cwd === path;
