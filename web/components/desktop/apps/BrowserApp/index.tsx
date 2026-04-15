@@ -704,7 +704,8 @@ function HomePage({ onNavigate, allowedSites }: HomePageProps) {
     if (q.startsWith('local://') || (q.includes('.') && !q.includes(' '))) {
       onNavigate(q);
     } else {
-      // Google search works reliably through the proxy without bot-detection issues
+      // Google search works reliably through the proxy without bot-detection issues.
+      // igu=1 requests the "iframe-safe" Google UI variant (no service-worker install).
       onNavigate(`https://www.google.com/search?q=${encodeURIComponent(q)}&igu=1`);
     }
   }
