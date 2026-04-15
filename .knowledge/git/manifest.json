@@ -2,9 +2,44 @@
   "$schema_version": "2.0.0",
   "domain": "git",
   "path": ".knowledge/git",
-  "purpose": "Professional Git workflow practices: atomic commits, Conventional Commits, branching strategy, staging, history rewriting, tagging, hygiene, and pull request workflow.",
+  "purpose": "Git version control: foundational concepts, core commands, branching, remotes, conflict resolution, and professional workflow best practices.",
   "last_updated": "2026-04-14",
   "documents": [
+    {
+      "id": "git_foundations",
+      "path": ".knowledge/git/git-foundations.md",
+      "title": "Git Foundations",
+      "type": "research",
+      "description": "Foundational knowledge of Git: VCS history, snapshot-based DAG data model, the three working areas, core commands (init, clone, add, commit, log, diff, branch, switch, merge, push, pull, fetch), merge conflict resolution, and GitHub remote workflow.",
+      "tags": [
+        "git",
+        "version-control",
+        "vcs",
+        "distributed-vcs",
+        "git-init",
+        "git-commit",
+        "git-branch",
+        "git-merge",
+        "git-remote",
+        "merge-conflict",
+        "github",
+        "staging-area",
+        "dag"
+      ],
+      "prerequisites": [],
+      "related_nodes": [
+        "git_best_practices",
+        "software-engineering-principles",
+        "core-competencies-fullstack",
+        "infrastructure"
+      ],
+      "terminal_objective": {
+        "prerequisite": "No programming prerequisite; learner must be comfortable using a terminal/command line and understand what a file system is",
+        "concept": "Git is a distributed VCS that stores history as a DAG of immutable snapshot objects (blobs, trees, commits). All operations move changes through three areas: working directory → staging area → repository. Branches are lightweight movable pointers to commits; HEAD tracks the current branch.",
+        "practical_application": "Initialize a repository, stage and commit changes, create and switch branches, merge branches (fast-forward and three-way), push to and pull from GitHub, and resolve a merge conflict by editing conflict markers and completing the merge commit.",
+        "market_value": "Critical — Git is used by 93.4% of professional developers (Stack Overflow 2024); it is the foundational prerequisite for all CI/CD, deployment, collaboration, and code review workflows; inability to use Git is disqualifying at any experience level."
+      }
+    },
     {
       "id": "git_best_practices",
       "path": ".knowledge/git/git-best-practices.md",

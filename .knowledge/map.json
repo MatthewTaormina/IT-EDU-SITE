@@ -3,7 +3,7 @@
     "version": "2.0.0",
     "last_updated": "2026-04-14",
     "description": "Flattened research node graph for the .knowledge/ Instructional Knowledge Engine. Optimized for RAG retrieval and agent navigation. Every node includes a terminal_objective block.",
-    "total_nodes": 18,
+    "total_nodes": 19,
     "domains": ["pedagogy", "programming", "web-dev", "git", "indexes", "validation"],
     "engine_version": "2.0.0",
     "agent_entry_point": ".knowledge/README_AGENT.md"
@@ -154,6 +154,15 @@
       "related_nodes": ["master-index"]
     },
     {
+      "id": "git_foundations",
+      "domain": "git",
+      "path": ".knowledge/git/git-foundations.md",
+      "title": "Git Foundations",
+      "description": "Foundational knowledge of Git: VCS history (local→centralized→distributed), Git's snapshot-based DAG data model (blobs, trees, commits), the three working areas (working directory, staging, repository), core commands (init, clone, add, commit, status, log, diff, branch, switch, merge, push, pull, fetch), merge conflict resolution, and GitHub remote workflow.",
+      "tags": ["git", "version-control", "vcs", "distributed-vcs", "git-init", "git-commit", "git-branch", "git-merge", "git-remote", "merge-conflict", "github", "staging-area", "dag"],
+      "related_nodes": ["git_best_practices", "software-engineering-principles", "core-competencies-fullstack", "infrastructure"]
+    },
+    {
       "id": "git_best_practices",
       "domain": "git",
       "path": ".knowledge/git/git-best-practices.md",
@@ -211,6 +220,10 @@
     { "from": "gap-analysis", "to": "frontend-stack", "relationship": "identifies-gaps-in" },
     { "from": "git_best_practices", "to": "software-engineering-principles", "relationship": "operationalises" },
     { "from": "git_best_practices", "to": "core-competencies-fullstack", "relationship": "professional-skill-within" },
-    { "from": "git_best_practices", "to": "infrastructure", "relationship": "prerequisite-for" }
+    { "from": "git_best_practices", "to": "infrastructure", "relationship": "prerequisite-for" },
+    { "from": "git_foundations", "to": "git_best_practices", "relationship": "prerequisite-for" },
+    { "from": "git_foundations", "to": "software-engineering-principles", "relationship": "enables" },
+    { "from": "git_foundations", "to": "core-competencies-fullstack", "relationship": "professional-skill-within" },
+    { "from": "git_foundations", "to": "infrastructure", "relationship": "prerequisite-for" }
   ]
 }
