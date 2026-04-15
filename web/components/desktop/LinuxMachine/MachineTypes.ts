@@ -15,20 +15,15 @@
 // ─── Extended VFS ─────────────────────────────────────────────────────────────
 
 /**
- * Every VFS entry carries an `origin` field:
- *   'remote' — loaded from the state endpoint at boot; excluded from sessionStorage.
- *   'local'  — created or modified interactively during the session; persisted.
- *
- * This keeps sessionStorage lean: only the user's mutations are stored.
- * On next boot the remote baseline is re-fetched and the local delta is
- * overlaid on top, reconstructing the full VFS without any stale copies of
- * large read-only assets.
- */
-/**
- * Three-layer filesystem provenance:
+ * Every VFS entry carries an `origin` field that records which layer of the
+ * three-layer filesystem it belongs to:
  *   'remote' — kernel system dirs/files built by buildRemoteVFS; re-fetched each boot.
  *   'setup'  — project-specific files ingested from vfs.json; re-fetched each boot.
  *   'local'  — user-created or modified during the session; persisted to sessionStorage.
+ *
+ * Only 'local' entries are written to sessionStorage, keeping it lean. On the
+ * next boot the remote + setup baselines are re-fetched and the local delta is
+ * overlaid on top.
  */
 export type VFSOrigin = 'remote' | 'setup' | 'local';
 
