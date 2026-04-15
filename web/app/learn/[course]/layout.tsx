@@ -20,7 +20,7 @@ export default async function CourseLayout({ children, params }: Props) {
   const tree = getCourseNavTree(course);
 
   return (
-    <div className="flex flex-1 min-h-0">
+    <div className="flex flex-1 min-h-0 flex-col md:flex-row">
       <CourseSidebar
         tree={tree}
         courseTitle={courseData.frontmatter.title}
