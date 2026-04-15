@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "label": "Try it: switch branches",
+  "initialCwd": "/home/user",
+  "git": true,
+  "files": {
+    "/home/user/README.md": "# Project\n",
+    "/home/user/feature.js": "// feature work\n"
+  },
+  "initialCommands": [
+    "git init",
+    "git config user.name \"Alice\"",
+    "git config user.email \"alice@example.com\"",
+    "git add README.md",
+    "git commit -m \"Initial commit\"",
+    "git checkout -b feature/login",
+    "git add feature.js",
+    "git commit -m \"Add login feature\""
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "label": "Full feature branch workflow",
+  "initialCwd": "/home/user",
+  "git": true,
+  "files": {
+    "/home/user/README.md": "# My App\n\nWelcome to My App.\n",
+    "/home/user/app.js": "// Application entry point\nconsole.log('App started');\n"
+  },
+  "initialCommands": [
+    "git init",
+    "git config user.name \"Alice\"",
+    "git config user.email \"alice@example.com\"",
+    "git add .",
+    "git commit -m \"Initial project setup\""
+  ]
+}

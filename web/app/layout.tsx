@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import Nav from '@/components/ui/Nav';
 import Footer from '@/components/ui/Footer';
 import ThemeProvider from '@/components/ui/ThemeProvider';
@@ -24,11 +25,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
-      <head>
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
       <body className="flex flex-col min-h-full">
+        <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
         {/* Skip link — WCAG 2.4.1 / AODA: first focusable element on every page */}
         <a
           href="#main-content"

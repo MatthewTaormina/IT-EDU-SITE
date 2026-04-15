@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "label": "Try it: git init",
+  "initialCwd": "/home/user/my-first-repo",
+  "git": true,
+  "files": {},
+  "initialCommands": []
+}

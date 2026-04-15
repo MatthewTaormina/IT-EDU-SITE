@@ -25,6 +25,7 @@ interface GitCommit {
   author: string;
   timestamp: string;        // ISO 8601
   parent: string | null;
+  parent2?: string;          // second parent for merge commits
   tree: Record<string, string>;  // repoRelPath → file content at commit time
 }
 
@@ -36,6 +37,8 @@ interface GitRepo {
   commits: Record<string, GitCommit>;
   index: Record<string, string>;         // staged: repoRelPath → content
   config: { name: string; email: string };
+  conflicts: Record<string, { ours: string; theirs: string; base: string }>;
+  mergeHead?: string;                    // incoming branch hash during a conflict state
   /** Monotonic counter used for deterministic fake hashes */
   _seq: number;
 }
@@ -61,6 +64,8 @@ function emptyRepo(): GitRepo {
     commits: {},
     index: {},
     config: { name: '', email: '' },
+    conflicts: {},
+    mergeHead: undefined,
     _seq: 0,
   };
 }
@@ -233,6 +238,14 @@ function gitStatus(args: string[], state: ShellState): CommandResult {
 
   if (!head) lines.push('No commits yet\n');
 
+  // Unmerged paths (merge conflict state)
+  const conflictEntries = Object.keys(repo.conflicts ?? {});
+  if (conflictEntries.length > 0) {
+    lines.push('\nUnmerged paths:');
+    lines.push('  (use "git add <file>" to mark resolution)');
+    for (const f of conflictEntries.sort()) lines.push(`\tboth modified:   ${f}`);
+  }
+
   // Staged changes (index vs HEAD tree)
   const staged: string[] = [];
   for (const [rel, content] of Object.entries(repo.index)) {
@@ -330,7 +343,13 @@ function gitAdd(args: string[], state: ShellState): CommandResult {
 
   for (const rel of toStage) {
     const content = readRepoFile(state.vfs, root, rel);
-    if (content !== null) repo.index[rel] = content;
+    if (content !== null) {
+      repo.index[rel] = content;
+      // Mark conflict resolved when learner stages the file
+      if (repo.conflicts && rel in repo.conflicts) {
+        delete repo.conflicts[rel];
+      }
+    }
   }
 
   return { output: [], state: saveRepo(repo, state) };
@@ -374,6 +393,14 @@ function gitCommit(args: string[], state: ShellState): CommandResult {
   const repo = loadRepo(state.env);
   if (!repo) return notInRepo(state);
 
+  // Check for unresolved merge conflicts (cleared by gitAdd when learner resolves each file)
+  if (Object.keys(repo.conflicts ?? {}).length > 0) {
+    return {
+      output: [{ kind: 'stderr', text: 'error: Committing is not possible because you have unmerged files.' }],
+      state,
+    };
+  }
+
   const mIdx = args.indexOf('-m');
   if (mIdx === -1 || !args[mIdx + 1]) {
     return { output: [{ kind: 'stderr', text: 'error: switch `m\' requires a value' }], state };
@@ -393,15 +420,21 @@ function gitCommit(args: string[], state: ShellState): CommandResult {
   const hash = makeHash(repo._seq, message + timestamp);
 
   const parent = repo.branches[repo.HEAD] || null;
+  const parent2 = repo.mergeHead;
 
   // Merge current HEAD tree with index to form new tree
   const parentTree = parent ? (repo.commits[parent]?.tree ?? {}) : {};
   const newTree: Record<string, string> = { ...parentTree, ...repo.index };
 
-  const commit: GitCommit = { hash, message, author, timestamp, parent, tree: newTree };
+  const commit: GitCommit = {
+    hash, message, author, timestamp, parent,
+    ...(parent2 ? { parent2 } : {}),
+    tree: newTree,
+  };
   repo.commits[hash] = commit;
   repo.branches[repo.HEAD] = hash;
   repo.index = {};
+  repo.mergeHead = undefined;
 
   // Update .git/HEAD and refs in VFS (cosmetic)
   const root = getRoot(state.env);
@@ -474,20 +507,20 @@ function gitBranch(args: string[], state: ShellState): CommandResult {
   return { output: [], state: saveRepo(repo, state) };
 }
 
-function gitCheckout(args: string[], state: ShellState): CommandResult {
-  const repo = loadRepo(state.env);
-  if (!repo) return notInRepo(state);
-
+/**
+ * Shared branch-switching logic for `git checkout` and `git switch`.
+ * Returns a CommandResult when the operation completed (success or branch-exists error),
+ * or null when the target branch was not found (so callers can handle their own fallbacks).
+ */
+function switchToBranch(
+  target: string,
+  createNew: boolean,
+  state: ShellState,
+  repo: GitRepo,
+): CommandResult | null {
   const root = getRoot(state.env);
-  const createNew = args.includes('-b');
-  const target = args.find(a => !a.startsWith('-'));
-
-  if (!target) {
-    return { output: [{ kind: 'stderr', text: 'error: you must specify a branch or commit' }], state };
-  }
 
   if (createNew) {
-    // git checkout -b <name>
     if (repo.branches[target] !== undefined) {
       return { output: [{ kind: 'stderr', text: `fatal: A branch named '${target}' already exists.` }], state };
     }
@@ -501,25 +534,39 @@ function gitCheckout(args: string[], state: ShellState): CommandResult {
     };
   }
 
-  // Switch to existing branch
   if (repo.branches[target] !== undefined) {
     repo.HEAD = target;
     repo.detached = false;
     repo.index = {};
-
-    // Restore working tree to match the branch's commit tree
     const hash = repo.branches[target];
     if (hash && repo.commits[hash]) {
       restoreTree(state.vfs, root, repo.commits[hash].tree);
     }
-
     return {
       output: [{ kind: 'stdout', text: `Switched to branch '${target}'` }],
       state: saveRepo(repo, state),
     };
   }
 
-  // Try detached HEAD at commit hash
+  return null; // branch not found — caller handles
+}
+
+function gitCheckout(args: string[], state: ShellState): CommandResult {
+  const repo = loadRepo(state.env);
+  if (!repo) return notInRepo(state);
+
+  const createNew = args.includes('-b');
+  const target = args.find(a => !a.startsWith('-'));
+
+  if (!target) {
+    return { output: [{ kind: 'stderr', text: 'error: you must specify a branch or commit' }], state };
+  }
+
+  const result = switchToBranch(target, createNew, state, repo);
+  if (result) return result;
+
+  // Fallback: try detached HEAD at commit hash
+  const root = getRoot(state.env);
   if (repo.commits[target]) {
     repo.HEAD = target;
     repo.detached = true;
@@ -542,6 +589,39 @@ function restoreTree(vfs: VFSMap, root: string, tree: Record<string, string>): v
   for (const [rel, content] of Object.entries(tree)) {
     writeRepoFile(vfs, root, rel, content);
   }
+}
+
+function gitSwitch(args: string[], state: ShellState): CommandResult {
+  const repo = loadRepo(state.env);
+  if (!repo) return notInRepo(state);
+
+  const createNew = args.includes('-c') || args.includes('--create');
+  const target = args.find(a => !a.startsWith('-'));
+
+  if (!target) {
+    return { output: [{ kind: 'stderr', text: 'error: you must specify a branch name' }], state };
+  }
+
+  const result = switchToBranch(target, createNew, state, repo);
+  if (result) return result;
+
+  return { output: [{ kind: 'stderr', text: `fatal: invalid reference: '${target}'` }], state };
+}
+
+/** Walk both commit chains and return the first common ancestor hash, or null. */
+function findMergeBase(repo: GitRepo, hashA: string, hashB: string): string | null {
+  const ancestorsA = new Set<string>();
+  let walk: string | null = hashA;
+  while (walk && repo.commits[walk]) {
+    ancestorsA.add(walk);
+    walk = repo.commits[walk].parent;
+  }
+  walk = hashB;
+  while (walk && repo.commits[walk]) {
+    if (ancestorsA.has(walk)) return walk;
+    walk = repo.commits[walk].parent;
+  }
+  return null;
 }
 
 function gitMerge(args: string[], state: ShellState): CommandResult {
@@ -586,10 +666,112 @@ function gitMerge(args: string[], state: ShellState): CommandResult {
     };
   }
 
-  return {
-    output: [{ kind: 'stderr', text: `error: Merge of divergent histories is not supported in this sandbox.\nTip: In a real repo you would use 'git merge' with a merge commit.` }],
-    state,
-  };
+  // Three-way merge
+  const root = getRoot(state.env);
+  const mergeBase = findMergeBase(repo, currentHash, targetHash);
+  const baseTree: Record<string, string> = mergeBase && repo.commits[mergeBase]
+    ? repo.commits[mergeBase].tree
+    : {};
+  const currentTree: Record<string, string> = currentHash && repo.commits[currentHash]
+    ? repo.commits[currentHash].tree
+    : {};
+  const targetTree: Record<string, string> = repo.commits[targetHash].tree;
+
+  const allFiles = new Set([
+    ...Object.keys(baseTree),
+    ...Object.keys(currentTree),
+    ...Object.keys(targetTree),
+  ]);
+
+  const mergedTree: Record<string, string> = { ...currentTree };
+  const conflicts: Record<string, { ours: string; theirs: string; base: string }> = {};
+
+  for (const file of allFiles) {
+    const base = baseTree[file] ?? null;
+    const ours = currentTree[file] ?? null;
+    const theirs = targetTree[file] ?? null;
+
+    const oursChanged = ours !== base;
+    const theirsChanged = theirs !== base;
+
+    if (!oursChanged && !theirsChanged) {
+      // Unchanged on both sides — keep as-is
+    } else if (oursChanged && !theirsChanged) {
+      // Only ours changed — already in mergedTree via currentTree copy
+    } else if (!oursChanged && theirsChanged) {
+      // Only theirs changed — take theirs
+      if (theirs === null) {
+        delete mergedTree[file];
+      } else {
+        mergedTree[file] = theirs;
+      }
+    } else if (ours === theirs) {
+      // Both changed identically — no conflict
+      mergedTree[file] = ours!;
+    } else {
+      // True conflict — write conflict markers to working tree
+      conflicts[file] = { ours: ours ?? '', theirs: theirs ?? '', base: base ?? '' };
+      const conflictContent = [
+        '<<<<<<< HEAD',
+        ours ?? '',
+        '=======',
+        theirs ?? '',
+        `>>>>>>> ${target}`,
+      ].join('\n');
+      writeRepoFile(state.vfs, root, file, conflictContent);
+      delete mergedTree[file];
+    }
+  }
+
+  if (Object.keys(conflicts).length === 0) {
+    // Auto-merge succeeded — restore working tree and create merge commit
+    for (const [file, content] of Object.entries(mergedTree)) {
+      writeRepoFile(state.vfs, root, file, content);
+    }
+
+    repo._seq += 1;
+    const mergeMessage = `Merge branch '${target}' into ${repo.HEAD}`;
+    const mergeHash = makeHash(repo._seq, mergeMessage + new Date().toISOString());
+    const mergeAuthor = repo.config.name
+      ? `${repo.config.name} <${repo.config.email}>`
+      : 'Unknown <>';
+    const mergeCommit: GitCommit = {
+      hash: mergeHash,
+      message: mergeMessage,
+      author: mergeAuthor,
+      timestamp: new Date().toISOString(),
+      parent: currentHash || null,
+      parent2: targetHash,
+      tree: mergedTree,
+    };
+    repo.commits[mergeHash] = mergeCommit;
+    repo.branches[repo.HEAD] = mergeHash;
+    repo.index = {};
+
+    const changedFiles = [...allFiles].filter(
+      f => (mergedTree[f] ?? null) !== (currentTree[f] ?? null),
+    );
+    return {
+      output: [
+        { kind: 'stdout', text: `Merge made by the 'ort' strategy.` },
+        ...changedFiles.map(f => ({ kind: 'stdout' as const, text: `  ${f}` })),
+      ],
+      state: saveRepo(repo, state),
+    };
+  }
+
+  // Conflicts detected — stage auto-merged files and record conflicts
+  repo.index = { ...mergedTree };
+  repo.conflicts = conflicts;
+  repo.mergeHead = targetHash;
+
+  const mergeOutput: Array<{ kind: 'stdout' | 'stderr' | 'info'; text: string }> = [];
+  for (const f of Object.keys(conflicts)) {
+    mergeOutput.push({ kind: 'stderr', text: `CONFLICT (content): Merge conflict in ${f}` });
+  }
+  mergeOutput.push({ kind: 'stderr', text: 'Automatic merge failed; fix conflicts and then commit the result.' });
+
+  return { output: mergeOutput, state: saveRepo(repo, state) };
 }
 
 function gitReset(args: string[], state: ShellState): CommandResult {
@@ -665,9 +847,16 @@ function gitHelp(state: ShellState): CommandResult {
     'branch [name]                List or create branches',
     'checkout <branch>            Switch branch',
     'checkout -b <name>           Create and switch to new branch',
-    'merge <branch>               Fast-forward merge',
+    'switch <branch>              Switch branch (modern syntax)',
+    'switch -c|--create <name>    Create and switch to new branch (modern syntax)',
+    'merge <branch>               Merge branch (fast-forward or three-way)',
     'reset HEAD <file>            Unstage a file',
     'restore <file>               Discard working-tree changes',
+    '',
+    'Conflict resolution workflow:',
+    '  1. On CONFLICT: edit conflicted files and remove the marker lines',
+    '  2. git add <file>           Mark each conflict resolved',
+    '  3. git commit -m "msg"      Complete the merge',
   ];
   return {
     output: [
@@ -698,6 +887,7 @@ export const gitPlugin: CommandPlugin = {
       case 'log':      return gitLog(rest, state);
       case 'branch':   return gitBranch(rest, state);
       case 'checkout': return gitCheckout(rest, state);
+      case 'switch':   return gitSwitch(rest, state);
       case 'merge':    return gitMerge(rest, state);
       case 'reset':    return gitReset(rest, state);
       case 'restore':  return gitRestore(rest, state);

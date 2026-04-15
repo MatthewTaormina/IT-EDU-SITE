@@ -22,7 +22,37 @@ import { gitPlugin } from './gitPlugin';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
+/**
+ * Shape of a JSON preset file stored in /public/sandbox/*.json.
+ * Content authors reference these by URL path from MDX so large preload
+ * objects and command sequences never need to be embedded inline.
+ *
+ * Inline props on <TerminalSandbox> always override the preset.
+ */
+export interface SandboxPreset {
+  /** Schema version — currently always 1. */
+  version?: number;
+  /** Overrides the terminal label when not set by the inline prop. */
+  label?: string;
+  /** Starting working directory. Overridden by the inline `initialCwd` prop. */
+  initialCwd?: string;
+  /** Whether to mount the git plugin. Overridden by the inline `git` prop default. */
+  git?: boolean;
+  /** Files to write into the VFS. Merged with (and overridden key-by-key by) inline `preload`. */
+  files?: Record<string, string>;
+  /** Commands to run automatically on mount. Ignored when inline `initialCommands` is non-empty. */
+  initialCommands?: string[];
+}
+
 export interface TerminalSandboxProps {
+  /**
+   * URL path to a SandboxPreset JSON file served from /public/sandbox/.
+   * e.g. '/sandbox/git_01_init_commit.json'
+   *
+   * The preset provides the base state (files, cwd, initial commands).
+   * All other inline props override the preset when provided.
+   */
+  stateUrl?: string;
   /** Files to pre-populate in the VFS before first command. */
   preload?: Record<string, string>;
   /** Working directory the shell starts in. Defaults to '/home/user'. */
@@ -93,6 +123,7 @@ let lineId = 0;
 function nextId() { return ++lineId; }
 
 export default function TerminalSandbox({
+  stateUrl,
   preload,
   initialCwd,
   initialCommands = [],
@@ -103,15 +134,68 @@ export default function TerminalSandbox({
   // Shell is stable for the lifetime of this mount; Reset replaces everything.
   const shellRef = useRef(buildShell(git));
 
+  // When stateUrl is given we start with an empty VFS and overwrite once the
+  // preset is fetched.  Without stateUrl we initialise immediately as before.
   const [shellState, setShellState] = useState<ShellState>(() =>
-    buildInitialState(preload, initialCwd),
+    stateUrl ? buildInitialState(undefined, undefined) : buildInitialState(preload, initialCwd),
   );
   const [lines, setLines] = useState<DisplayLine[]>([]);
   const [input, setInput] = useState('');
   const [histIdx, setHistIdx] = useState(-1);   // -1 = not browsing history
 
+  // ── Preset (stateUrl) ──────────────────────────────────────────────────────
+  const [preset,        setPreset]        = useState<SandboxPreset | null>(null);
+  const [presetLoading, setPresetLoading] = useState(!!stateUrl);
+  const [presetError,   setPresetError]   = useState<string | null>(null);
+
   const outputRef = useRef<HTMLDivElement>(null);
   const inputRef  = useRef<HTMLInputElement>(null);
+
+  // ── Fetch preset JSON ──────────────────────────────────────────────────────
+  useEffect(() => {
+    if (!stateUrl) return;
+    let cancelled = false;
+    fetch(stateUrl)
+      .then(res => {
+        if (!res.ok) throw new Error(`Failed to load preset (HTTP ${res.status})`);
+        return res.json() as Promise<SandboxPreset>;
+      })
+      .then(data => {
+        if (!cancelled) {
+          setPreset(data);
+          setPresetLoading(false);
+        }
+      })
+      .catch(err => {
+        if (!cancelled) {
+          setPresetError(err instanceof Error ? err.message : 'Failed to load preset');
+          setPresetLoading(false);
+        }
+      });
+    return () => { cancelled = true; };
+  }, [stateUrl]);
+
+  // ── Initialise shell once preset is ready (stateUrl path) ─────────────────
+  useEffect(() => {
+    if (!stateUrl || !preset) return;
+    const effPreload: Record<string, string> = { ...preset.files, ...preload };
+    const effCwd  = initialCwd ?? preset.initialCwd;
+    const effGit  = preset.git ?? git;
+    const effCmds = initialCommands.length > 0 ? initialCommands : (preset.initialCommands ?? []);
+    shellRef.current = buildShell(effGit);
+    const fresh = buildInitialState(effPreload, effCwd);
+    setLines([]);
+    if (effCmds.length > 0) {
+      let state = fresh;
+      for (const cmd of effCmds) {
+        state = runCommand(cmd, state);
+      }
+      setShellState(state);
+    } else {
+      setShellState(fresh);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preset]); // re-run only when newly fetched preset arrives
 
   // ── Scroll to bottom whenever lines change ──────────────────────────────────
   useEffect(() => {
@@ -144,8 +228,9 @@ export default function TerminalSandbox({
     return result.state;
   }, []);
 
-  // ── Play initial commands on mount ─────────────────────────────────────────
+  // ── Play initial commands on mount (non-stateUrl path only) ────────────────
   useEffect(() => {
+    if (stateUrl) return;           // stateUrl path handles this after preset loads
     if (initialCommands.length === 0) return;
     let state = buildInitialState(preload, initialCwd);
     for (const cmd of initialCommands) {
@@ -199,16 +284,20 @@ export default function TerminalSandbox({
 
   // ── Reset ──────────────────────────────────────────────────────────────────
   function handleReset() {
-    shellRef.current = buildShell(git);
+    const effPreload: Record<string, string> = { ...preset?.files, ...preload };
+    const effCwd  = initialCwd ?? preset?.initialCwd;
+    const effGit  = preset?.git ?? git;
+    const effCmds = initialCommands.length > 0 ? initialCommands : (preset?.initialCommands ?? []);
+    shellRef.current = buildShell(effGit);
     lineId = 0;
-    const fresh = buildInitialState(preload, initialCwd);
+    const fresh = buildInitialState(effPreload, effCwd);
     setLines([]);
     setInput('');
     setHistIdx(-1);
 
-    if (initialCommands.length > 0) {
+    if (effCmds.length > 0) {
       let state = fresh;
-      for (const cmd of initialCommands) {
+      for (const cmd of effCmds) {
         state = runCommand(cmd, state);
       }
       setShellState(state);
@@ -225,6 +314,49 @@ export default function TerminalSandbox({
       case 'command': return COLORS.fg;
       default:        return COLORS.fg;
     }
+  }
+
+  // ── Effective label (preset base, inline override) ─────────────────────────
+  const effectiveLabel = label ?? preset?.label;
+
+  // ── Loading skeleton ───────────────────────────────────────────────────────
+  if (presetLoading) {
+    return (
+      <div
+        role="status"
+        aria-label="Loading terminal sandbox"
+        style={{ backgroundColor: COLORS.bg, borderColor: COLORS.border, height }}
+        className="rounded-lg border overflow-hidden font-mono text-sm my-6 not-prose flex items-center justify-center"
+      >
+        <span style={{ color: COLORS.muted }}>Loading…</span>
+      </div>
+    );
+  }
+
+  // ── Error state ────────────────────────────────────────────────────────────
+  if (presetError) {
+    return (
+      <div
+        role="alert"
+        style={{ backgroundColor: COLORS.bg, borderColor: COLORS.border }}
+        className="rounded-lg border overflow-hidden font-mono text-sm my-6 not-prose"
+      >
+        <div
+          style={{ backgroundColor: COLORS.bar, borderColor: COLORS.border }}
+          className="flex items-center px-4 py-2 border-b select-none"
+        >
+          <span style={{ color: COLORS.stderr }} className="text-xs">
+            Terminal — failed to load state
+          </span>
+        </div>
+        <div
+          style={{ backgroundColor: COLORS.bg, height, color: COLORS.stderr }}
+          className="flex items-center px-4"
+        >
+          <pre className="font-mono text-sm m-0 p-0 whitespace-pre-wrap break-words">{presetError}</pre>
+        </div>
+      </div>
+    );
   }
 
   const prompt = formatPrompt(shellState);
@@ -249,9 +381,9 @@ export default function TerminalSandbox({
             <span className="w-3 h-3 rounded-full bg-[#febc2e] inline-block" />
             <span className="w-3 h-3 rounded-full bg-[#28c840] inline-block" />
           </span>
-          {label && (
+          {effectiveLabel && (
             <span style={{ color: COLORS.muted }} className="text-xs">
-              {label}
+              {effectiveLabel}
             </span>
           )}
         </div>
