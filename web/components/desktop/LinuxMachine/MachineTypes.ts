@@ -15,16 +15,17 @@
 // ─── Extended VFS ─────────────────────────────────────────────────────────────
 
 /**
- * Every VFS entry carries an `origin` field:
- *   'remote' — loaded from the state endpoint at boot; excluded from sessionStorage.
- *   'local'  — created or modified interactively during the session; persisted.
+ * Every VFS entry carries an `origin` field that records which layer of the
+ * three-layer filesystem it belongs to:
+ *   'remote' — kernel system dirs/files built by buildRemoteVFS; re-fetched each boot.
+ *   'setup'  — project-specific files ingested from vfs.json; re-fetched each boot.
+ *   'local'  — user-created or modified during the session; persisted to sessionStorage.
  *
- * This keeps sessionStorage lean: only the user's mutations are stored.
- * On next boot the remote baseline is re-fetched and the local delta is
- * overlaid on top, reconstructing the full VFS without any stale copies of
- * large read-only assets.
+ * Only 'local' entries are written to sessionStorage, keeping it lean. On the
+ * next boot the remote + setup baselines are re-fetched and the local delta is
+ * overlaid on top.
  */
-export type VFSOrigin = 'remote' | 'local';
+export type VFSOrigin = 'remote' | 'setup' | 'local';
 
 export type DesktopVFSEntry =
   | { kind: 'file';    content: string; readOnly?: boolean; origin: VFSOrigin }
@@ -37,7 +38,7 @@ export type DesktopVFSMap = Map<string, DesktopVFSEntry>;
 
 // ─── App identifiers ──────────────────────────────────────────────────────────
 
-export type AppId = 'terminal' | 'browser' | 'email' | 'text-editor';
+export type AppId = 'terminal' | 'browser' | 'email' | 'text-editor' | 'ticket-app' | 'file-explorer';
 
 // ─── Per-app window-level state ───────────────────────────────────────────────
 
@@ -65,11 +66,26 @@ export interface TextEditorAppState {
   cursorCol: number;
 }
 
+export interface TicketAppState {
+  view: 'list' | 'new' | 'detail';
+  /** ID of the currently open ticket in detail view */
+  openTicketId?: string;
+}
+
+export interface FileExplorerAppState {
+  /** Current directory path displayed in the right pane */
+  cwd: string;
+  /** Currently selected VFS path (file or dir), or null */
+  selectedPath: string | null;
+}
+
 export type AppState =
   | TerminalAppState
   | BrowserAppState
   | EmailAppState
-  | TextEditorAppState;
+  | TextEditorAppState
+  | TicketAppState
+  | FileExplorerAppState;
 
 // ─── Windows ──────────────────────────────────────────────────────────────────
 
@@ -131,6 +147,22 @@ export interface MachineState {
   stateEndpoint?: string;
 }
 
+// ─── Virtual fetch (kernel HTTP simulation) ───────────────────────────────────
+
+/**
+ * Response object returned by `kernel.vfetch()`.
+ * Mirrors the shape of the Fetch API Response for familiarity.
+ */
+export interface VFetchResponse {
+  ok:         boolean;
+  status:     number;
+  statusText: string;
+  /** Parsed JSON body, or null when the response body is not valid JSON. */
+  data:       unknown;
+  /** Raw text body */
+  text:       string;
+}
+
 // ─── Kernel API (the syscall surface exposed to all apps) ───────────────────
 
 export interface KernelAPI {
@@ -171,6 +203,51 @@ export interface KernelAPI {
   // ── Process management ─────────────────────────────────────────────────
   spawnProcess(name: string, windowId?: string): void;
   killProcess(pid: number): void;
+
+  // ── Virtual HTTP (simulated network) ──────────────────────────────────
+  /**
+   * Simulated HTTP fetch for in-sandbox apps.
+   *
+   * URL routing:
+   *   sandbox://api/{path}  → reads /var/api/{path}.json from VFS;
+   *                           falls back to {stateEndpoint}/api/{path} if
+   *                           a state endpoint is configured.
+   *   sandbox://…           → 404 for unrecognised schemes.
+   *
+   * Always resolves (never rejects). Check `response.ok` for success.
+   */
+  vfetch(url: string): Promise<VFetchResponse>;
+
+  // ── "Open With" — sandbox:// URL dispatcher ────────────────────────────
+  /**
+   * Parse a `sandbox://` URL and open the matching desktop app.
+   *
+   * Every app is addressable with query-param style (preferred) or, for
+   * ticket-app and file-explorer, the legacy path style still works.
+   *
+   * Route table:
+   *   sandbox://terminal                          → Terminal (HOME cwd)
+   *   sandbox://terminal?cwd=<path>               → Terminal at <path>
+   *   sandbox://browser                           → Browser (about:home)
+   *   sandbox://browser?url=<url>                 → Browser at <url>
+   *   sandbox://text-editor                       → Text Editor (new buffer)
+   *   sandbox://text-editor?path=<path>           → Text Editor opens <path>
+   *   sandbox://email                             → Email inbox
+   *   sandbox://email?view=compose                → Email compose
+   *   sandbox://email?view=sent                   → Email sent
+   *   sandbox://email?view=message&id=<id>        → Email message <id>
+   *   sandbox://ticket-app                        → Ticket list
+   *   sandbox://ticket-app?view=new               → New ticket
+   *   sandbox://ticket-app?view=detail&id=<id>    → Ticket detail <id>
+   *   sandbox://ticket-app/new                    → New ticket (legacy)
+   *   sandbox://ticket-app/detail/<id>            → Ticket detail (legacy)
+   *   sandbox://file-explorer                     → File Explorer at HOME
+   *   sandbox://file-explorer?cwd=<path>          → File Explorer at <path>
+   *   sandbox://file-explorer/<path>              → File Explorer at <path> (legacy)
+   *
+   * Silently ignored for unrecognised slugs.
+   */
+  openWith(url: string): void;
 }
 
 // ─── Reducer actions ──────────────────────────────────────────────────────────

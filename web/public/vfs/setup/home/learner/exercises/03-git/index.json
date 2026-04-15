@@ -1,0 +1,12 @@
+{
+  "path": "/home/learner/exercises/03-git",
+  "layer": "setup",
+  "entries": [
+    {
+      "name": "README.md",
+      "type": "file",
+      "size": 225,
+      "readOnly": true
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "path": "/dev",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "pts",
+      "type": "dir"
+    },
+    {
+      "name": "null",
+      "type": "file",
+      "size": 21,
+      "readOnly": true
+    },
+    {
+      "name": "random",
+      "type": "file",
+      "size": 21,
+      "readOnly": true
+    },
+    {
+      "name": "sda",
+      "type": "file",
+      "size": 17,
+      "readOnly": true
+    },
+    {
+      "name": "tty",
+      "type": "file",
+      "size": 21,
+      "readOnly": true
+    },
+    {
+      "name": "zero",
+      "type": "file",
+      "size": 21,
+      "readOnly": true
+    }
+  ]
+}

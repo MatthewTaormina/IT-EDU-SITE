@@ -1,0 +1,14 @@
+{
+  "path": "/var/mail",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "inbox",
+      "type": "dir"
+    },
+    {
+      "name": "sent",
+      "type": "dir"
+    }
+  ]
+}

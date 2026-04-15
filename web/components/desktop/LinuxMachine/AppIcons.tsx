@@ -102,3 +102,47 @@ export function TextEditorIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function TicketIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+    >
+      {/* Ticket shape */}
+      <path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1.5a1.5 1.5 0 0 0 0 3V15a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1.5a1.5 1.5 0 0 0 0-3V9z" />
+      {/* Perforation line */}
+      <line x1="9" y1="7" x2="9" y2="17" strokeDasharray="2 2" />
+      {/* Content lines */}
+      <line x1="12" y1="10" x2="18" y2="10" />
+      <line x1="12" y1="13" x2="18" y2="13" />
+    </svg>
+  );
+}
+
+export function FileExplorerIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+    >
+      {/* Folder body */}
+      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+      {/* File icon inside */}
+      <line x1="12" y1="12" x2="12" y2="17" />
+      <line x1="9.5" y1="14.5" x2="14.5" y2="14.5" />
+    </svg>
+  );
+}

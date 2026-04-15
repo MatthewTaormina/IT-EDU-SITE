@@ -1,0 +1,5 @@
+{
+  "path": "/proc/net",
+  "layer": "base",
+  "entries": []
+}

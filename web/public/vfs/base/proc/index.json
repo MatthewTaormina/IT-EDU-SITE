@@ -1,0 +1,38 @@
+{
+  "path": "/proc",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "net",
+      "type": "dir"
+    },
+    {
+      "name": "sys",
+      "type": "dir"
+    },
+    {
+      "name": "cpuinfo",
+      "type": "file",
+      "size": 97,
+      "readOnly": true
+    },
+    {
+      "name": "meminfo",
+      "type": "file",
+      "size": 140,
+      "readOnly": true
+    },
+    {
+      "name": "uptime",
+      "type": "file",
+      "size": 16,
+      "readOnly": true
+    },
+    {
+      "name": "version",
+      "type": "file",
+      "size": 63,
+      "readOnly": true
+    }
+  ]
+}

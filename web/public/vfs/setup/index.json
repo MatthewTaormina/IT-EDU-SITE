@@ -1,0 +1,14 @@
+{
+  "path": "/",
+  "layer": "setup",
+  "entries": [
+    {
+      "name": "etc",
+      "type": "dir"
+    },
+    {
+      "name": "home",
+      "type": "dir"
+    }
+  ]
+}

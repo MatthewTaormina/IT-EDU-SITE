@@ -1,0 +1,74 @@
+{
+  "path": "/",
+  "layer": "base",
+  "entries": [
+    {
+      "name": "bin",
+      "type": "dir"
+    },
+    {
+      "name": "boot",
+      "type": "dir"
+    },
+    {
+      "name": "dev",
+      "type": "dir"
+    },
+    {
+      "name": "etc",
+      "type": "dir"
+    },
+    {
+      "name": "home",
+      "type": "dir"
+    },
+    {
+      "name": "lib",
+      "type": "dir"
+    },
+    {
+      "name": "lib64",
+      "type": "dir"
+    },
+    {
+      "name": "media",
+      "type": "dir"
+    },
+    {
+      "name": "mnt",
+      "type": "dir"
+    },
+    {
+      "name": "opt",
+      "type": "dir"
+    },
+    {
+      "name": "proc",
+      "type": "dir"
+    },
+    {
+      "name": "run",
+      "type": "dir"
+    },
+    {
+      "name": "sbin",
+      "type": "dir"
+    },
+    {
+      "name": "srv",
+      "type": "dir"
+    },
+    {
+      "name": "tmp",
+      "type": "dir"
+    },
+    {
+      "name": "usr",
+      "type": "dir"
+    },
+    {
+      "name": "var",
+      "type": "dir"
+    }
+  ]
+}

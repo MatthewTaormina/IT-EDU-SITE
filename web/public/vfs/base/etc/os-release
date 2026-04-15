@@ -1,0 +1,5 @@
+NAME="FictOS"
+VERSION="1.0 (Sandbox Edition)"
+ID=fictos
+ID_LIKE=debian
+PRETTY_NAME="FictOS 1.0 (Sandbox Edition)"

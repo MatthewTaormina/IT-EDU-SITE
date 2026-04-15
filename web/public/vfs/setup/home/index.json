@@ -1,0 +1,10 @@
+{
+  "path": "/home",
+  "layer": "setup",
+  "entries": [
+    {
+      "name": "learner",
+      "type": "dir"
+    }
+  ]
+}

@@ -67,10 +67,12 @@ function cloneVFS(vfs: DesktopVFSMap): DesktopVFSMap {
 // ─── Window helpers ───────────────────────────────────────────────────────────
 
 const DEFAULT_WINDOW_SIZES: Record<AppId, { width: number; height: number }> = {
-  terminal:      { width: 720,  height: 480 },
-  browser:       { width: 1024, height: 700 },
-  email:         { width: 800,  height: 560 },
-  'text-editor': { width: 640,  height: 480 },
+  terminal:        { width: 720,  height: 480 },
+  browser:         { width: 1024, height: 700 },
+  email:           { width: 800,  height: 560 },
+  'text-editor':   { width: 640,  height: 480 },
+  'ticket-app':    { width: 900,  height: 600 },
+  'file-explorer': { width: 820,  height: 540 },
 };
 
 /** Cascade-position each new window 24px offset from the previous. */
@@ -102,6 +104,10 @@ function defaultAppState(app: AppId, env: Record<string, string>): AppState {
       return { view: 'inbox' };
     case 'text-editor':
       return { filePath: null, content: '', dirty: false, cursorLine: 1, cursorCol: 1 };
+    case 'ticket-app':
+      return { view: 'list' };
+    case 'file-explorer':
+      return { cwd: env['HOME'] ?? '/home/user', selectedPath: null };
   }
 }
 

@@ -1,0 +1,18 @@
+{
+  "path": "/home/learner/exercises/01-hello",
+  "layer": "setup",
+  "entries": [
+    {
+      "name": "hello.sh",
+      "type": "file",
+      "size": 59,
+      "readOnly": true
+    },
+    {
+      "name": "README.md",
+      "type": "file",
+      "size": 160,
+      "readOnly": true
+    }
+  ]
+}

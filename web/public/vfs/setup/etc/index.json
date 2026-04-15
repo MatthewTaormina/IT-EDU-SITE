@@ -1,0 +1,12 @@
+{
+  "path": "/etc",
+  "layer": "setup",
+  "entries": [
+    {
+      "name": "motd",
+      "type": "file",
+      "size": 127,
+      "readOnly": true
+    }
+  ]
+}

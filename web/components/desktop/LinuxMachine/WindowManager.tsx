@@ -20,13 +20,20 @@
  */
 
 import type { ReactNode } from 'react';
+import dynamic from 'next/dynamic';
 import { useMachineState } from './MachineContext';
 import { WindowFrame } from './WindowFrame';
-import type { AppId, WindowEntry, TerminalAppState, BrowserAppState, EmailAppState, TextEditorAppState } from './MachineTypes';
+import type { AppId, WindowEntry, TerminalAppState, BrowserAppState, EmailAppState, TextEditorAppState, TicketAppState, FileExplorerAppState } from './MachineTypes';
 import { TerminalApp }    from '../apps/TerminalApp';
 import { BrowserApp }    from '../apps/BrowserApp';
 import { EmailApp }      from '../apps/EmailApp';
 import { TextEditorApp } from '../apps/TextEditorApp';
+import { TicketApp }     from '../apps/TicketApp';
+
+const FileExplorerApp = dynamic(
+  () => import('../apps/FileExplorerApp').then(m => ({ default: m.FileExplorerApp })),
+  { loading: () => <AppStub label="File Explorer" hint="Loading…" />, ssr: false },
+);
 
 // ─── App slot registry ────────────────────────────────────────────────────────
 
@@ -62,6 +69,20 @@ function renderAppContent(win: WindowEntry): ReactNode {
         <TextEditorApp
           windowId={win.id}
           appState={win.appState as TextEditorAppState}
+        />
+      );
+    case 'ticket-app':
+      return (
+        <TicketApp
+          windowId={win.id}
+          appState={win.appState as TicketAppState}
+        />
+      );
+    case 'file-explorer':
+      return (
+        <FileExplorerApp
+          windowId={win.id}
+          appState={win.appState as FileExplorerAppState}
         />
       );
     default: {

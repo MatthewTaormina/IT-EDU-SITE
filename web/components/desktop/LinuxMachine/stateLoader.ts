@@ -33,10 +33,12 @@ import type {
 // ─── Default window dimensions ────────────────────────────────────────────────
 
 const DEFAULT_WINDOW_SIZES: Record<AppId, { width: number; height: number }> = {
-  terminal:      { width: 720,  height: 480 },
-  browser:       { width: 1024, height: 700 },
-  email:         { width: 800,  height: 560 },
-  'text-editor': { width: 640,  height: 480 },
+  terminal:        { width: 720,  height: 480 },
+  browser:         { width: 1024, height: 700 },
+  email:           { width: 800,  height: 560 },
+  'text-editor':   { width: 640,  height: 480 },
+  'ticket-app':    { width: 900,  height: 600 },
+  'file-explorer': { width: 820,  height: 540 },
 };
 
 // ─── Remote VFS builder ───────────────────────────────────────────────────────
@@ -56,16 +58,30 @@ function ensureDirs(vfs: DesktopVFSMap, absPath: string): void {
 /**
  * Minimal Debian-like directory tree + system stubs.
  * All entries are origin:'remote' — never written to sessionStorage.
+ * AC 3.1: Full Linux filesystem view.
  */
 function buildRemoteVFS(hostname: string): DesktopVFSMap {
   const vfs: DesktopVFSMap = new Map();
   vfs.set('/', { kind: 'dir', origin: 'remote' });
 
   const sysDirs = [
-    '/bin', '/etc', '/home', '/tmp',
-    '/usr', '/usr/bin', '/usr/local', '/usr/local/bin',
-    '/var', '/var/log', '/var/mail', '/var/mail/inbox', '/var/mail/sent',
-    '/proc',
+    // FHS top-level
+    '/bin', '/boot', '/dev', '/etc', '/home', '/lib', '/lib64',
+    '/media', '/mnt', '/opt', '/proc', '/run', '/sbin', '/srv',
+    '/tmp', '/usr', '/var',
+    // /usr subtree
+    '/usr/bin', '/usr/lib', '/usr/local', '/usr/local/bin', '/usr/local/lib',
+    '/usr/sbin', '/usr/share', '/usr/share/doc',
+    // /var subtree
+    '/var/api', '/var/cache', '/var/lib', '/var/log',
+    '/var/mail', '/var/mail/inbox', '/var/mail/sent',
+    '/var/run', '/var/spool', '/var/tickets', '/var/tmp', '/var/www',
+    // /proc stubs
+    '/proc/sys', '/proc/net',
+    // /dev stubs
+    '/dev/pts',
+    // /run stubs
+    '/run/lock',
   ];
   for (const d of sysDirs) vfs.set(d, { kind: 'dir', origin: 'remote' });
 
@@ -73,6 +89,59 @@ function buildRemoteVFS(hostname: string): DesktopVFSMap {
   for (const b of bins) {
     vfs.set(`/bin/${b}`, { kind: 'file', content: '', readOnly: true, origin: 'remote' });
   }
+
+  const sbins = ['init', 'shutdown', 'reboot'];
+  for (const b of sbins) {
+    vfs.set(`/sbin/${b}`, { kind: 'file', content: '', readOnly: true, origin: 'remote' });
+  }
+
+  // /dev stubs (AC 3.1: devices visible to user)
+  const devStubs = [
+    ['null',   'c', '1', '3'],
+    ['zero',   'c', '1', '5'],
+    ['random', 'c', '1', '8'],
+    ['tty',    'c', '5', '0'],
+    ['sda',    'b', '8', '0'],
+  ] as const;
+  for (const [name, type, major, minor] of devStubs) {
+    vfs.set(`/dev/${name}`, {
+      kind: 'file',
+      content: `${type === 'c' ? 'character' : 'block'} device ${major}:${minor}\n`,
+      readOnly: true,
+      origin: 'remote',
+    });
+  }
+
+  // /proc stubs
+  vfs.set('/proc/version', {
+    kind: 'file', readOnly: true, origin: 'remote',
+    content: 'Linux version 6.1.0-fictos (build@sandbox) (gcc 12.2.0) #1 SMP\n',
+  });
+  vfs.set('/proc/uptime', {
+    kind: 'file', readOnly: true, origin: 'remote',
+    content: '3600.00 3599.00\n',
+  });
+  vfs.set('/proc/meminfo', {
+    kind: 'file', readOnly: true, origin: 'remote',
+    content: [
+      'MemTotal:        1048576 kB',
+      'MemFree:          524288 kB',
+      'MemAvailable:     786432 kB',
+      'Buffers:           32768 kB',
+      'Cached:           196608 kB',
+      '',
+    ].join('\n'),
+  });
+  vfs.set('/proc/cpuinfo', {
+    kind: 'file', readOnly: true, origin: 'remote',
+    content: [
+      'processor\t: 0',
+      'model name\t: FictOS Virtual CPU @ 2.00GHz',
+      'cpu MHz\t\t: 2000.000',
+      'cache size\t: 4096 KB',
+      '',
+    ].join('\n'),
+  });
 
   vfs.set('/etc/hostname', {
     kind: 'file', readOnly: true, origin: 'remote',
@@ -93,26 +162,45 @@ function buildRemoteVFS(hostname: string): DesktopVFSMap {
     kind: 'file', readOnly: true, origin: 'remote',
     content: `Welcome to ${hostname}.\nFictOS 1.0 — sandbox environment.\nType 'help' for available commands.\n`,
   });
+  vfs.set('/etc/fstab', {
+    kind: 'file', readOnly: true, origin: 'remote',
+    content: [
+      '# <file system>  <mount point>  <type>   <options>       <dump>  <pass>',
+      'proc             /proc          proc     defaults          0       0',
+      'tmpfs            /tmp           tmpfs    defaults          0       0',
+      '',
+    ].join('\n'),
+  });
+  vfs.set('/etc/shells', {
+    kind: 'file', readOnly: true, origin: 'remote',
+    content: '/bin/sh\n/bin/bash\n',
+  });
+  vfs.set('/etc/passwd', {
+    kind: 'file', readOnly: true, origin: 'remote',
+    content: `root:x:0:0:root:/root:/bin/bash\n${hostname.split('.')[0]}:x:1000:1000::/home/${hostname.split('.')[0]}:/bin/bash\n`,
+  });
 
   return vfs;
 }
 
 /**
- * Ingest vfs.json entries into an existing VFS. All entries become origin:'remote'.
+ * Ingest vfs.json entries into an existing VFS.
+ * AC 3.3 Setup Layer: all entries become origin:'setup' (distinct from the
+ * kernel 'remote' base layer and user 'local' delta layer).
  */
 function ingestRemoteVFS(vfs: DesktopVFSMap, vfsData: VFSStateFile): void {
   for (const [rawPath, entry] of Object.entries(vfsData)) {
     const abs = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
     ensureDirs(vfs, abs);
     if (typeof entry === 'string') {
-      vfs.set(abs, { kind: 'file', content: entry, readOnly: true, origin: 'remote' });
+      vfs.set(abs, { kind: 'file', content: entry, readOnly: true, origin: 'setup' });
     } else {
       vfs.set(abs, {
         kind: 'url',
         href: (entry as { url: string; mimeType: string }).url,
         mimeType: (entry as { url: string; mimeType: string }).mimeType,
         readOnly: true,
-        origin: 'remote',
+        origin: 'setup',
       });
     }
   }
@@ -130,6 +218,10 @@ function defaultAppState(app: AppId, env: Record<string, string>): AppState {
       return { view: 'inbox' };
     case 'text-editor':
       return { filePath: null, content: '', dirty: false, cursorLine: 1, cursorCol: 1 };
+    case 'ticket-app':
+      return { view: 'list' };
+    case 'file-explorer':
+      return { cwd: env['HOME'] ?? '/home/user', selectedPath: null };
   }
 }
 

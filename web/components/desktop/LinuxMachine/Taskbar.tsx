@@ -25,7 +25,7 @@ import {
 } from 'react';
 import { useKernel, useMachineState } from './MachineContext';
 import type { AppId, WindowEntry } from './MachineTypes';
-import { TerminalIcon, BrowserIcon, EmailIcon, TextEditorIcon } from './AppIcons';
+import { TerminalIcon, BrowserIcon, EmailIcon, TextEditorIcon, TicketIcon, FileExplorerIcon } from './AppIcons';
 
 // ─── App launcher specs ───────────────────────────────────────────────────────
 
@@ -37,10 +37,12 @@ interface LauncherSpec {
 }
 
 const LAUNCHERS: readonly LauncherSpec[] = [
-  { id: 'terminal',    label: 'Terminal',    icon: <TerminalIcon className="w-5 h-5" />,    defaultTitle: 'Terminal'     },
-  { id: 'browser',     label: 'Browser',     icon: <BrowserIcon className="w-5 h-5" />,     defaultTitle: 'Web Browser'  },
-  { id: 'email',       label: 'Email',       icon: <EmailIcon className="w-5 h-5" />,       defaultTitle: 'Inbox'        },
-  { id: 'text-editor', label: 'Text Editor', icon: <TextEditorIcon className="w-5 h-5" />,  defaultTitle: 'New Document' },
+  { id: 'terminal',      label: 'Terminal',       icon: <TerminalIcon className="w-5 h-5" />,      defaultTitle: 'Terminal'      },
+  { id: 'browser',       label: 'Browser',        icon: <BrowserIcon className="w-5 h-5" />,       defaultTitle: 'Web Browser'   },
+  { id: 'email',         label: 'Email',          icon: <EmailIcon className="w-5 h-5" />,         defaultTitle: 'Inbox'         },
+  { id: 'text-editor',   label: 'Text Editor',    icon: <TextEditorIcon className="w-5 h-5" />,    defaultTitle: 'New Document'  },
+  { id: 'ticket-app',    label: 'Ticket Manager', icon: <TicketIcon className="w-5 h-5" />,        defaultTitle: 'Ticket Manager'},
+  { id: 'file-explorer', label: 'File Explorer',  icon: <FileExplorerIcon className="w-5 h-5" />,  defaultTitle: 'File Explorer' },
 ];
 
 // ─── Clock ────────────────────────────────────────────────────────────────────
