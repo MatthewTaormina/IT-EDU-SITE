@@ -280,9 +280,10 @@ export function buildNavInterceptScript(pageUrl: string): string {
       'var he=node.getAttribute("http-equiv");' +
       'if(!he||he.toLowerCase()!=="refresh")return;' +
       'var c=node.getAttribute("content")||"";' +
-      'var m=/url\\s*=\\s*["\']?([^"\'\\s;]+)/i.exec(c);' +
+      'var m=/url\\s*=\\s*(?:["\']([^"\']*)["\']|([^\\s;]*))/i.exec(c);' +
       'if(!m)return;' +
-      'var abs;try{abs=new URL(m[1],BASE).href;}catch(x){abs=m[1];}' +
+      'var raw=m[1]||m[2]||"";if(!raw)return;' +
+      'var abs;try{abs=new URL(raw,BASE).href;}catch(x){abs=raw;}' +
       'node.parentNode&&node.parentNode.removeChild(node);' +
       'if(/^https?:/i.test(abs)){POST("nav",{type:"browser-navigate",href:abs});}' +
     '}' +

@@ -222,6 +222,18 @@ const STRIP_HEADERS = new Set([
   // set-cookie is handled separately — not stripped
 ]);
 
+// ─── Chrome 124 header constants ──────────────────────────────────────────────
+
+/** Accept header Chrome 124 sends for top-level navigation requests. */
+const CHROME_ACCEPT_NAVIGATE =
+  'text/html,application/xhtml+xml,application/xml;q=0.9,' +
+  'image/avif,image/webp,image/apng,*/*;q=0.8,' +
+  'application/signed-exchange;v=b3;q=0.7';
+
+/** Sec-CH-UA value matching Chrome 124 on Linux. */
+const CHROME_SEC_CH_UA =
+  '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"';
+
 // ─── Body size cap ────────────────────────────────────────────────────────────
 
 const MAX_BYTES = 10 * 1024 * 1024; // 10 MB
@@ -275,16 +287,13 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     'Cache-Control':             'max-age=0',
     'Upgrade-Insecure-Requests': '1',
     'User-Agent':                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-    'Accept':                    incomingAccept || (isNavigation
-      ? 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
-      : '*/*'),
-    'Sec-CH-UA':                 '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+    'Accept':                    incomingAccept || (isNavigation ? CHROME_ACCEPT_NAVIGATE : '*/*'),
+    'Sec-CH-UA':                 CHROME_SEC_CH_UA,
     'Sec-CH-UA-Mobile':          '?0',
     'Sec-CH-UA-Platform':        '"Linux"',
     'Sec-Fetch-Dest':            isNavigation ? 'document' : 'empty',
     'Sec-Fetch-Mode':            isNavigation ? 'navigate' : 'cors',
     'Sec-Fetch-Site':            'none',
-    'Sec-Fetch-User':            isNavigation ? '?1' : '',
     'Accept-Language':           'en-CA,en-US;q=0.9,en;q=0.8',
     'Accept-Encoding':           'identity',
     'Referer':                   rawUrl,
@@ -292,9 +301,9 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     'Priority':                  isNavigation ? 'u=0, i' : 'u=1',
   };
 
-  // Remove empty values (e.g. Sec-Fetch-User for non-navigation)
-  for (const key of Object.keys(outHeaders)) {
-    if (!outHeaders[key]) delete outHeaders[key];
+  // Navigation-only headers
+  if (isNavigation) {
+    outHeaders['Sec-Fetch-User'] = '?1';
   }
 
   // POST/PUT/PATCH — include Origin header (browsers send it on non-GET)
