@@ -123,7 +123,24 @@ export function FileExplorerApp({ windowId, appState }: FileExplorerAppProps) {
     });
   }, [kernel, state.vfs]);
 
-  const entries = listDir(cwd);
+  const entries = useMemo(() => listDir(cwd), [listDir, cwd]);
+
+  // Pre-compute a parent → [child dir paths] map in a single O(N) VFS scan.
+  // Each TreeNode can then look up its children in O(1) instead of scanning
+  // all VFS keys on every render.
+  const childDirsMap = useMemo(() => {
+    const map = new Map<string, string[]>();
+    for (const [p, entry] of state.vfs) {
+      if (p === '/') continue;
+      if ((entry as { kind?: string }).kind !== 'dir') continue;
+      const parent = parentPath(p);
+      const list = map.get(parent);
+      if (list) list.push(p);
+      else map.set(parent, [p]);
+    }
+    for (const list of map.values()) list.sort();
+    return map;
+  }, [state.vfs]);
 
   const navigate = useCallback((path: string) => {
     setCwd(path);
@@ -197,9 +214,8 @@ export function FileExplorerApp({ windowId, appState }: FileExplorerAppProps) {
         {/* Left: directory tree */}
         <div style={{ width: '220px', flexShrink: 0, borderRight: '1px solid #21262d', overflow: 'auto', background: '#0d1117' }}>
           <DirectoryTree
-            vfs={state.vfs}
+            childDirsMap={childDirsMap}
             cwd={cwd}
-            kernel={kernel}
             onNavigate={navigate}
           />
         </div>
@@ -307,13 +323,12 @@ function FileEntry({ entry, isSelected, onSelect, onOpen, onKeyDown }: FileEntry
 // ─── DirectoryTree (left panel) ───────────────────────────────────────────────
 
 interface DirectoryTreeProps {
-  vfs:        Map<string, unknown>;
-  cwd:        string;
-  kernel:     ReturnType<typeof useKernel>;
-  onNavigate: (path: string) => void;
+  childDirsMap: Map<string, string[]>;
+  cwd:          string;
+  onNavigate:   (path: string) => void;
 }
 
-function DirectoryTree({ vfs, cwd, kernel, onNavigate }: DirectoryTreeProps) {
+function DirectoryTree({ childDirsMap, cwd, onNavigate }: DirectoryTreeProps) {
   return (
     <nav aria-label="Directory tree" style={{ padding: '0.5rem 0' }}>
       <ul role="tree" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
@@ -322,8 +337,7 @@ function DirectoryTree({ vfs, cwd, kernel, onNavigate }: DirectoryTreeProps) {
           label="/"
           level={0}
           cwd={cwd}
-          vfs={vfs}
-          kernel={kernel}
+          childDirsMap={childDirsMap}
           onNavigate={onNavigate}
           defaultExpanded
         />
@@ -333,17 +347,16 @@ function DirectoryTree({ vfs, cwd, kernel, onNavigate }: DirectoryTreeProps) {
 }
 
 interface TreeNodeProps {
-  path:           string;
-  label:          string;
-  level:          number;
-  cwd:            string;
-  vfs:            Map<string, unknown>;
-  kernel:         ReturnType<typeof useKernel>;
-  onNavigate:     (path: string) => void;
+  path:             string;
+  label:            string;
+  level:            number;
+  cwd:              string;
+  childDirsMap:     Map<string, string[]>;
+  onNavigate:       (path: string) => void;
   defaultExpanded?: boolean;
 }
 
-function TreeNode({ path, label, level, cwd, vfs, kernel, onNavigate, defaultExpanded }: TreeNodeProps) {
+function TreeNode({ path, label, level, cwd, childDirsMap, onNavigate, defaultExpanded }: TreeNodeProps) {
   const isActive = cwd === path || cwd.startsWith(path === '/' ? '/' : path + '/');
   const [expanded, setExpanded] = useState(defaultExpanded ?? isActive);
 
@@ -352,16 +365,8 @@ function TreeNode({ path, label, level, cwd, vfs, kernel, onNavigate, defaultExp
     if (isActive) setExpanded(true);
   }, [isActive]);
 
-  const children = useMemo(() =>
-    Array.from(vfs.keys())
-      .filter(p => {
-        const parent = path === '/' ? '' : path;
-        const rel = p.slice(parent.length);
-        return rel.startsWith('/') && rel.indexOf('/', 1) === -1 && (vfs.get(p) as { kind?: string })?.kind === 'dir';
-      })
-      .sort(),
-    [vfs, path],
-  );
+  // O(1) lookup — childDirsMap was built with a single VFS scan in the parent
+  const children = childDirsMap.get(path) ?? [];
 
   const indent = level * 12;
   const isCwd  = cwd === path;
@@ -404,8 +409,7 @@ function TreeNode({ path, label, level, cwd, vfs, kernel, onNavigate, defaultExp
               label={basename(childPath)}
               level={level + 1}
               cwd={cwd}
-              vfs={vfs}
-              kernel={kernel}
+              childDirsMap={childDirsMap}
               onNavigate={onNavigate}
             />
           ))}
