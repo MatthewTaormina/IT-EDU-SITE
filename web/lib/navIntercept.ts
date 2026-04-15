@@ -22,6 +22,15 @@
  * `new URL(raw, BASE)` makes URL resolution completely independent of the
  * document's `<base>` tag.
  *
+ * Same-page fragment links
+ * ────────────────────────
+ * After resolving `href`, the script compares the resolved URL's `origin` and
+ * `pathname` against `BASE`. If they match — meaning the link targets the same
+ * page with only a different hash (e.g. `href="/page#section"` on `/page`) —
+ * the intercept returns early and lets the browser handle the scroll natively.
+ * Without this check, such links would trigger a full `browser-navigate` message
+ * and reload the iframe instead of scrolling.
+ *
  * Injection safety
  * ────────────────
  * `JSON.stringify` is used to serialise the URL into a JS string literal.
@@ -54,6 +63,8 @@ export function buildNavInterceptScript(pageUrl: string): string {
     "var raw=a.getAttribute('href');if(!raw||raw.charAt(0)==='#')return;" +
     "var href;try{href=new URL(raw,BASE).href;}catch(x){href=raw;}" +
     "if(/^javascript:/i.test(href))return;" +
+    // Same-page fragment: resolved URL differs from BASE only by hash → scroll, don't navigate
+    "try{var b=new URL(BASE),d=new URL(href);if(d.origin===b.origin&&d.pathname===b.pathname)return;}catch(x){}" +
     "e.preventDefault();" +
     "window.parent.postMessage({type:'browser-navigate',href:href,windowId:window.name},'*');" +
     "},true);})();"
