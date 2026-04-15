@@ -16,6 +16,8 @@ related_topics:
   - "[[backend-stack]]"
   - "[[web-standards]]"
   - "[[infrastructure]]"
+  - "[[git_foundations]]"
+  - "[[git_best_practices]]"
 last_updated: "2026-04-14"
 ---
 
@@ -29,13 +31,14 @@ This is the master index of the `.knowledge/` knowledge base. It lists all resea
 
 ## Research Graph Overview
 
-The `.knowledge/` knowledge base contains 14 research nodes organized into 3 subject domains and 1 index domain.
+The `.knowledge/` knowledge base contains 19 research nodes organized into 4 subject domains and 1 index domain.
 
 ```
 .knowledge/
 ├── pedagogy/           (5 nodes — educational frameworks and learning science)
 ├── programming/        (5 nodes — language concepts, paradigms, engineering principles)
 ├── web-dev/            (4 nodes — frontend, backend, standards, infrastructure)
+├── git/                (2 nodes — version control fundamentals and professional workflow)
 └── indexes/            (2 nodes — navigation and cross-reference)
 ```
 
@@ -111,6 +114,30 @@ Research into the specific technology stacks, standards, and infrastructure of m
 
 ---
 
+## Domain: Git
+
+Research into Git version control — from foundational data model through professional workflow conventions.
+
+| Node | File | Primary Topic | Key Relationships |
+| :--- | :--- | :--- | :--- |
+| [[git_foundations]] | `git/git-foundations.md` | VCS history, DAG model, three areas, core commands, branching, remotes, conflicts | → git_best_practices, software-engineering-principles, infrastructure |
+| [[git_best_practices]] | `git/git-best-practices.md` | Atomic commits, Conventional Commits, branching strategies, interactive rebase, PR workflow | → software-engineering-principles, core-competencies-fullstack, infrastructure |
+
+### Key Questions Answered in Git Domain
+
+- What is version control and why does it exist?
+- How does Git store data internally (blobs, trees, commits, DAG)?
+- What are the three working areas and how do changes flow through them?
+- What is HEAD and how do branches work as pointers?
+- What is the difference between a fast-forward and a three-way merge?
+- How do you resolve a merge conflict?
+- What is the difference between `git fetch` and `git pull`?
+- What is GitHub Flow and how do pull requests work?
+- What are atomic commits and how do you write a Conventional Commits message?
+- What branching strategies exist (Git Flow, GitHub Flow, trunk-based development)?
+
+---
+
 ## Domain: Indexes
 
 Navigation and cross-reference documents for AI agent traversal.
@@ -132,6 +159,9 @@ Navigation and cross-reference documents for AI agent traversal.
 | core-competencies-fullstack | programming | `programming/core-competencies-fullstack.md` |
 | cross-reference-map | indexes | `indexes/cross-reference-map.md` |
 | frontend-stack | web-dev | `web-dev/frontend-stack.md` |
+| gap-analysis | validation | `validation/gap-analysis.md` |
+| git_best_practices | git | `git/git-best-practices.md` |
+| git_foundations | git | `git/git-foundations.md` |
 | infrastructure | web-dev | `web-dev/infrastructure.md` |
 | it-education-strategies | pedagogy | `pedagogy/it-education-strategies.md` |
 | language-fundamentals | programming | `programming/language-fundamentals.md` |
