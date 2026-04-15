@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "hostname": "sandbox",
+  "user": "learner",
+  "browserAllowedSites": [
+    "duckduckgo.com",
+    "developer.mozilla.org",
+    "en.wikipedia.org"
+  ],
+  "initialWindows": [
+    {
+      "app": "terminal",
+      "title": "Terminal — bash"
+    }
+  ],
+  "resources": {
+    "vfs": "vfs.json"
+  }
+}

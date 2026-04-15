@@ -1,0 +1,20 @@
+[
+  {
+    "id": "welcome-01",
+    "from": "admin@fictos.io",
+    "to": "learner@sandbox",
+    "subject": "Welcome to FictOS Sandbox!",
+    "date": "2026-04-15T09:00:00.000Z",
+    "body": "Hi Learner,\n\nWelcome to your FictOS Sandbox environment!\n\nThis is a fully browser-based Linux desktop. Nothing is saved to our servers — all your files and changes live in this browser tab's memory and are preserved across page refreshes via sessionStorage.\n\nHere's what you can do right now:\n\n  • Open the Terminal and run shell commands (ls, cd, cat, nano, git, ...)\n  • Create and edit files with the Text Editor\n  • Look up documentation in the Browser (MDN, Wikipedia are pre-approved)\n  • Compose and send messages in Email (fictional — nothing is sent for real)\n\nTo get started, check out the exercises in ~/exercises/.\n\nHappy learning!\n\n— The IT Learning Hub Team",
+    "read": false
+  },
+  {
+    "id": "welcome-02",
+    "from": "curriculum@it-edu-site.ca",
+    "to": "learner@sandbox",
+    "subject": "Quick tip: git is available in the terminal",
+    "date": "2026-04-15T09:05:00.000Z",
+    "body": "Hi,\n\nJust a quick note: the terminal includes a full git implementation.\n\nTry it:\n\n  cd ~/exercises/03-git\n  git init\n  echo '# My repo' > README.md\n  git add README.md\n  git commit -m 'Initial commit'\n  git log\n\nAll the standard git commands work: init, add, commit, log, status, diff, branch, checkout, merge, and more.\n\nThe git state is stored entirely in the virtual filesystem, so it persists across page reloads just like your files.\n\nGood luck!\n\n— Curriculum Team",
+    "read": false
+  }
+]

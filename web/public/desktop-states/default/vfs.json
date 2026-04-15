@@ -1,0 +1,15 @@
+{
+  "/home/learner/README.md": "# Welcome to FictOS Sandbox\n\nThis is your personal browser-based Linux environment.\nEverything runs in memory — no files are saved to any server.\n\n## Getting started\n\n```bash\nls ~/\ncat ~/README.md\nnano ~/notes.txt\n```\n\n## Available apps\n\n- **Terminal** — full bash-like shell with git support\n- **Text Editor** — GUI editor backed by the same filesystem\n- **Browser** — sandboxed in-world browser (MDN, Wikipedia)\n- **Email** — check your welcome messages\n\nOpen the Email app to read your welcome message.\n",
+
+  "/home/learner/Desktop/getting-started.txt": "GETTING STARTED\n===============\n\n1. Open a terminal and try: ls, cd, cat, mkdir, nano\n2. Run 'git init' inside any directory to start a git repo\n3. Open the Text Editor to create and edit files with a GUI\n4. Use the Browser to look up MDN documentation\n5. Check Email for your welcome message\n\nTip: Your files persist for the duration of this browser session.\nRefreshing the page reloads from this default state.\n",
+
+  "/home/learner/exercises/01-hello/README.md": "# Exercise 1 — Hello World\n\nRun the shell script below:\n\n```bash\ncd ~/exercises/01-hello\nbash hello.sh\n```\n\nThen modify `hello.sh` to print your own message.\n",
+
+  "/home/learner/exercises/01-hello/hello.sh": "#!/bin/bash\n# Exercise 1: Hello World\necho 'Hello, World!'\n",
+
+  "/home/learner/exercises/02-files/README.md": "# Exercise 2 — Working with Files\n\nPractice creating, reading, and organising files:\n\n```bash\ncd ~/exercises/02-files\nmkdir my-project\ntouch my-project/index.html\necho '<h1>Hello</h1>' > my-project/index.html\ncat my-project/index.html\n```\n",
+
+  "/home/learner/exercises/03-git/README.md": "# Exercise 3 — Git Basics\n\nInitialise a repository and make your first commit:\n\n```bash\ncd ~/exercises/03-git\ngit init\ngit status\necho '# My Project' > README.md\ngit add README.md\ngit commit -m 'Initial commit'\ngit log\n```\n",
+
+  "/etc/motd": "Welcome to sandbox (FictOS 1.0 — Sandbox Edition).\nType 'help' for available commands.\nYour home directory is /home/learner.\n"
+}
