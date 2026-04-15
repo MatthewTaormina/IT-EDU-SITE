@@ -132,7 +132,7 @@ type PageState =
   | { kind: 'blocked'; url: string }
   | { kind: 'error'; url: string; message: string }
   | { kind: 'iframe'; src: string; title: string }
-  | { kind: 'srcdoc'; html: string; title: string }
+  | { kind: 'srcdoc'; html: string; title: string; proxied?: boolean }
   | { kind: 'launched'; url: string; appName: string };
 
 function getPageTitle(page: PageState): string {
@@ -336,6 +336,65 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
     void resolveUrl(currentUrl);
   }, [currentUrl, resolveUrl]);
 
+  // ── Handle POST form submissions from within the iframe ─────────────────
+  const handleFormSubmit = useCallback(async (
+    actionUrl: string,
+    method: string,
+    body: string,
+    contentType: string,
+  ): Promise<void> => {
+    const url = normalizeUrl(actionUrl);
+
+    // Push the action URL to history
+    const newHistory = [...navHistory.slice(0, historyIdx + 1), url];
+    const newIdx     = newHistory.length - 1;
+    setNavHistory(newHistory);
+    setHistoryIdx(newIdx);
+    setUrlInput(url);
+    syncKernel(newHistory, newIdx);
+    setPage({ kind: 'loading', url });
+
+    try {
+      const res = await fetch(proxyUrl(url), {
+        method,
+        headers: { 'Content-Type': contentType },
+        body,
+      });
+
+      // The proxy returns X-Final-URL with the post-redirect URL
+      const finalUrl = res.headers.get('x-final-url') || url;
+      const ct       = res.headers.get('content-type') || '';
+
+      // Update history to the final URL if a redirect occurred
+      if (finalUrl !== url) {
+        newHistory[newIdx] = finalUrl;
+        setNavHistory([...newHistory]);
+        setUrlInput(finalUrl);
+        syncKernel(newHistory, newIdx);
+      }
+
+      if (/text\/html/i.test(ct)) {
+        const html = await res.text();
+        const m    = /<title[^>]*>([^<]+)<\/title>/i.exec(html);
+        setPage({
+          kind:    'srcdoc',
+          html,
+          title:   m?.[1] ?? finalUrl,
+          proxied: true,
+        });
+      } else {
+        setPage({
+          kind:    'error',
+          url:     finalUrl,
+          message: 'Form submission returned a non-HTML response',
+        });
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setPage({ kind: 'error', url, message: `Form submission failed: ${msg}` });
+    }
+  }, [navHistory, historyIdx, syncKernel]);
+
   // ── Initial page load (once on mount) ───────────────────────────────────
   const didInitRef = useRef(false);
   useEffect(() => {
@@ -345,18 +404,34 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ── Listen for in-iframe link clicks forwarded via postMessage ──────────
+  // ── Listen for in-iframe postMessages (link clicks + form submissions) ───
   useEffect(() => {
     function handleMessage(e: MessageEvent): void {
-      if (!e.data || e.data.type !== 'browser-navigate') return;
-      if (e.data.windowId !== windowId) return;
-      const href = e.data.href;
-      if (typeof href !== 'string' || !href) return;
-      navigate(href);
+      if (!e.data) return;
+      const { type: msgType, windowId: msgWid } = e.data;
+      if (msgWid !== windowId) return;
+
+      if (msgType === 'browser-navigate') {
+        const href = e.data.href;
+        if (typeof href !== 'string' || !href) return;
+        navigate(href);
+        return;
+      }
+
+      if (msgType === 'browser-form-submit') {
+        const { href, method, body, contentType } = e.data;
+        if (typeof href !== 'string' || !href) return;
+        void handleFormSubmit(
+          href,
+          method || 'POST',
+          body || '',
+          contentType || 'application/x-www-form-urlencoded',
+        );
+      }
     }
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [navigate, windowId]);
+  }, [navigate, handleFormSubmit, windowId]);
 
   // ── URL bar handlers ─────────────────────────────────────────────────────
   const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>): void => {
@@ -576,7 +651,9 @@ function PageRenderer({
           srcDoc={page.html}
           title={pageTitle}
           className="w-full h-full border-0"
-          sandbox="allow-scripts allow-forms allow-modals"
+          sandbox={page.proxied
+            ? 'allow-scripts allow-forms allow-same-origin allow-popups allow-downloads'
+            : 'allow-scripts allow-forms allow-modals'}
           style={{ background: '#fff' }}
         />
       );
