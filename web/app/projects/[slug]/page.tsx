@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
+import rehypeHighlight from 'rehype-highlight';
 import rehypeCalloutBlocks from '@/lib/rehype-callout-blocks';
-import { getProjectContent, getEntriesByType } from '@/lib/content';
+import remarkProjectLinks from '@/lib/remark-project-links';
+import { getProjectContent, getEntriesByType, getProjectDocSlugs } from '@/lib/content';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import DifficultyBadge from '@/components/ui/DifficultyBadge';
 import { mdxComponents } from '@/components/mdx';
@@ -38,6 +41,7 @@ export default async function ProjectPage({ params }: Props) {
   }
 
   const { frontmatter, content } = project;
+  const allDocs = getProjectDocSlugs(slug);
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
@@ -57,14 +61,30 @@ export default async function ProjectPage({ params }: Props) {
         <p className="text-muted text-lg">{frontmatter.description}</p>
       </header>
 
-      <article className="prose prose-slate dark:prose-invert max-w-none">
+      {/* Sub-document navigation */}
+      {allDocs.length > 0 && (
+        <nav className="mb-8 flex flex-wrap gap-2" aria-label="Project documents">
+          {allDocs.map((d) => (
+            <Link
+              key={d}
+              href={`/projects/${slug}/${d}`}
+              className="text-xs font-medium px-3 py-1.5 rounded-full border border-border text-muted hover:text-foreground hover:border-primary transition-colors"
+            >
+              {d.replace(/^\d+_/, '').replace(/_/g, ' ')}
+            </Link>
+          ))}
+        </nav>
+      )}
+
+      <article className="lesson-prose prose prose-slate dark:prose-invert max-w-none">
         <MDXRemote
           source={content}
           components={mdxComponents}
           options={{
             mdxOptions: {
-              remarkPlugins: [remarkGfm],
-              rehypePlugins: [rehypeSlug, rehypeCalloutBlocks],
+              format: 'md',
+              remarkPlugins: [remarkGfm, [remarkProjectLinks, { projectSlug: slug }]],
+              rehypePlugins: [rehypeSlug, rehypeHighlight, rehypeCalloutBlocks],
             },
           }}
         />

@@ -118,6 +118,33 @@ export function getProjectContent(slug: string): {
   return { frontmatter: frontmatter as unknown as ProjectFrontmatter, content, entry };
 }
 
+/** Read a named sub-document from a project folder (e.g. "01_brief"). */
+export function getProjectDocContent(
+  projectSlug: string,
+  docSlug: string,
+): { frontmatter: Record<string, unknown>; content: string } {
+  const entry = getEntryBySlug(projectSlug);
+  if (!entry) throw new Error(`Project not found: ${projectSlug}`);
+  // Entry path is e.g. "Projects/webdev_capstone_portfolio/index.md"
+  const projectDir = path.dirname(path.join(CONTENT_ROOT, entry.path));
+  const docPath = path.join(projectDir, `${docSlug}.md`);
+  if (!fs.existsSync(docPath)) throw new Error(`Doc not found: ${docSlug}`);
+  const raw = fs.readFileSync(docPath, 'utf-8');
+  const { data: frontmatter, content } = matter(raw);
+  return { frontmatter, content };
+}
+
+/** Return all project sub-document slugs (all .md files except index.md). */
+export function getProjectDocSlugs(projectSlug: string): string[] {
+  const entry = getEntryBySlug(projectSlug);
+  if (!entry) return [];
+  const projectDir = path.dirname(path.join(CONTENT_ROOT, entry.path));
+  return fs
+    .readdirSync(projectDir)
+    .filter((f) => f.endsWith('.md') && f !== 'index.md')
+    .map((f) => f.replace(/\.md$/, ''));
+}
+
 // ─── Course navigation tree ───────────────────────────────────────────────────
 
 function buildNavItems(refs: ContentRef[], courseSlug: string): NavItem[] {
