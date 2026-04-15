@@ -704,8 +704,8 @@ function HomePage({ onNavigate, allowedSites }: HomePageProps) {
     if (q.startsWith('local://') || (q.includes('.') && !q.includes(' '))) {
       onNavigate(q);
     } else {
-      // Wikipedia search embeds fine; DuckDuckGo/Google block iframes
-      onNavigate(`https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(q)}&ns0=1`);
+      // Google search works reliably through the proxy without bot-detection issues
+      onNavigate(`https://www.google.com/search?q=${encodeURIComponent(q)}&igu=1`);
     }
   }
 
