@@ -151,6 +151,6 @@ Use `git status` immediately after a conflict to list all conflicted files under
 
 ## Related
 
-- [Manual Conflict Resolution](/lessons/git_04_conflicts_04_manual_conflict_resolution)
-- [Reading Conflict Markers](/lessons/git_04_conflicts_02_conflict_markers)
-- [Completing the Merge](/lessons/git_04_conflicts_05_completing_merge)
+- [Manual Conflict Resolution](/learn/git_foundations/git_04_conflicts_04_manual_conflict_resolution)
+- [Reading Conflict Markers](/learn/git_foundations/git_04_conflicts_02_conflict_markers)
+- [Completing the Merge](/learn/git_foundations/git_04_conflicts_05_completing_merge)

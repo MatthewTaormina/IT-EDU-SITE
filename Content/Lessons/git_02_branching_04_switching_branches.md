@@ -180,6 +180,6 @@ Before continuing to divergent histories and merging, make sure you can work thr
 
 ## Related
 
-- [Creating Branches](/lessons/git_02_branching_02_creating_branches)
-- [Divergent Histories and Branch Divergence](/lessons/git_02_branching_05_divergent_histories)
-- [Undoing Changes](/lessons/git_01_init_commit_10_undoing_changes)
+- [Creating Branches](/learn/git_foundations/git_02_branching_02_creating_branches)
+- [Divergent Histories and Branch Divergence](/learn/git_foundations/git_02_branching_05_divergent_histories)
+- [Undoing Changes](/learn/git_foundations/git_01_init_commit_10_undoing_changes)

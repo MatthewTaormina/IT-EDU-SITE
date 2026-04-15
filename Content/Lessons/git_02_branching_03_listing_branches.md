@@ -56,5 +56,5 @@ git branch -a --list "*/main"   # remote and local main branches
 
 ## Related
 
-- [Deleting Branches](/lessons/git_02_branching_08_deleting_branches)
-- [Switching Between Branches](/lessons/git_02_branching_04_switching_branches)
+- [Deleting Branches](/learn/git_foundations/git_02_branching_08_deleting_branches)
+- [Switching Between Branches](/learn/git_foundations/git_02_branching_04_switching_branches)

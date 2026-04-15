@@ -193,5 +193,5 @@ Installing Git and configuring your identity is a one-time setup. Use `git confi
 
 ## Related
 
-- [Initializing Your First Repository](/lessons/git_01_init_commit_01_init_repository)
-- [The Three Working Areas](/lessons/git_00_intro_03_three_working_areas)
+- [Initializing Your First Repository](/learn/git_foundations/git_01_init_commit_01_init_repository)
+- [The Three Working Areas](/learn/git_foundations/git_00_intro_03_three_working_areas)

@@ -129,6 +129,6 @@ A fast-forward merge moves the target branch pointer forward without creating a 
 
 ## Related
 
-- [Three-Way Merges](/lessons/git_02_branching_07_three_way_merge)
-- [Divergent Histories](/lessons/git_02_branching_05_divergent_histories)
-- [Deleting Branches After Merging](/lessons/git_02_branching_08_deleting_branches)
+- [Three-Way Merges](/learn/git_foundations/git_02_branching_07_three_way_merge)
+- [Divergent Histories](/learn/git_foundations/git_02_branching_05_divergent_histories)
+- [Deleting Branches After Merging](/learn/git_foundations/git_02_branching_08_deleting_branches)

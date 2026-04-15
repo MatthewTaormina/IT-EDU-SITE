@@ -189,6 +189,6 @@ git log --oneline
 
 ## Related
 
-- [Viewing Staged vs. Unstaged Changes with `git diff`](/lessons/git_01_init_commit_05_git_diff_command)
-- [Creating Your First Commit](/lessons/git_01_init_commit_06_first_commit)
-- [Understanding the Staging Area and Why It Exists](/lessons/git_01_init_commit_02_understanding_staging_area)
+- [Viewing Staged vs. Unstaged Changes with `git diff`](/learn/git_foundations/git_01_init_commit_05_git_diff_command)
+- [Creating Your First Commit](/learn/git_foundations/git_01_init_commit_06_first_commit)
+- [Understanding the Staging Area and Why It Exists](/learn/git_foundations/git_01_init_commit_02_understanding_staging_area)

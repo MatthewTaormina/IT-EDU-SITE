@@ -81,6 +81,6 @@ A remote is a named URL pointing to another Git repository. `origin` is the conv
 
 ## Related
 
-- [The `git remote` Command](/lessons/git_03_remotes_02_git_remote_command)
-- [Cloning a Repository](/lessons/git_03_remotes_03_git_clone_command)
-- [Remote-Tracking Branches](/lessons/git_03_remotes_05_remote_tracking_branches)
+- [The `git remote` Command](/learn/git_foundations/git_03_remotes_02_git_remote_command)
+- [Cloning a Repository](/learn/git_foundations/git_03_remotes_03_git_clone_command)
+- [Remote-Tracking Branches](/learn/git_foundations/git_03_remotes_05_remote_tracking_branches)

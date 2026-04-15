@@ -203,6 +203,6 @@ The GitHub PR workflow follows: branch → commit → push → PR → review →
 
 ## Related
 
-- [Feature Branch Workflow](/lessons/git_02_branching_09_feature_branch_workflow)
-- [Pushing Changes with `git push`](/lessons/git_03_remotes_04_git_push_command)
-- [Pulling Changes with `git pull`](/lessons/git_03_remotes_07_git_pull_command)
+- [Feature Branch Workflow](/learn/git_foundations/git_02_branching_09_feature_branch_workflow)
+- [Pushing Changes with `git push`](/learn/git_foundations/git_03_remotes_04_git_push_command)
+- [Pulling Changes with `git pull`](/learn/git_foundations/git_03_remotes_07_git_pull_command)

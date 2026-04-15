@@ -169,6 +169,6 @@ The feature branch workflow keeps `main` stable and deployable. Every task gets 
 
 ## Related
 
-- [Pushing to a Remote with `git push`](/lessons/git_03_remotes_04_git_push_command)
-- [Creating Branches](/lessons/git_02_branching_02_creating_branches)
-- [Deleting Branches](/lessons/git_02_branching_08_deleting_branches)
+- [Pushing to a Remote with `git push`](/learn/git_foundations/git_03_remotes_04_git_push_command)
+- [Creating Branches](/learn/git_foundations/git_02_branching_02_creating_branches)
+- [Deleting Branches](/learn/git_foundations/git_02_branching_08_deleting_branches)

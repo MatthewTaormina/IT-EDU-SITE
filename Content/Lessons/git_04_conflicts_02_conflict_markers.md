@@ -147,6 +147,6 @@ Conflict markers divide a conflicted section into three parts: `HEAD` version (y
 
 ## Related
 
-- [Identifying All Conflicts in a Merge](/lessons/git_04_conflicts_03_identifying_conflicts)
-- [Manual Conflict Resolution](/lessons/git_04_conflicts_04_manual_conflict_resolution)
-- [When Conflicts Occur](/lessons/git_04_conflicts_01_when_conflicts_occur)
+- [Identifying All Conflicts in a Merge](/learn/git_foundations/git_04_conflicts_03_identifying_conflicts)
+- [Manual Conflict Resolution](/learn/git_foundations/git_04_conflicts_04_manual_conflict_resolution)
+- [When Conflicts Occur](/learn/git_foundations/git_04_conflicts_01_when_conflicts_occur)

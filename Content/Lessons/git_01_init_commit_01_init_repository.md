@@ -160,6 +160,6 @@ You should see `.git/` in the listing. Your repository is initialized and ready.
 
 ## Related
 
-- [Understanding the Staging Area and Why It Exists](/lessons/git_01_init_commit_02_understanding_staging_area)
-- [Checking Repository Status with `git status`](/lessons/git_01_init_commit_03_git_status_command)
-- [The Three Working Areas](/lessons/git_00_intro_03_three_working_areas)
+- [Understanding the Staging Area and Why It Exists](/learn/git_foundations/git_01_init_commit_02_understanding_staging_area)
+- [Checking Repository Status with `git status`](/learn/git_foundations/git_01_init_commit_03_git_status_command)
+- [The Three Working Areas](/learn/git_foundations/git_00_intro_03_three_working_areas)

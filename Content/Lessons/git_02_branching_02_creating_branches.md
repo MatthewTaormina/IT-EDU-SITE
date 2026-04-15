@@ -138,6 +138,6 @@ ls    # feature.txt is NOT here — it's on the other branch
 
 ## Related
 
-- [Listing and Inspecting Branches](/lessons/git_02_branching_03_listing_branches)
-- [Switching Between Branches](/lessons/git_02_branching_04_switching_branches)
-- [Understanding Branches as Pointers](/lessons/git_02_branching_01_branch_pointer_model)
+- [Listing and Inspecting Branches](/learn/git_foundations/git_02_branching_03_listing_branches)
+- [Switching Between Branches](/learn/git_foundations/git_02_branching_04_switching_branches)
+- [Understanding Branches as Pointers](/learn/git_foundations/git_02_branching_01_branch_pointer_model)

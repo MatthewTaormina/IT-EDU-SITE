@@ -143,6 +143,6 @@ git push origin --tags          # push tags
 
 ## Related
 
-- [Fetching Changes with `git fetch`](/lessons/git_03_remotes_06_git_fetch_command)
-- [Pulling Changes with `git pull`](/lessons/git_03_remotes_07_git_pull_command)
-- [Feature Branch Workflow](/lessons/git_02_branching_09_feature_branch_workflow)
+- [Fetching Changes with `git fetch`](/learn/git_foundations/git_03_remotes_06_git_fetch_command)
+- [Pulling Changes with `git pull`](/learn/git_foundations/git_03_remotes_07_git_pull_command)
+- [Feature Branch Workflow](/learn/git_foundations/git_02_branching_09_feature_branch_workflow)

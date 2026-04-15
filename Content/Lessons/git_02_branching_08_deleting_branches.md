@@ -163,6 +163,6 @@ git log --oneline | head -3
 
 ## Related
 
-- [Listing and Inspecting Branches](/lessons/git_02_branching_03_listing_branches)
-- [Feature Branch Workflow](/lessons/git_02_branching_09_feature_branch_workflow)
-- [Remote-Tracking Branches](/lessons/git_03_remotes_05_remote_tracking_branches)
+- [Listing and Inspecting Branches](/learn/git_foundations/git_02_branching_03_listing_branches)
+- [Feature Branch Workflow](/learn/git_foundations/git_02_branching_09_feature_branch_workflow)
+- [Remote-Tracking Branches](/learn/git_foundations/git_03_remotes_05_remote_tracking_branches)

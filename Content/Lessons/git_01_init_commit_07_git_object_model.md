@@ -129,6 +129,6 @@ Every operation in Git is a manipulation of these objects. When you understand t
 
 ## Related
 
-- [The DAG: Directed Acyclic Graph of Commits](/lessons/git_01_init_commit_08_dag_commit_graph)
-- [The Three Working Areas](/lessons/git_00_intro_03_three_working_areas)
-- [Three Generations of Version Control Systems](/lessons/git_00_intro_02_three_generations_vcs)
+- [The DAG: Directed Acyclic Graph of Commits](/learn/git_foundations/git_01_init_commit_08_dag_commit_graph)
+- [The Three Working Areas](/learn/git_foundations/git_00_intro_03_three_working_areas)
+- [Three Generations of Version Control Systems](/learn/git_foundations/git_00_intro_02_three_generations_vcs)

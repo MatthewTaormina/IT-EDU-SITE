@@ -125,6 +125,6 @@ Merges multiple branches simultaneously. Used by Linux kernel development and ot
 
 ## Related
 
-- [Fast-Forward Merges](/lessons/git_02_branching_06_fast_forward_merge)
-- [Three-Way Merges](/lessons/git_02_branching_07_three_way_merge)
-- [Aborting a Merge](/lessons/git_04_conflicts_07_aborting_merge)
+- [Fast-Forward Merges](/learn/git_foundations/git_02_branching_06_fast_forward_merge)
+- [Three-Way Merges](/learn/git_foundations/git_02_branching_07_three_way_merge)
+- [Aborting a Merge](/learn/git_foundations/git_04_conflicts_07_aborting_merge)

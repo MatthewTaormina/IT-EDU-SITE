@@ -143,6 +143,6 @@ git pull --ff-only            # pull, but fail if not fast-forwardable
 
 ## Related
 
-- [Downloading Updates with `git fetch`](/lessons/git_03_remotes_06_git_fetch_command)
-- [Pushing Changes with `git push`](/lessons/git_03_remotes_04_git_push_command)
-- [The GitHub Collaboration Workflow](/lessons/git_03_remotes_08_github_workflow)
+- [Downloading Updates with `git fetch`](/learn/git_foundations/git_03_remotes_06_git_fetch_command)
+- [Pushing Changes with `git push`](/learn/git_foundations/git_03_remotes_04_git_push_command)
+- [The GitHub Collaboration Workflow](/learn/git_foundations/git_03_remotes_08_github_workflow)

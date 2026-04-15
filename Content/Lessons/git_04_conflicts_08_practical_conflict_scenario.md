@@ -227,6 +227,6 @@ A complete conflict resolution cycle: fetch → merge → read `git status` → 
 
 ## Related
 
-- [Reading Conflict Markers](/lessons/git_04_conflicts_02_conflict_markers)
-- [Manual Conflict Resolution](/lessons/git_04_conflicts_04_manual_conflict_resolution)
-- [The GitHub Collaboration Workflow](/lessons/git_03_remotes_08_github_workflow)
+- [Reading Conflict Markers](/learn/git_foundations/git_04_conflicts_02_conflict_markers)
+- [Manual Conflict Resolution](/learn/git_foundations/git_04_conflicts_04_manual_conflict_resolution)
+- [The GitHub Collaboration Workflow](/learn/git_foundations/git_03_remotes_08_github_workflow)

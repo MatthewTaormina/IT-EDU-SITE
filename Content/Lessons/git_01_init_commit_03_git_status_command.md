@@ -177,6 +177,6 @@ Make `git status` a reflex. Run it when you sit down to work, before staging any
 
 ## Related
 
-- [Staging Changes with `git add`](/lessons/git_01_init_commit_04_git_add_command)
-- [Understanding the Staging Area and Why It Exists](/lessons/git_01_init_commit_02_understanding_staging_area)
-- [The Three Working Areas](/lessons/git_00_intro_03_three_working_areas)
+- [Staging Changes with `git add`](/learn/git_foundations/git_01_init_commit_04_git_add_command)
+- [Understanding the Staging Area and Why It Exists](/learn/git_foundations/git_01_init_commit_02_understanding_staging_area)
+- [The Three Working Areas](/learn/git_foundations/git_00_intro_03_three_working_areas)

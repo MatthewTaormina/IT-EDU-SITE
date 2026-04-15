@@ -134,6 +134,6 @@ git log --oneline -5     # recent history
 
 ## Related
 
-- [Pushing Changes with `git push`](/lessons/git_03_remotes_04_git_push_command)
-- [Managing Remotes with `git remote`](/lessons/git_03_remotes_02_git_remote_command)
-- [Remote-Tracking Branches](/lessons/git_03_remotes_05_remote_tracking_branches)
+- [Pushing Changes with `git push`](/learn/git_foundations/git_03_remotes_04_git_push_command)
+- [Managing Remotes with `git remote`](/learn/git_foundations/git_03_remotes_02_git_remote_command)
+- [Remote-Tracking Branches](/learn/git_foundations/git_03_remotes_05_remote_tracking_branches)
