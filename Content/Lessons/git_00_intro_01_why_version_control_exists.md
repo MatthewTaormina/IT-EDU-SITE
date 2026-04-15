@@ -95,5 +95,5 @@ Version control solves the core problems of software development at every scale:
 
 ## Related
 
-- [Three Generations of Version Control Systems](/lessons/git_00_intro_02_three_generations_vcs)
-- [The Three Working Areas](/lessons/git_00_intro_03_three_working_areas)
+- [Three Generations of Version Control Systems](/learn/git_foundations/git_00_intro_02_three_generations_vcs)
+- [The Three Working Areas](/learn/git_foundations/git_00_intro_03_three_working_areas)

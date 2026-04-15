@@ -141,6 +141,6 @@ A three-way merge occurs when both branches have diverged from a common ancestor
 
 ## Related
 
-- [Fast-Forward Merges](/lessons/git_02_branching_06_fast_forward_merge)
-- [Divergent Histories](/lessons/git_02_branching_05_divergent_histories)
-- [When Conflicts Occur](/lessons/git_04_conflicts_01_when_conflicts_occur)
+- [Fast-Forward Merges](/learn/git_foundations/git_02_branching_06_fast_forward_merge)
+- [Divergent Histories](/learn/git_foundations/git_02_branching_05_divergent_histories)
+- [When Conflicts Occur](/learn/git_foundations/git_04_conflicts_01_when_conflicts_occur)

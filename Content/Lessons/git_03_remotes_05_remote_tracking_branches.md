@@ -140,6 +140,6 @@ Remote-tracking branches (`origin/main`, etc.) are read-only local snapshots of 
 
 ## Related
 
-- [Fetching Changes with `git fetch`](/lessons/git_03_remotes_06_git_fetch_command)
-- [Managing Remotes with `git remote`](/lessons/git_03_remotes_02_git_remote_command)
-- [Listing and Inspecting Branches](/lessons/git_02_branching_03_listing_branches)
+- [Fetching Changes with `git fetch`](/learn/git_foundations/git_03_remotes_06_git_fetch_command)
+- [Managing Remotes with `git remote`](/learn/git_foundations/git_03_remotes_02_git_remote_command)
+- [Listing and Inspecting Branches](/learn/git_foundations/git_02_branching_03_listing_branches)

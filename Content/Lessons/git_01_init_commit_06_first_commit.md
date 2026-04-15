@@ -178,6 +178,6 @@ A commit is a permanently stored snapshot of your staging area with a message an
 
 ## Related
 
-- [Inspecting History with `git log`](/lessons/git_01_init_commit_09_git_log_command)
-- [Staging Changes with `git add`](/lessons/git_01_init_commit_04_git_add_command)
-- [Undoing Changes](/lessons/git_01_init_commit_10_undoing_changes)
+- [Inspecting History with `git log`](/learn/git_foundations/git_01_init_commit_09_git_log_command)
+- [Staging Changes with `git add`](/learn/git_foundations/git_01_init_commit_04_git_add_command)
+- [Undoing Changes](/learn/git_foundations/git_01_init_commit_10_undoing_changes)

@@ -146,6 +146,6 @@ After resolving all conflicts, complete the merge with: `git add <resolved-files
 
 ## Related
 
-- [Manual Conflict Resolution](/lessons/git_04_conflicts_04_manual_conflict_resolution)
-- [Identifying All Conflicts](/lessons/git_04_conflicts_03_identifying_conflicts)
-- [Aborting a Merge](/lessons/git_04_conflicts_07_aborting_merge)
+- [Manual Conflict Resolution](/learn/git_foundations/git_04_conflicts_04_manual_conflict_resolution)
+- [Identifying All Conflicts](/learn/git_foundations/git_04_conflicts_03_identifying_conflicts)
+- [Aborting a Merge](/learn/git_foundations/git_04_conflicts_07_aborting_merge)

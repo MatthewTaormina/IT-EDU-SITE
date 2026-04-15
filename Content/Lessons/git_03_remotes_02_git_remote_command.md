@@ -157,6 +157,6 @@ git remote show <name>              # full details
 
 ## Related
 
-- [What Is a Remote Repository?](/lessons/git_03_remotes_01_remote_concept)
-- [Cloning a Repository](/lessons/git_03_remotes_03_git_clone_command)
-- [Pushing Changes with `git push`](/lessons/git_03_remotes_04_git_push_command)
+- [What Is a Remote Repository?](/learn/git_foundations/git_03_remotes_01_remote_concept)
+- [Cloning a Repository](/learn/git_foundations/git_03_remotes_03_git_clone_command)
+- [Pushing Changes with `git push`](/learn/git_foundations/git_03_remotes_04_git_push_command)

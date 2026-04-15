@@ -194,6 +194,6 @@ Git undo falls into four categories: discard working directory edits (`git resto
 
 ## Related
 
-- [Creating Your First Commit](/lessons/git_01_init_commit_06_first_commit)
-- [Understanding Branches as Pointers](/lessons/git_02_branching_01_branch_pointer_model)
-- [Aborting a Merge in Progress](/lessons/git_04_conflicts_07_aborting_merge)
+- [Creating Your First Commit](/learn/git_foundations/git_01_init_commit_06_first_commit)
+- [Understanding Branches as Pointers](/learn/git_foundations/git_02_branching_01_branch_pointer_model)
+- [Aborting a Merge in Progress](/learn/git_foundations/git_04_conflicts_07_aborting_merge)

@@ -168,6 +168,6 @@ The ASCII graph on the left shows exactly how commits relate to each other. The 
 
 ## Related
 
-- [Git's Object Model: Blobs, Trees, and Commits](/lessons/git_01_init_commit_07_git_object_model)
-- [The Three Working Areas](/lessons/git_00_intro_03_three_working_areas)
-- [What Is a Branch? The Lightweight Pointer Model](/lessons/git_02_branching_01_branch_pointer_model)
+- [Git's Object Model: Blobs, Trees, and Commits](/learn/git_foundations/git_01_init_commit_07_git_object_model)
+- [The Three Working Areas](/learn/git_foundations/git_00_intro_03_three_working_areas)
+- [What Is a Branch? The Lightweight Pointer Model](/learn/git_foundations/git_02_branching_01_branch_pointer_model)

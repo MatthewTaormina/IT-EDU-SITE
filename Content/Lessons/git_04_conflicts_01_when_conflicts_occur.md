@@ -117,6 +117,6 @@ A merge conflict occurs when two branches modified the same lines in the same fi
 
 ## Related
 
-- [Understanding Conflict Markers](/lessons/git_04_conflicts_02_conflict_markers)
-- [Three-Way Merges](/lessons/git_02_branching_07_three_way_merge)
-- [Aborting a Merge](/lessons/git_04_conflicts_07_aborting_merge)
+- [Understanding Conflict Markers](/learn/git_foundations/git_04_conflicts_02_conflict_markers)
+- [Three-Way Merges](/learn/git_foundations/git_02_branching_07_three_way_merge)
+- [Aborting a Merge](/learn/git_foundations/git_04_conflicts_07_aborting_merge)

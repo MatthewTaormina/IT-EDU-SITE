@@ -163,6 +163,6 @@ Use `git diff` to see unstaged changes (working directory vs. staging area) and 
 
 ## Related
 
-- [Creating Your First Commit](/lessons/git_01_init_commit_06_first_commit)
-- [Staging Changes with `git add`](/lessons/git_01_init_commit_04_git_add_command)
-- [Inspecting History with `git log`](/lessons/git_01_init_commit_09_git_log_command)
+- [Creating Your First Commit](/learn/git_foundations/git_01_init_commit_06_first_commit)
+- [Staging Changes with `git add`](/learn/git_foundations/git_01_init_commit_04_git_add_command)
+- [Inspecting History with `git log`](/learn/git_foundations/git_01_init_commit_09_git_log_command)

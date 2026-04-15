@@ -168,6 +168,6 @@ To resolve a conflict: open the file, read both sides, write the correct merged 
 
 ## Related
 
-- [Completing the Merge After Resolution](/lessons/git_04_conflicts_05_completing_merge)
-- [Reading Conflict Markers](/lessons/git_04_conflicts_02_conflict_markers)
-- [Identifying All Conflicts](/lessons/git_04_conflicts_03_identifying_conflicts)
+- [Completing the Merge After Resolution](/learn/git_foundations/git_04_conflicts_05_completing_merge)
+- [Reading Conflict Markers](/learn/git_foundations/git_04_conflicts_02_conflict_markers)
+- [Identifying All Conflicts](/learn/git_foundations/git_04_conflicts_03_identifying_conflicts)
