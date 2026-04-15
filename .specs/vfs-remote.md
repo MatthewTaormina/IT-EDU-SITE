@@ -27,7 +27,8 @@
 15. [File & Directory Locking](#15-file--directory-locking)
 16. [Presigned Links](#16-presigned-links)
 17. [Multi-Client Synchronisation](#17-multi-client-synchronisation)
-18. [Appendix A — JSON Schemas](#appendix-a--json-schemas)
+18. [V1 vs V2 Scope](#18-v1-vs-v2-scope)
+19. [Appendix A — JSON Schemas](#appendix-a--json-schemas)
 
 ---
 
@@ -101,7 +102,8 @@ The entry point of a filesystem. Fetched first on mount.
   "owner":      "string — user ID or 'guest'",
   "fork_of":    "string | null — fsid of parent FS if this is a fork",
   "fork_depth": "number — 0 for original, increments per fork level",
-  "children":   ["string"] // nids of top-level directory and file meta nodes
+  "children":   ["string"], // nids of top-level directory and file meta nodes
+  "name_index": { "entryName": "nid" } // name → nid map for O(1) child lookup; kept in sync with children
 }
 ```
 
@@ -118,7 +120,8 @@ The entry point of a filesystem. Fetched first on mount.
   "updated_at": "ISO-8601",
   "ttl":        "number | null",
   "meta":       { /* LinuxMeta — see §5 */ },
-  "children":   ["string"] // nids of contained directory and file meta nodes
+  "children":   ["string"], // nids of contained directory and file meta nodes
+  "name_index": { "entryName": "nid" } // name → nid map for O(1) child lookup; kept in sync with children
 }
 ```
 
@@ -188,16 +191,17 @@ fs.meta (root meta node)
 Paths are resolved from the root by:
 
 1. Splitting the path on `/`.
-2. Starting at `fs.meta.children`.
-3. For each segment, fetching the child meta node whose `name` matches the segment.
-4. Returning the final node (file or directory).
+2. Starting at `fs.meta`.
+3. For each segment, looking up the segment name in the current node's `name_index` (O(1)); fall back to a linear scan of `children` only for nodes created by an older implementation that lacks `name_index`.
+4. Fetching the child meta node identified by the resolved nid.
+5. Returning the final node (file or directory).
 
 The client library resolves the full path depth-first with cache hits, issuing one parallel batch request per directory level for any cache misses.
 
 ### 4.3 Hardlinks and Symlinks
 
 - **Symlink:** A file meta node with `symlink_target` set and `blob_nid` null. The client resolves symlinks up to a depth of 40 (POSIX limit) before returning `ELOOP`.
-- **Hardlink:** Not a separate node type. Two file meta nodes in the same filesystem MAY share the same `blob_nid`; `ref_count` on the blob header tracks this. When `ref_count` reaches zero the blob is eligible for GC.
+- **Hardlink:** Not a separate node type. Two file meta nodes in the same filesystem MAY share the same `blob_nid`; `ref_count` on the blob header tracks this. When `ref_count` reaches zero the blob is eligible for GC. Hardlinks MUST NOT span filesystem boundaries — `blob_nid` references are only valid within the same `fsid`.
 
 ---
 
@@ -214,7 +218,7 @@ Every meta node includes a `meta` object with full POSIX-style attributes.
   "mtime":  "ISO-8601 — last content modification time",
   "ctime":  "ISO-8601 — last metadata change time",
   "nlink":  "number — number of hard links (always ≥ 1)",
-  "inode":  "number — virtual inode number (stable within a session; derived from nid)"
+  "inode":  "number — virtual inode number: lower 53 bits of the SHA-256 of the node's nid string (stable within a session; unique within a filesystem)"
 }
 ```
 
@@ -326,9 +330,9 @@ Clients MAY extend TTL by calling the `PATCH /fs/{fsid}/ttl` or `PATCH /node/{ni
 
 A fork is a **copy-on-write (CoW)** snapshot of a filesystem at a point in time.
 
-- Immediately after forking, the child FS has no nodes of its own — all reads fall through to the parent.
-- On first write to any node in the child, the client library checks if the target node is owned by the child; if not, it creates a new node in the child (copying the parent's node data), then applies the mutation.
-- Blob nodes are shared until written: a write to a file creates a new blob node in the child, decrements `ref_count` on the parent blob, and sets `blob_nid` on the new file meta node to point to the new blob.
+- Immediately after forking, the child FS has no nodes of its own — all reads fall through to the parent (resolved server-side by following the `fork_of` chain).
+- On first write to any path in the child, the **server** atomically copies the parent's node into the child FS (assigning it a new nid owned by the child), then applies the mutation. The CoW copy is an atomic server operation (`POST /fs/{fsid}/op/write` handles this transparently); the client library issues a standard write and receives a child-owned nid in the response.
+- Blob nodes are shared until written. When a file in the child is written, the server creates a new blob node in the child (with `ref_count: 1`), orphans the old blob reference in the copied file meta node (decrementing the parent blob's `ref_count`), and sets `blob_nid` on the new child file meta node to point to the new blob.
 
 ### 8.2 Fork Resolution Order
 
@@ -360,6 +364,7 @@ All responses are `application/json` unless noted. Binary responses use `applica
 
 | Method | Path | Description |
 |--------|------|-------------|
+| `GET` | `/fs` | List filesystems accessible to the current session |
 | `POST` | `/fs` | Create a new filesystem |
 | `GET` | `/fs/{fsid}` | Fetch `fs.meta` (root node) |
 | `PATCH` | `/fs/{fsid}` | Update FS label or TTL |
@@ -367,6 +372,23 @@ All responses are `application/json` unless noted. Binary responses use `applica
 | `POST` | `/fs/{fsid}/fork` | Fork this filesystem |
 | `GET` | `/fs/{fsid}/nodes` | List all node IDs (paginated) |
 | `PATCH` | `/fs/{fsid}/ttl` | Renew filesystem TTL |
+
+#### `GET /fs` — List Filesystems
+
+Returns all filesystems the current session is authorized to access.
+
+Query parameters: `owner` (filter by owner user ID, optional), `cursor` (pagination cursor), `limit` (default: 20, max: 100).
+
+Response `200 OK`:
+```jsonc
+{
+  "items": [
+    { "fsid": "string", "label": "string", "owner": "string", "access": "read | write | admin", "created_at": "ISO-8601", "ttl": "number | null" }
+  ],
+  "cursor": "string | null",
+  "has_more": true
+}
+```
 
 #### `POST /fs` — Create Filesystem
 
@@ -386,6 +408,19 @@ Response `201 Created`:
   "root_nid": "string",
   "label":    "string",
   "created_at": "ISO-8601"
+}
+```
+
+#### `GET /fs/{fsid}/nodes` — List All Node IDs (Paginated)
+
+Query parameters: `cursor` (pagination cursor from previous response), `limit` (default: 100, max: 1000).
+
+Response `200 OK`:
+```jsonc
+{
+  "nids":     ["string"],
+  "cursor":   "string | null",
+  "has_more": false
 }
 ```
 
@@ -657,6 +692,21 @@ interface StorageBackend {
 }
 ```
 
+### 9.10 Health Check
+
+A lightweight endpoint used by client libraries to detect connectivity before declaring offline mode.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/ping` | Server liveness check |
+
+Response `200 OK`:
+```jsonc
+{ "ok": true, "version": "1.0.0" }
+```
+
+No authentication required. The server SHOULD respond within 100 ms. Client libraries poll this endpoint every 15 s to detect reconnection after an offline period (see §12.3).
+
 ---
 
 ## 10. Client Library API
@@ -739,6 +789,53 @@ type RvfsClientEvent =
   | 'online' | 'offline'
   | 'sync:start' | 'sync:complete' | 'sync:error'
   | 'change';          // fired for every RvfsChangeEvent from the watch stream
+
+/** Payload passed to handlers registered for RvfsClientEvent */
+type RvfsEvent =
+  | { type: 'online' }
+  | { type: 'offline' }
+  | { type: 'sync:start' }
+  | { type: 'sync:complete'; result: SyncResult }
+  | { type: 'sync:error'; entry: PendingWrite; error: RvfsError }
+  | { type: 'change'; event: RvfsChangeEvent };
+
+interface SyncResult {
+  applied:   number;      // number of WAL entries successfully replayed
+  conflicts: number;      // number of entries that landed in 'conflict' status
+  errors:    number;      // number of entries that landed in 'error' status
+  skipped:   number;      // entries already in 'done' status (idempotent replay)
+}
+
+/** A single entry from the WAL — shape mirrors the WAL Entry Schema (§12.1 / A.6) */
+interface PendingWrite {
+  id:         string;
+  fsid:       string;
+  op:         'create' | 'write' | 'rm' | 'mv' | 'cp' | 'mkdir' | 'rmdir' | 'chmod' | 'chown';
+  path:       string;
+  args:       Record<string, unknown>;
+  queued_at:  Date;
+  status:     'pending' | 'syncing' | 'done' | 'conflict' | 'error';
+  retry:      number;
+  error:      string | null;
+}
+
+/**
+ * Alias for the full Lock object (§15.4 / A.7) returned when inspecting
+ * locks held by other sessions via queryLocks().
+ */
+type LockInfo = {
+  lock_id:     string;
+  fsid:        string;
+  path:        string;
+  type:        'shared' | 'exclusive' | 'intent-shared' | 'intent-exclusive';
+  mode:        'advisory' | 'mandatory';
+  session_id:  string;
+  acquired_at: Date;
+  expires_at:  Date;
+  ttl:         number;
+  recursive:   boolean;
+  metadata:    Record<string, unknown>;
+};
 
 interface CacheStats {
   hits: number; misses: number; evictions: number;
@@ -849,6 +946,27 @@ await client.mount();
 | **Session storage** | Session ID passed via config or environment variable; no browser storage APIs used. |
 | **Concurrency** | The system client is safe for concurrent async calls within a single process. For multi-process deployments, use an external WAL backend (`sqlite` or `fs`) with advisory locking. |
 | **Graceful shutdown** | Call `client.unmount()` before process exit to flush pending WAL entries and close the SSE connection cleanly. |
+
+#### Injectable Interface Types
+
+```typescript
+/** Minimal interface an injected SSE library must satisfy */
+interface EventSourceLike {
+  readonly url:        string;
+  readonly readyState: number; // 0 = CONNECTING, 1 = OPEN, 2 = CLOSED
+  onmessage:           ((event: { data: string; lastEventId: string; type: string }) => void) | null;
+  onerror:             ((event: unknown) => void) | null;
+  close():             void;
+}
+
+/** TLS options passed through to the underlying fetch / http client */
+interface TlsOptions {
+  ca?:                 string | Buffer;    // PEM-encoded CA certificate(s)
+  cert?:               string | Buffer;    // PEM-encoded client certificate (mTLS)
+  key?:                string | Buffer;    // PEM-encoded private key (mTLS)
+  rejectUnauthorized?: boolean;           // default: true; set false only in dev
+}
+```
 
 #### System Client Usage Example (Node.js build script)
 
@@ -1042,13 +1160,27 @@ For system clients that must guarantee WAL durability (e.g., a background sync s
   "fsid":       "string",
   "op":         "create | write | rm | mv | cp | mkdir | rmdir | chmod | chown",
   "path":       "string",
-  "args":       { /* operation-specific payload */ },
+  "args":       { /* operation-specific payload — see table below */ },
   "queued_at":  "ISO-8601",
   "status":     "pending | syncing | done | conflict | error",
   "retry":      "number — retry count",
   "error":      "string | null"
 }
 ```
+
+The `args` field carries the same payload as the corresponding high-level server operation (§9.4). The mapping is:
+
+| `op` | `args` shape | Replays to |
+|------|-------------|-----------|
+| `create` | `{ type, meta?, content?, symlink_target?, ttl? }` | `POST /fs/{fsid}/op/create` |
+| `write` | `{ content, binary?, append?, create_if_missing? }` | `POST /fs/{fsid}/op/write` |
+| `rm` | `{ recursive? }` | `POST /fs/{fsid}/op/rm` |
+| `mv` | `{ dst }` | `POST /fs/{fsid}/op/mv` |
+| `cp` | `{ dst, recursive?, no_clobber? }` | `POST /fs/{fsid}/op/cp` |
+| `mkdir` | `{ parents?, mode? }` | `POST /fs/{fsid}/op/create` with `type: "dir"` |
+| `rmdir` | `{ recursive? }` | `POST /fs/{fsid}/op/rm` with `recursive` |
+| `chmod` | `{ mode }` | `PATCH /node/{nid}` with `{ meta: { mode } }` |
+| `chown` | `{ uid, gid }` | `PATCH /node/{nid}` with `{ meta: { uid, gid } }` |
 
 Reads during offline mode are served entirely from the in-memory LRU and the platform-specific persistent cache. If a requested node is not in any cache and the remote is unavailable, the operation rejects with `RvfsError { code: 'OFFLINE', message: '...' }`.
 
@@ -1157,6 +1289,21 @@ Presigned link tokens MUST be verified server-side on every redemption:
 4. Constraint checks (origin, IP) must pass.
 
 The server MUST NOT skip any of these checks even for `read`-only links. A compromised or leaked link must be revocable via `DELETE /presign/{presign_id}` at any time.
+
+### 14.9 Rate Limiting
+
+Implementations SHOULD apply per-session rate limits to prevent abuse. Recommended defaults:
+
+| Scope | Limit |
+|-------|-------|
+| Write operations per session per minute | 300 |
+| Read operations per session per minute | 1 200 |
+| Batch request operations per minute | 600 (counted by total sub-operations) |
+| Presigned link generation per session per hour | 100 |
+
+When a limit is exceeded the server MUST respond with `429 Too Many Requests` and include a `Retry-After` header (seconds until the rate limit window resets). The client library surfaces this as `RvfsError { code: 'TIMEOUT', status: 429 }` with the `Retry-After` value attached to the error object.
+
+Guest sessions MAY be subject to stricter limits than authenticated sessions.
 
 ---
 
@@ -1389,6 +1536,7 @@ https://api.example.com/rvfs/v1/presigned/{token}
 // Decoded token payload (before base64)
 {
   "v":          1,                        // token version
+  "kid":        "string",                 // key ID identifying the signing key (see §16.6)
   "type":       "path:read",              // link type
   "fsid":       "string | null",          // target filesystem (null for blob:* links by nid)
   "resource":   "string",                 // path, nid, or fsid depending on type
@@ -1401,14 +1549,14 @@ https://api.example.com/rvfs/v1/presigned/{token}
     "allowed_ip_prefix":  "string | null",// CIDR block (optional)
     "max_bytes":          "number | null" // cap for write links (optional)
   },
-  "sig":        "hex HMAC-SHA256"         // covers all fields above
+  "sig":        "hex HMAC-SHA256"         // covers all fields above except sig itself
 }
 ```
 
 The HMAC is computed over the **canonical string**:
 
 ```
-{v}\n{type}\n{fsid}\n{resource}\n{operation}\n{issued_at}\n{expires_at}\n{max_uses}\n{constraints_json_sorted_keys}
+{v}\n{kid}\n{type}\n{fsid}\n{resource}\n{operation}\n{issued_at}\n{expires_at}\n{max_uses}\n{constraints_json_sorted_keys}
 ```
 
 The signing key is a server-side secret rotated on a schedule (see §16.6).
@@ -1603,6 +1751,42 @@ If the server's event log is pruned before a client reconnects, it sends a `stre
 
 ---
 
+## 18. V1 vs V2 Scope
+
+The RVFS spec is layered so that a working V1 can be shipped without implementing every section. The table below shows which sections are **required for V1** (mutually dependent) and which are **safe to defer to V2** (no other section hard-depends on them).
+
+### V1 — Ship Together
+
+| Section | Content |
+|---------|---------|
+| §3–5 | Node model, filesystem graph, Linux metadata |
+| §6 | Sessions (guest + authenticated) |
+| §7 | TTL & soft/hard expiry |
+| §8 | Forking (CoW; fork depth ≤ 1 enforced in V1 to reduce implementation risk) |
+| §9.1–9.9 | Full server API: FS management, node CRUD, blob upload/download, atomic high-level ops, batch, SSE change stream, response headers |
+| §9.10 | Health-check `/ping` endpoint |
+| §10–11 | Browser and System client packages + caching architecture |
+| §12 | Offline WAL + sync protocol |
+| §13 | Error model |
+| §14 | Security (token isolation, server-side authz, blob integrity, path traversal, quota, fork depth, rate limiting) |
+
+### V2 — Safe to Defer
+
+| Section | Content | Reason deferrable |
+|---------|---------|------------------|
+| §15 | File & directory locking | Purely additive; no other section calls lock endpoints. Introduce in V2 when shared-FS use cases require it. |
+| §16 | Presigned links | Useful for sharing but not required for core sandbox operation. |
+| §8.4 | Fork merge | Explicitly marked future; fork chain structure already supports it. |
+| Multi-level fork chains (depth > 1) | Extend `fork_depth` cap from 1 to 16 | Bounded complexity; defer until real nesting need is demonstrated. |
+
+### Recommended V1 Enforcement Rules
+
+- `fork_depth` MAY be capped at `1` in V1 server implementations. Any `POST /fs/{fsid}/fork` on a filesystem that already has `fork_depth > 0` SHOULD return `400 Bad Request` with `"error": "FORK_DEPTH_EXCEEDED"` until V2.
+- Lock endpoints (`/lock`, `/fs/{fsid}/locks`) SHOULD return `501 Not Implemented` in V1 rather than `404`, so clients can distinguish missing features from missing resources.
+- Presign endpoints (`/presign`, `/presigned/{token}`) SHOULD likewise return `501 Not Implemented` in V1.
+
+---
+
 ## Appendix A — JSON Schemas
 
 ### A.1 LinuxMeta
@@ -1658,7 +1842,7 @@ If the server's event log is pruned before a client reconnects, it sends a `stre
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "DirMetaNode",
   "type": "object",
-  "required": ["nid", "type", "name", "fsid", "created_at", "updated_at", "meta", "children"],
+  "required": ["nid", "type", "name", "fsid", "created_at", "updated_at", "meta", "children", "name_index"],
   "properties": {
     "nid":        { "type": "string" },
     "type":       { "type": "string", "const": "dir" },
@@ -1669,7 +1853,8 @@ If the server's event log is pruned before a client reconnects, it sends a `stre
     "updated_at": { "type": "string", "format": "date-time" },
     "ttl":        { "type": ["integer", "null"], "minimum": 0 },
     "meta":       { "$ref": "#/definitions/LinuxMeta" },
-    "children":   { "type": "array", "items": { "type": "string" } }
+    "children":   { "type": "array", "items": { "type": "string" } },
+    "name_index": { "type": "object", "additionalProperties": { "type": "string" } }
   }
 }
 ```
@@ -1681,7 +1866,7 @@ If the server's event log is pruned before a client reconnects, it sends a `stre
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "RootMetaNode",
   "type": "object",
-  "required": ["nid", "type", "fsid", "label", "created_at", "updated_at", "owner", "children"],
+  "required": ["nid", "type", "fsid", "label", "created_at", "updated_at", "owner", "children", "name_index"],
   "properties": {
     "nid":        { "type": "string" },
     "type":       { "type": "string", "const": "root" },
@@ -1694,6 +1879,7 @@ If the server's event log is pruned before a client reconnects, it sends a `stre
     "fork_of":    { "type": ["string", "null"] },
     "fork_depth": { "type": "integer", "minimum": 0 },
     "children":   { "type": "array", "items": { "type": "string" } },
+    "name_index": { "type": "object", "additionalProperties": { "type": "string" } },
     "quota_bytes":{ "type": ["integer", "null"], "minimum": 0 }
   }
 }
@@ -1800,9 +1986,10 @@ If the server's event log is pruned before a client reconnects, it sends a `stre
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "PresignedTokenPayload",
   "type": "object",
-  "required": ["v", "type", "resource", "operation", "issued_at", "expires_at", "sig"],
+  "required": ["v", "kid", "type", "resource", "operation", "issued_at", "expires_at", "sig"],
   "properties": {
     "v":           { "type": "integer", "const": 1 },
+    "kid":         { "type": "string", "description": "Key ID identifying which signing key to verify against (see §16.6)" },
     "type":        { "type": "string", "enum": ["blob:read","blob:write","path:read","path:write","fs:mount","watch:stream"] },
     "fsid":        { "type": ["string", "null"] },
     "resource":    { "type": "string" },
@@ -1818,7 +2005,28 @@ If the server's event log is pruned before a client reconnects, it sends a `stre
         "max_bytes":         { "type": ["integer", "null"] }
       }
     },
-    "sig": { "type": "string", "description": "Hex-encoded HMAC-SHA256 over canonical string" }
+    "sig": { "type": "string", "description": "Hex-encoded HMAC-SHA256 over canonical string (all fields except sig itself)" }
   }
 }
 ```
+
+### A.10 SyncResult
+
+```jsonc
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SyncResult",
+  "type": "object",
+  "required": ["applied", "conflicts", "errors", "skipped"],
+  "properties": {
+    "applied":   { "type": "integer", "minimum": 0, "description": "WAL entries successfully replayed to the remote" },
+    "conflicts": { "type": "integer", "minimum": 0, "description": "Entries that landed in 'conflict' status (409 from server)" },
+    "errors":    { "type": "integer", "minimum": 0, "description": "Entries that landed in 'error' status (non-retryable failure)" },
+    "skipped":   { "type": "integer", "minimum": 0, "description": "Entries already 'done' — idempotent replay had no effect" }
+  }
+}
+```
+
+### A.11 PendingWrite
+
+The `PendingWrite` TypeScript type (§10.0) maps directly to the `WalEntry` schema (A.6). The `args` field is typed as `Record<string, unknown>` in the client interface but has per-operation structure as described in the WAL args table in §12.1.
