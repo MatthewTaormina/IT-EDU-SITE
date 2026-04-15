@@ -122,6 +122,15 @@ Reading this:
 - `auth.js` — modified, not staged, will NOT be in next commit
 - `scratch-notes.txt` — new file, not tracked, will NOT be in next commit
 
+The sandbox below starts with a repo where `README.md` is committed, `index.js` is staged, and `notes.txt` is untracked. Run `git status` to see all three sections:
+
+<TerminalSandbox
+  stateUrl="/sandbox/git_01_init_commit_03.json"
+  height="22rem"
+/>
+
+Edit a file (e.g., add a line to `index.js`), then run `git status` again to see the "Changes not staged" section appear.
+
 ## Short Status Output
 
 For a more concise view:
@@ -170,4 +179,4 @@ Make `git status` a reflex. Run it when you sit down to work, before staging any
 
 - [Staging Changes with `git add`](/lessons/git_01_init_commit_04_git_add_command)
 - [Understanding the Staging Area and Why It Exists](/lessons/git_01_init_commit_02_understanding_staging_area)
-- [The Three Working Areas](/lessons/git_00_intro_05_three_working_areas)
+- [The Three Working Areas](/lessons/git_00_intro_03_three_working_areas)

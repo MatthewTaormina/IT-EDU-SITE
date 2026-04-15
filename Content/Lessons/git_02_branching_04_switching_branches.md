@@ -27,6 +27,13 @@ git checkout feature-login   # older, equivalent syntax
 
 Both work. `git switch` is preferred in modern Git for clarity.
 
+The sandbox starts with `main` (one commit) and `feature/login` (two commits, with an extra file). Switch between them and run `ls` or `git log --oneline` to see the difference:
+
+<TerminalSandbox
+  stateUrl="/sandbox/git_02_branching_04.json"
+  height="26rem"
+/>
+
 ## Switching Back to the Previous Branch
 
 ```bash
@@ -175,4 +182,4 @@ Before continuing to divergent histories and merging, make sure you can work thr
 
 - [Creating Branches](/lessons/git_02_branching_02_creating_branches)
 - [Divergent Histories and Branch Divergence](/lessons/git_02_branching_05_divergent_histories)
-- [Undoing Changes](/lessons/git_01_init_commit_08_undoing_changes)
+- [Undoing Changes](/lessons/git_01_init_commit_10_undoing_changes)

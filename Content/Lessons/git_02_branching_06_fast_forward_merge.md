@@ -59,6 +59,17 @@ The commit graph has a single straight line. There is no merge commit — just t
 - The branch boundary disappears from the log — you can't tell at a glance that this work was done on a separate branch
 - On shared teams, understanding the feature's scope from the log requires looking at commit messages rather than graph topology
 
+The sandbox starts on `feature/nav` — a branch ahead of `main` by zero commits. Add a commit on this feature branch, switch back to `main`, and run `git merge feature/nav`:
+
+<TerminalSandbox
+  stateUrl="/sandbox/git_02_branching_06.json"
+  height="26rem"
+/>
+
+<Callout type="tip">
+After committing on `feature/nav`, run `git log --oneline` to confirm your branch is ahead of `main`. Then `git checkout main` and `git merge feature/nav` to complete the fast-forward.
+</Callout>
+
 ## Preventing Fast-Forward: Always Create a Merge Commit
 
 Some teams require merge commits even when a fast-forward is possible, to preserve evidence that work was done on a branch:

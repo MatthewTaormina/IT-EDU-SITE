@@ -112,4 +112,4 @@ Aborting buys you time, not a solution. Consider what to do next:
 
 - [Manual Conflict Resolution](/lessons/git_04_conflicts_04_manual_conflict_resolution)
 - [Completing the Merge](/lessons/git_04_conflicts_05_completing_merge)
-- [Undoing Changes](/lessons/git_01_init_commit_08_undoing_changes)
+- [Undoing Changes](/lessons/git_01_init_commit_10_undoing_changes)

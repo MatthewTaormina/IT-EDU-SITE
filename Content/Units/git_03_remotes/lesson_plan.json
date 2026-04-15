@@ -43,7 +43,7 @@
         "push URL"
       ],
       "mdx_components": [
-        "TerminalEmulator"
+        "TerminalSandbox"
       ],
       "notes": "Show: `git remote` (list), `git remote -v` (show URLs), `git remote add upstream <url>`, `git remote remove upstream`."
     },
@@ -63,7 +63,7 @@
         "default branch"
       ],
       "mdx_components": [
-        "TerminalEmulator"
+        "TerminalSandbox"
       ],
       "notes": "When cloning: entire object database copied, `origin` remote created automatically, default branch checked out. Much faster than downloading ZIP."
     },
@@ -83,7 +83,7 @@
         "remote-tracking branches"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Show: `git push origin main` (push main to origin). Then `git push -u origin feature-auth` (push and set tracking). Explain `-u` flag."
@@ -124,7 +124,7 @@
         "safe exploration"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Fetch updates remote-tracking branches but doesn't change your local branches. Safe way to see what's new before integrating."
@@ -145,7 +145,7 @@
         "divergence"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout",
         "ProgressCheck"
       ],

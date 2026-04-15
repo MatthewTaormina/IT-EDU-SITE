@@ -155,4 +155,4 @@ The staging area lets you build precise, logical commits from a working session 
 
 - [Staging Changes with `git add`](/lessons/git_01_init_commit_04_git_add_command)
 - [Viewing Staged vs. Unstaged Changes with `git diff`](/lessons/git_01_init_commit_05_git_diff_command)
-- [The Three Working Areas](/lessons/git_00_intro_05_three_working_areas)
+- [The Three Working Areas](/lessons/git_00_intro_03_three_working_areas)

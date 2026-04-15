@@ -211,6 +211,6 @@ git log --oneline --graph --all
 
 ## Related
 
-- [Undoing Changes](/lessons/git_01_init_commit_08_undoing_changes)
+- [Undoing Changes](/lessons/git_01_init_commit_10_undoing_changes)
 - [Creating Your First Commit](/lessons/git_01_init_commit_06_first_commit)
 - [Understanding Branches as Pointers](/lessons/git_02_branching_01_branch_pointer_model)

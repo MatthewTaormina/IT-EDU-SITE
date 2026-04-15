@@ -64,7 +64,7 @@
         "marker location"
       ],
       "mdx_components": [
-        "TerminalEmulator"
+        "TerminalSandbox"
       ],
       "notes": "After failed merge, `git status` shows 'unmerged paths'. `git diff` shows conflict markers in context."
     },
@@ -84,7 +84,7 @@
         "working version"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Three choices: (1) keep HEAD version only, (2) keep incoming only, (3) write new code combining both. Remove markers and edit to create working state."
@@ -105,7 +105,7 @@
         "merge complete"
       ],
       "mdx_components": [
-        "TerminalEmulator"
+        "TerminalSandbox"
       ],
       "notes": "After editing files: (1) `git add` each resolved file, (2) `git commit` (Git pre-fills merge commit message). Now merge is complete."
     },
@@ -125,7 +125,7 @@
         "manual resolution preferred"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Strategies auto-resolve conflicts. Rare to use; usually better to decide manually based on domain knowledge. Use with caution."
@@ -146,7 +146,7 @@
         "try again later"
       ],
       "mdx_components": [
-        "TerminalEmulator"
+        "TerminalSandbox"
       ],
       "notes": "`git merge --abort` cancels the merge entirely and returns to pre-merge state. Safe, loses nothing. Use if you need time to think."
     },

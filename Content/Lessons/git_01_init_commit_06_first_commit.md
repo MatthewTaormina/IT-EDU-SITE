@@ -76,6 +76,13 @@ Git confirms:
 - Your message
 - Files changed and lines added
 
+Follow the steps above in the live sandbox — the directory and `README.md` are ready for you:
+
+<TerminalSandbox
+  stateUrl="/sandbox/git_01_init_commit_06.json"
+  height="26rem"
+/>
+
 ## Writing Good Commit Messages
 
 The message is the most human-readable part of a commit. Future-you (or a teammate) will read these messages to understand changes without re-reading code.
@@ -171,6 +178,6 @@ A commit is a permanently stored snapshot of your staging area with a message an
 
 ## Related
 
-- [Inspecting History with `git log`](/lessons/git_01_init_commit_07_git_log_command)
+- [Inspecting History with `git log`](/lessons/git_01_init_commit_09_git_log_command)
 - [Staging Changes with `git add`](/lessons/git_01_init_commit_04_git_add_command)
-- [Undoing Changes](/lessons/git_01_init_commit_08_undoing_changes)
+- [Undoing Changes](/lessons/git_01_init_commit_10_undoing_changes)

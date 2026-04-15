@@ -14,9 +14,9 @@ references:
   - type: lesson
     slug: git_00_intro_01_why_version_control_exists
   - type: lesson
-    slug: git_00_intro_06_install_configure_git
-  - type: lesson
     slug: git_00_intro_02_three_generations_vcs
   - type: lesson
-    slug: git_00_intro_05_three_working_areas
+    slug: git_00_intro_03_three_working_areas
+  - type: lesson
+    slug: git_00_intro_04_install_configure_git
 ---

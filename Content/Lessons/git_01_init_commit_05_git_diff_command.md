@@ -76,6 +76,17 @@ This shows what's in the staging area compared to the last commit — exactly wh
 Use `git diff` before staging, `git diff --staged` after staging. Together they give you full visibility over both decisions: what to include and what will be committed.
 </Callout>
 
+The sandbox starts with an initial commit. Make changes to the files, stage some, and use `git diff` and `git diff --staged` to inspect:
+
+<TerminalSandbox
+  stateUrl="/sandbox/git_01_init_commit_05.json"
+  height="24rem"
+/>
+
+<Callout type="tip">
+Run `echo "new line" >> README.md` then `git add README.md` then try both `git diff` and `git diff --staged` to see the difference.
+</Callout>
+
 ## Comparing Specific Files
 
 ```bash
@@ -154,4 +165,4 @@ Use `git diff` to see unstaged changes (working directory vs. staging area) and 
 
 - [Creating Your First Commit](/lessons/git_01_init_commit_06_first_commit)
 - [Staging Changes with `git add`](/lessons/git_01_init_commit_04_git_add_command)
-- [Inspecting History with `git log`](/lessons/git_01_init_commit_07_git_log_command)
+- [Inspecting History with `git log`](/lessons/git_01_init_commit_09_git_log_command)

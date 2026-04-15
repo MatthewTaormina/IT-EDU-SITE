@@ -146,4 +146,4 @@ Changes flow: edit → `git add` → `git commit`. Understanding this flow expla
 
 - [Initializing Your First Repository](/lessons/git_01_init_commit_01_init_repository)
 - [Staging Changes with `git add`](/lessons/git_01_init_commit_04_git_add_command)
-- [Git's Object Model: Blobs, Trees, and Commits](/lessons/git_01_init_commit_09_git_object_model)
+- [Git's Object Model: Blobs, Trees, and Commits](/lessons/git_01_init_commit_07_git_object_model)

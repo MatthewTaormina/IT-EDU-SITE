@@ -133,4 +133,4 @@ Branches diverge the moment independent commits are made on each side. The commo
 
 - [Fast-Forward Merges](/lessons/git_02_branching_06_fast_forward_merge)
 - [Three-Way Merges](/lessons/git_02_branching_07_three_way_merge)
-- [The DAG Commit Graph](/lessons/git_00_intro_04_dag_commit_graph)
+- [The DAG Commit Graph](/lessons/git_01_init_commit_08_dag_commit_graph)

@@ -26,11 +26,11 @@ references:
   - type: lesson
     slug: git_01_init_commit_06_first_commit
   - type: lesson
-    slug: git_01_init_commit_07_git_log_command
+    slug: git_01_init_commit_07_git_object_model
   - type: lesson
-    slug: git_01_init_commit_08_undoing_changes
+    slug: git_01_init_commit_08_dag_commit_graph
   - type: lesson
-    slug: git_00_intro_03_git_object_model
+    slug: git_01_init_commit_09_git_log_command
   - type: lesson
-    slug: git_00_intro_04_dag_commit_graph
+    slug: git_01_init_commit_10_undoing_changes
 ---

@@ -38,6 +38,13 @@ The `-c` flag means "create." This is the shorthand professionals use — one co
 `git switch` was introduced in Git 2.23 (2019) as a more intuitive replacement for `git checkout` (for branch operations). Both work. On modern systems, prefer `git switch` and `git switch -c`.
 </Callout>
 
+Try creating branches in the sandbox below — it starts with one commit on `main`:
+
+<TerminalSandbox
+  stateUrl="/sandbox/git_02_branching_02.json"
+  height="22rem"
+/>
+
 ## Creating a Branch from a Specific Starting Point
 
 By default, `git switch -c` creates the branch from your current HEAD. You can specify a different starting point:

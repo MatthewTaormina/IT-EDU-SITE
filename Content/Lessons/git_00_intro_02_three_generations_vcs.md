@@ -133,4 +133,4 @@ Version control evolved through three generations: local (one machine), centrali
 ## Related
 
 - [Why Version Control Exists](/lessons/git_00_intro_01_why_version_control_exists)
-- [Git's Object Model: Blobs, Trees, and Commits](/lessons/git_00_intro_03_git_object_model)
+- [Git's Object Model: Blobs, Trees, and Commits](/lessons/git_01_init_commit_07_git_object_model)

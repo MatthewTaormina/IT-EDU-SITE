@@ -22,7 +22,7 @@
         "tracked files"
       ],
       "mdx_components": [
-        "TerminalEmulator"
+        "TerminalSandbox"
       ],
       "notes": "Hands-on: students create a folder, cd into it, run `git init`. Show the `.git` folder structure briefly. Explain this is now a Git repository."
     },
@@ -65,7 +65,7 @@
         "ahead/behind"
       ],
       "mdx_components": [
-        "TerminalEmulator"
+        "TerminalSandbox"
       ],
       "notes": "Show status output with annotations: what does each section mean? Create some files, edit some, stage some. Show how status changes accordingly."
     },
@@ -86,7 +86,7 @@
         "hunk selection"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Hands-on: stage specific files, entire directory, all changes. Show `-p` for interactive hunk staging. Explain what `git add` actually does (adds content to index)."
@@ -108,7 +108,7 @@
         "comparing versions"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Run `git diff` (working vs. staging), then `git diff --staged` (staging vs. repo). Explain the diff format: @@, +, -, context."
@@ -130,13 +130,56 @@
         "timestamp"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Commit staged changes with `-m`. Show good vs. poor commit messages. Emphasize subject line ≤50 chars, imperative mood ('Add' not 'Added')."
     },
     {
       "lesson_id": "git_01_init_commit_07",
+      "title": "Git's Object Model: Blobs, Trees, and Commits",
+      "slug": "git_object_model",
+      "duration_minutes": 18,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to explain Git's content-addressed object model and describe how blobs, trees, and commits work together to store project history.",
+      "key_concepts": [
+        "blob",
+        "tree",
+        "commit",
+        "SHA-1",
+        "content-addressed",
+        "immutable",
+        "object database"
+      ],
+      "mdx_components": [
+        "Callout",
+        "TerminalSandbox"
+      ],
+      "notes": "Retrospective: learners have just made their first commits — now show what Git actually created. Use `git cat-file -p` to inspect live objects. ASCII diagrams reinforce the mental model."
+    },
+    {
+      "lesson_id": "git_01_init_commit_08",
+      "title": "The DAG: Directed Acyclic Graph of Commits",
+      "slug": "dag_commit_graph",
+      "duration_minutes": 16,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to visualize commit history as a DAG and explain how immutability ensures history cannot be lost.",
+      "key_concepts": [
+        "DAG",
+        "parent commit",
+        "merge commit",
+        "directed acyclic graph",
+        "immutability",
+        "linear history",
+        "divergent history"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Show linear history (A->B->C) and branching (B->C, B->D->E). Use `git log --oneline --graph` on the repo built in this unit. Emphasize that commits are immutable; you can add to history but never rewrite it."
+    },
+    {
+      "lesson_id": "git_01_init_commit_09",
       "title": "Viewing Commit History with `git log`",
       "slug": "git_log_command",
       "duration_minutes": 14,
@@ -153,13 +196,13 @@
         "git log --all"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Show full commit details, then `--oneline` (concise), `--graph` (visual branches), `--all` (all branches). Filter by author, date, etc."
     },
     {
-      "lesson_id": "git_01_init_commit_08",
+      "lesson_id": "git_01_init_commit_10",
       "title": "Undoing Changes: Unstaging and Reset",
       "slug": "undoing_changes",
       "duration_minutes": 15,
@@ -175,7 +218,7 @@
         "recovering work"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout",
         "ProgressCheck"
       ],

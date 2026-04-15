@@ -152,6 +152,13 @@ git log --oneline --graph main
 
 `main` shows a clear record of every merged feature in reverse chronological order.
 
+Put the full workflow into practice — the sandbox starts you on `main` with an initial commit. Work through each step: create a feature branch, make changes, commit, and merge back:
+
+<TerminalSandbox
+  stateUrl="/sandbox/git_02_branching_09.json"
+  height="30rem"
+/>
+
 <ProgressCheck>
 Run through the full feature branch cycle in your practice repository: start from main, create a branch, make two commits, merge back into main. Then view the resulting graph with `git log --oneline --graph`.
 </ProgressCheck>

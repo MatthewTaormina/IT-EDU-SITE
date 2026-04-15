@@ -146,4 +146,4 @@ A Git branch is a text file storing a single commit hash. HEAD points to the cur
 
 - [Creating Branches](/lessons/git_02_branching_02_creating_branches)
 - [Switching Between Branches](/lessons/git_02_branching_04_switching_branches)
-- [The DAG Commit Graph](/lessons/git_00_intro_04_dag_commit_graph)
+- [The DAG Commit Graph](/lessons/git_01_init_commit_08_dag_commit_graph)

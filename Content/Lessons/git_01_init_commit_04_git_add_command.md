@@ -51,6 +51,13 @@ Stages all changes (modified + new untracked files) in the current directory and
 `git add .` is convenient but blunt — it stages everything. Use it carefully, especially in projects without a solid `.gitignore`. Run `git status` first to confirm you know what's about to be staged.
 </Callout>
 
+Practice staging in the sandbox below — three files are ready to stage. Try staging them individually, then run `git status` to confirm:
+
+<TerminalSandbox
+  stateUrl="/sandbox/git_01_init_commit_04.json"
+  height="22rem"
+/>
+
 ## What `git add` Actually Does
 
 `git add` does not simply mark files as "to be committed." It:

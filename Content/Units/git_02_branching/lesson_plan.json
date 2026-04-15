@@ -43,7 +43,7 @@
         "current branch"
       ],
       "mdx_components": [
-        "TerminalEmulator"
+        "TerminalSandbox"
       ],
       "notes": "Two approaches: (1) create then switch separately, (2) create and switch in one command. Show legacy `git checkout -b` alongside modern `git switch -c`."
     },
@@ -63,7 +63,7 @@
         "asterisk marker"
       ],
       "mdx_components": [
-        "TerminalEmulator"
+        "TerminalSandbox"
       ],
       "notes": "Show `git branch` (local only), then `git branch -a` (all including remote-tracking). The asterisk marks current branch."
     },
@@ -83,7 +83,7 @@
         "branch switching safety"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Key safety rule: switching branches updates your working directory. You must commit or stash uncommitted changes first or Git refuses."
@@ -123,7 +123,7 @@
         "automatic merge"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout",
         "ProgressCheck"
       ],
@@ -145,7 +145,7 @@
         "recording integration"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "When both branches have new commits after a common ancestor, Git creates a merge commit with two parents. This records the integration event."
@@ -166,7 +166,7 @@
         "branch cleanup"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "`-d` is safe (refuses to delete unmerged branches). `-D` forces deletion. Explain that deleting a branch pointer doesn't delete commits (still in reflog)."

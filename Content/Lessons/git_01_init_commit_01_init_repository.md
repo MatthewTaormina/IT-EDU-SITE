@@ -33,6 +33,13 @@ Initialized empty Git repository in /Users/alice/my-first-repo/.git/
 
 Your folder is now a Git repository. Nothing is tracked yet — you have an empty object database and a single default branch (`main`, if configured).
 
+Try it yourself in the sandbox below — the directory already exists, ready to initialize:
+
+<TerminalSandbox
+  stateUrl="/sandbox/git_01_init_commit_01.json"
+  height="20rem"
+/>
+
 ### Initializing an Existing Project
 
 You can also initialize a repository in an existing folder that already has files:
@@ -155,4 +162,4 @@ You should see `.git/` in the listing. Your repository is initialized and ready.
 
 - [Understanding the Staging Area and Why It Exists](/lessons/git_01_init_commit_02_understanding_staging_area)
 - [Checking Repository Status with `git status`](/lessons/git_01_init_commit_03_git_status_command)
-- [The Three Working Areas](/lessons/git_00_intro_05_three_working_areas)
+- [The Three Working Areas](/lessons/git_00_intro_03_three_working_areas)

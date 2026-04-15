@@ -49,49 +49,6 @@
     },
     {
       "lesson_id": "git_00_intro_03",
-      "title": "Git's Object Model: Blobs, Trees, and Commits",
-      "slug": "git_object_model",
-      "duration_minutes": 18,
-      "bloom_level": 3,
-      "learning_objective": "By the end of this lesson, learners will be able to explain Git's content-addressed object model and describe how blobs, trees, and commits work together to store project history.",
-      "key_concepts": [
-        "blob",
-        "tree",
-        "commit",
-        "SHA-1",
-        "content-addressed",
-        "immutable",
-        "object database"
-      ],
-      "mdx_components": [
-        "Callout",
-        "CodeSandbox"
-      ],
-      "notes": "Make this visual: show blob as raw file content, tree as directory snapshot, commit as named snapshot with parents. Use ASCII diagrams (safe to include in prose)."
-    },
-    {
-      "lesson_id": "git_00_intro_04",
-      "title": "The DAG: Directed Acyclic Graph of Commits",
-      "slug": "dag_commit_graph",
-      "duration_minutes": 16,
-      "bloom_level": 3,
-      "learning_objective": "By the end of this lesson, learners will be able to visualize commit history as a DAG and explain how immutability ensures history cannot be lost.",
-      "key_concepts": [
-        "DAG",
-        "parent commit",
-        "merge commit",
-        "directed acyclic graph",
-        "immutability",
-        "linear history",
-        "divergent history"
-      ],
-      "mdx_components": [
-        "Callout"
-      ],
-      "notes": "Show linear history (A->B->C) and branching (B->C, B->D->E). Emphasize that commits are immutable; you can add to history but never rewrite it."
-    },
-    {
-      "lesson_id": "git_00_intro_05",
       "title": "The Three Working Areas",
       "slug": "three_working_areas",
       "duration_minutes": 14,
@@ -113,7 +70,7 @@
       "notes": "Flow diagram is essential: working → staging → repo. Explain why staging area exists: allows selective, logical commits."
     },
     {
-      "lesson_id": "git_00_intro_06",
+      "lesson_id": "git_00_intro_04",
       "title": "Installing Git and Configuring Your Identity",
       "slug": "install_configure_git",
       "duration_minutes": 10,
@@ -129,7 +86,7 @@
         "terminal"
       ],
       "mdx_components": [
-        "TerminalEmulator",
+        "TerminalSandbox",
         "Callout"
       ],
       "notes": "Hands-on: students download from git-scm.com, run `git config --global`. Distinguish global (used for all repos) vs. per-repo (used only for one)."
