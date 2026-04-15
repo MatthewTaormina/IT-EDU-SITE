@@ -1238,11 +1238,11 @@
     "published_date": "2026-04-14"
   },
   {
-    "slug": "git_00_intro_03_git_object_model",
+    "slug": "git_01_init_commit_07_git_object_model",
     "type": "lesson",
     "title": "Git's Object Model: Blobs, Trees, and Commits",
     "description": "Understand how Git stores every version of every file as immutable, content-addressed objects — blobs, trees, and commits — and why this model makes Git so reliable.",
-    "path": "Lessons/git_00_intro_03_git_object_model.md",
+    "path": "Lessons/git_01_init_commit_07_git_object_model.md",
     "tags": ["git", "object-model", "internals", "blob", "tree", "commit", "sha1"],
     "difficulty": "Beginner",
     "domain": "git",
@@ -1251,11 +1251,11 @@
     "published_date": "2026-04-14"
   },
   {
-    "slug": "git_00_intro_04_dag_commit_graph",
+    "slug": "git_01_init_commit_08_dag_commit_graph",
     "type": "lesson",
     "title": "The DAG: Directed Acyclic Graph of Commits",
     "description": "Understand commit history as a directed acyclic graph, how branches and HEAD fit into this model, and why Git's immutability means history can never truly be lost.",
-    "path": "Lessons/git_00_intro_04_dag_commit_graph.md",
+    "path": "Lessons/git_01_init_commit_08_dag_commit_graph.md",
     "tags": ["git", "dag", "commit-graph", "branches", "head", "immutability"],
     "difficulty": "Beginner",
     "domain": "git",
@@ -1264,11 +1264,11 @@
     "published_date": "2026-04-14"
   },
   {
-    "slug": "git_00_intro_05_three_working_areas",
+    "slug": "git_00_intro_03_three_working_areas",
     "type": "lesson",
     "title": "The Three Working Areas",
     "description": "Learn how Git organizes your work across three distinct areas — working directory, staging area, and repository — and understand how changes flow through them with every command.",
-    "path": "Lessons/git_00_intro_05_three_working_areas.md",
+    "path": "Lessons/git_00_intro_03_three_working_areas.md",
     "tags": ["git", "working-directory", "staging-area", "repository", "index", "workflow"],
     "difficulty": "Beginner",
     "domain": "git",
@@ -1277,11 +1277,11 @@
     "published_date": "2026-04-14"
   },
   {
-    "slug": "git_00_intro_06_install_configure_git",
+    "slug": "git_00_intro_04_install_configure_git",
     "type": "lesson",
     "title": "Installing Git and Configuring Your Identity",
     "description": "Install Git on your machine, verify the installation, and configure the name and email that will appear on every commit you ever make.",
-    "path": "Lessons/git_00_intro_06_install_configure_git.md",
+    "path": "Lessons/git_00_intro_04_install_configure_git.md",
     "tags": ["git", "setup", "configuration", "git-config", "install"],
     "difficulty": "Beginner",
     "domain": "git",
@@ -1368,11 +1368,11 @@
     "published_date": "2026-04-14"
   },
   {
-    "slug": "git_01_init_commit_07_git_log_command",
+    "slug": "git_01_init_commit_09_git_log_command",
     "type": "lesson",
     "title": "Inspecting History with `git log`",
     "description": "Navigate your commit history using `git log` and its powerful formatting flags to understand what changed, when, and why.",
-    "path": "Lessons/git_01_init_commit_07_git_log_command.md",
+    "path": "Lessons/git_01_init_commit_09_git_log_command.md",
     "tags": ["git", "git-log", "history", "commits", "log"],
     "difficulty": "Beginner",
     "domain": "git",
@@ -1381,11 +1381,11 @@
     "published_date": "2026-04-14"
   },
   {
-    "slug": "git_01_init_commit_08_undoing_changes",
+    "slug": "git_01_init_commit_10_undoing_changes",
     "type": "lesson",
     "title": "Undoing Changes in Git",
     "description": "Safely undo changes at every stage — working directory, staging area, and committed history — using `git restore`, `git reset`, and `git revert`.",
-    "path": "Lessons/git_01_init_commit_08_undoing_changes.md",
+    "path": "Lessons/git_01_init_commit_10_undoing_changes.md",
     "tags": ["git", "undo", "git-restore", "git-reset", "git-revert", "workflow"],
     "difficulty": "Beginner",
     "domain": "git",
@@ -1715,6 +1715,19 @@
     "difficulty": "Intermediate",
     "domain": "git",
     "estimated_hours": 0.3,
+    "author": "IT EDU SITE",
+    "published_date": "2026-04-14"
+  },
+  {
+    "slug": "git_foundations_capstone",
+    "type": "project",
+    "title": "First Day at Stackworks Labs",
+    "description": "Complete three real git workflow tickets on your first day as a junior developer at a fictional tech company.",
+    "path": "Projects/git_foundations_capstone/index.md",
+    "tags": ["git", "branching", "merge-conflict", "workflow"],
+    "difficulty": "Beginner",
+    "domain": "git",
+    "estimated_hours": 2,
     "author": "IT EDU SITE",
     "published_date": "2026-04-14"
   }
