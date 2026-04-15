@@ -222,14 +222,30 @@ export interface KernelAPI {
   /**
    * Parse a `sandbox://` URL and open the matching desktop app.
    *
-   * Supported routes:
-   *   sandbox://ticket-app/new              → opens Ticket Manager, new-ticket view
-   *   sandbox://ticket-app/detail/{id}      → opens Ticket Manager, detail view for {id}
-   *   sandbox://ticket-app                  → opens Ticket Manager, list view
-   *   sandbox://file-explorer/{path}        → opens File Explorer at {path}
-   *   sandbox://file-explorer               → opens File Explorer at HOME
+   * Every app is addressable with query-param style (preferred) or, for
+   * ticket-app and file-explorer, the legacy path style still works.
    *
-   * Silently ignored for unrecognised paths.
+   * Route table:
+   *   sandbox://terminal                          → Terminal (HOME cwd)
+   *   sandbox://terminal?cwd=<path>               → Terminal at <path>
+   *   sandbox://browser                           → Browser (about:home)
+   *   sandbox://browser?url=<url>                 → Browser at <url>
+   *   sandbox://text-editor                       → Text Editor (new buffer)
+   *   sandbox://text-editor?path=<path>           → Text Editor opens <path>
+   *   sandbox://email                             → Email inbox
+   *   sandbox://email?view=compose                → Email compose
+   *   sandbox://email?view=sent                   → Email sent
+   *   sandbox://email?view=message&id=<id>        → Email message <id>
+   *   sandbox://ticket-app                        → Ticket list
+   *   sandbox://ticket-app?view=new               → New ticket
+   *   sandbox://ticket-app?view=detail&id=<id>    → Ticket detail <id>
+   *   sandbox://ticket-app/new                    → New ticket (legacy)
+   *   sandbox://ticket-app/detail/<id>            → Ticket detail (legacy)
+   *   sandbox://file-explorer                     → File Explorer at HOME
+   *   sandbox://file-explorer?cwd=<path>          → File Explorer at <path>
+   *   sandbox://file-explorer/<path>              → File Explorer at <path> (legacy)
+   *
+   * Silently ignored for unrecognised slugs.
    */
   openWith(url: string): void;
 }

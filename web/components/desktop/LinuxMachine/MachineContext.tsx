@@ -40,6 +40,10 @@ import type {
   AppState,
   KernelAPI,
   VFetchResponse,
+  TerminalAppState,
+  BrowserAppState,
+  TextEditorAppState,
+  EmailAppState,
   TicketAppState,
   FileExplorerAppState,
 } from './MachineTypes';
@@ -74,9 +78,35 @@ function kernelReadFile(vfs: DesktopVFSMap, path: string): string | null {
   return entry.content;
 }
 
-// ─── sessionStorage key ─────────────────────────────────────────────────────────
+// ─── sandbox:// URL parser ───────────────────────────────────────────────────────
 
-function sessionKey(machineId: string): string {
+/**
+ * Parses a `sandbox://` launch URL into its components.
+ *
+ * Examples:
+ *   sandbox://terminal?cwd=/var/log   → { slug:'terminal', segments:[], params:{cwd:'/var/log'} }
+ *   sandbox://ticket-app/detail/42    → { slug:'ticket-app', segments:['detail','42'], params:{} }
+ *   sandbox://file-explorer?cwd=/etc  → { slug:'file-explorer', segments:[], params:{cwd:'/etc'} }
+ */
+function parseSandboxUrl(url: string): {
+  slug:     string;
+  segments: string[];
+  params:   URLSearchParams;
+} {
+  if (!url.startsWith('sandbox://')) {
+    return { slug: '', segments: [], params: new URLSearchParams() };
+  }
+  const withoutScheme = url.slice('sandbox://'.length);
+  const qIdx = withoutScheme.indexOf('?');
+  const pathPart  = qIdx === -1 ? withoutScheme : withoutScheme.slice(0, qIdx);
+  const queryPart = qIdx === -1 ? '' : withoutScheme.slice(qIdx + 1);
+  const parts    = pathPart.split('/').filter(Boolean);
+  const slug     = parts[0] ?? '';
+  const segments = parts.slice(1);
+  return { slug, segments, params: new URLSearchParams(queryPart) };
+}
+
+// ─── sessionStorage key ─────────────────────────────────────────────────────────
   return `linux-machine-${machineId}`;
 }
 
@@ -370,38 +400,104 @@ export function LinuxMachineProvider({
 
     // ── "Open With" — sandbox:// URL dispatcher ────────────────────────────────
     //
-    // AC 2.3: Parses sandbox:// URLs and dispatches WINDOW_OPEN for the
-    // appropriate app.
+    // Full app launch API.  Every desktop app is addressable by a canonical
+    // sandbox:// URL.  Query-param style is preferred; legacy path style for
+    // ticket-app and file-explorer is kept for backward compatibility.
+    //
+    // Route table:
+    //   sandbox://terminal                          → Terminal (HOME cwd)
+    //   sandbox://terminal?cwd=<path>               → Terminal at <path>
+    //   sandbox://browser                           → Browser (about:home)
+    //   sandbox://browser?url=<url>                 → Browser at <url>
+    //   sandbox://text-editor                       → Text Editor (new buffer)
+    //   sandbox://text-editor?path=<path>           → Text Editor opens <path>
+    //   sandbox://email                             → Email (inbox)
+    //   sandbox://email?view=compose                → Email compose
+    //   sandbox://email?view=sent                   → Email sent
+    //   sandbox://email?view=message&id=<id>        → Email message <id>
+    //   sandbox://ticket-app                        → Ticket list
+    //   sandbox://ticket-app?view=new               → New ticket
+    //   sandbox://ticket-app?view=detail&id=<id>    → Ticket detail <id>
+    //   sandbox://ticket-app/new                    → New ticket (legacy)
+    //   sandbox://ticket-app/detail/<id>            → Ticket detail (legacy)
+    //   sandbox://file-explorer                     → File Explorer (HOME)
+    //   sandbox://file-explorer?cwd=<path>          → File Explorer at <path>
+    //   sandbox://file-explorer/<path>              → File Explorer at <path> (legacy)
 
     openWith(url: string): void {
       if (!url.startsWith('sandbox://')) return;
 
-      const body = url.slice('sandbox://'.length); // e.g. 'ticket-app/new'
-      const [appSlug, ...rest] = body.split('/');
+      const { slug, segments, params } = parseSandboxUrl(url);
+      const home = stateRef.current.env['HOME'] ?? '/home/user';
 
-      switch (appSlug) {
+      switch (slug) {
+
+        case 'terminal': {
+          const cwd = params.get('cwd') ?? home;
+          const appState: TerminalAppState = { cwd, history: [] };
+          dispatch({ type: 'WINDOW_OPEN', app: 'terminal', title: 'Terminal', appState });
+          break;
+        }
+
+        case 'browser': {
+          const target = params.get('url') ?? 'about:home';
+          const appState: BrowserAppState = { url: target, history: [target], historyIndex: 0 };
+          dispatch({ type: 'WINDOW_OPEN', app: 'browser', title: 'Browser', appState });
+          break;
+        }
+
+        case 'text-editor': {
+          const filePath = params.get('path') ?? null;
+          const content  = filePath ? (kernelReadFile(stateRef.current.vfs, filePath) ?? '') : '';
+          const title    = filePath ? (filePath.split('/').at(-1) ?? 'Text Editor') : 'Text Editor';
+          const appState: TextEditorAppState = { filePath, content, dirty: false, cursorLine: 1, cursorCol: 1 };
+          dispatch({ type: 'WINDOW_OPEN', app: 'text-editor', title, appState });
+          break;
+        }
+
+        case 'email': {
+          const rawView = params.get('view') ?? 'inbox';
+          const view = (['inbox', 'compose', 'sent', 'message'] as const).includes(
+            rawView as EmailAppState['view'],
+          )
+            ? (rawView as EmailAppState['view'])
+            : ('inbox' as const);
+          const openMessageId = params.get('id') ?? undefined;
+          const appState: EmailAppState = { view, openMessageId };
+          dispatch({ type: 'WINDOW_OPEN', app: 'email', title: 'Email', appState });
+          break;
+        }
+
         case 'ticket-app': {
-          const sub = rest[0] ?? '';
+          // Query-param style takes priority; legacy path style as fallback.
+          const viewParam = params.get('view');
+          const idParam   = params.get('id');
+          const sub       = segments[0] ?? '';
           let appState: TicketAppState;
-          if (sub === 'new') {
+          if (viewParam === 'new' || sub === 'new') {
             appState = { view: 'new' };
-          } else if (sub === 'detail' && rest[1]) {
-            appState = { view: 'detail', openTicketId: rest[1] };
+          } else if ((viewParam === 'detail' && idParam) || (sub === 'detail' && segments[1])) {
+            appState = { view: 'detail', openTicketId: idParam ?? segments[1] };
           } else {
             appState = { view: 'list' };
           }
           dispatch({ type: 'WINDOW_OPEN', app: 'ticket-app', title: 'Ticket Manager', appState });
           break;
         }
+
         case 'file-explorer': {
-          const pathParts = rest.join('/');
-          const cwd = pathParts ? (pathParts.startsWith('/') ? pathParts : `/${pathParts}`) : (stateRef.current.env['HOME'] ?? '/home/user');
+          // Query-param style takes priority; legacy path segments as fallback.
+          const cwdParam  = params.get('cwd');
+          const pathParts = segments.join('/');
+          const cwd = cwdParam
+            ?? (pathParts ? (pathParts.startsWith('/') ? pathParts : `/${pathParts}`) : home);
           const appState: FileExplorerAppState = { cwd, selectedPath: null };
           dispatch({ type: 'WINDOW_OPEN', app: 'file-explorer', title: 'File Explorer', appState });
           break;
         }
+
         default:
-          // Unrecognised — silently ignore
+          // Unrecognised slug — silently ignore
           break;
       }
     },

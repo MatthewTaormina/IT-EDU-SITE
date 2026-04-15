@@ -106,9 +106,16 @@ function proxyUrl(externalUrl: string): string {
 
 /** Map a sandbox:// URL to a human-readable app name for display. */
 function sandboxAppName(url: string): string {
-  const body = url.slice('sandbox://'.length);
-  const slug  = body.split('/')[0] ?? '';
+  const { slug } = (() => {
+    const withoutScheme = url.slice('sandbox://'.length);
+    const slug = withoutScheme.split('/')[0]?.split('?')[0] ?? '';
+    return { slug };
+  })();
   const names: Record<string, string> = {
+    'terminal':      'Terminal',
+    'browser':       'Browser',
+    'text-editor':   'Text Editor',
+    'email':         'Email',
     'ticket-app':    'Ticket Manager',
     'file-explorer': 'File Explorer',
   };

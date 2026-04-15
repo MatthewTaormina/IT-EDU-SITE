@@ -30,7 +30,7 @@
 
 import { useState, useCallback, useEffect, useRef, useMemo, type KeyboardEvent } from 'react';
 import { useKernel, useMachineState } from '../LinuxMachine/MachineContext';
-import type { FileExplorerAppState, VFSOrigin } from '../LinuxMachine/MachineTypes';
+import type { FileExplorerAppState, TextEditorAppState, BrowserAppState, VFSOrigin } from '../LinuxMachine/MachineTypes';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -158,10 +158,18 @@ export function FileExplorerApp({ windowId, appState }: FileExplorerAppProps) {
   const openEntry = useCallback((entry: EntryInfo) => {
     if (entry.kind === 'dir') {
       navigate(entry.path);
+    } else if (entry.kind === 'file') {
+      const content = kernel.readFile(entry.path) ?? '';
+      const title   = basename(entry.path);
+      const appState: TextEditorAppState = { filePath: entry.path, content, dirty: false, cursorLine: 1, cursorCol: 1 };
+      kernel.openWindow('text-editor', title, appState);
+    } else if (entry.kind === 'url') {
+      const appState: BrowserAppState = { url: entry.href, history: [entry.href], historyIndex: 0 };
+      kernel.openWindow('browser', basename(entry.path), appState);
     } else {
       select(entry.path);
     }
-  }, [navigate, select]);
+  }, [kernel, navigate, select]);
 
   // Keyboard navigation in the right panel
   const listRef = useRef<HTMLUListElement>(null);
