@@ -12,17 +12,25 @@
  *   local://slug/path — fictional in-world site; content read from VFS at
  *                       /var/www/slug/path (kind:'file') or fetched from
  *                       {stateEndpoint}/sites/slug/path.html
- *   https://...       — real site in sandboxed iframe, gated by
- *                       state.browserAllowedSites
+ *   sandbox://…       — opens a desktop app via kernel.openWith()
+ *   http(s)://…       — proxied through /api/browser-proxy, removing all
+ *                       X-Frame-Options / CSP headers that block embedding.
+ *                       A <base href> tag is injected so relative assets in
+ *                       the proxied page resolve against the original server.
+ *
+ * Proxy approach
+ * ──────────────
+ * External HTTP/HTTPS pages are fetched server-side by the Next.js middleware
+ * at GET /api/browser-proxy?url=<encoded>. The middleware strips embedding-
+ * blocking headers and injects a <base href> tag. The browser then loads the
+ * result from our own origin, so no X-Frame-Options or CSP restrictions apply.
  *
  * Security
  * ────────
  * • javascript: / data: / vbscript: URLs are silently redirected to about:blank.
- * • Real-site iframes use sandbox="allow-scripts allow-forms allow-same-origin
- *   allow-popups" — the external site has its own isolated storage, different
- *   from our application origin.
+ * • The proxy blocks private/loopback IP ranges (SSRF guard in middleware.ts).
  * • Only URLs whose hostname matches an entry in browserAllowedSites are
- *   rendered in an iframe; all others show an Access Blocked page.
+ *   rendered; all others show an Access Blocked page.
  * • Fictional (local://) pages are served as <iframe srcdoc> with
  *   sandbox="allow-scripts allow-forms allow-modals" and no allow-same-origin,
  *   placing the content in a unique opaque origin, isolated from parent storage.
@@ -33,7 +41,7 @@
  * • URL bar: visible <label> via sr-only, aria-label on the input
  * • Back/Forward/Reload: aria-label + aria-disabled when unavailable
  * • iframe: title attribute reflects the active page title
- * • Loading / blocked / error states use role="status" or role="alert"
+ * • Loading / blocked / error / launched states use role="status" or role="alert"
  * • Home page search: role="search", associated <label> for the input
  */
 
@@ -68,7 +76,7 @@ function normalizeUrl(raw: string): string {
 
 /**
  * Returns true when navigating to `url` is permitted.
- * about: and local:// URLs are always allowed.
+ * about:, local://, and sandbox:// URLs are always allowed.
  * HTTP/HTTPS URLs require a matching entry in `allowedSites`.
  */
 function isAllowed(url: string, allowedSites: string[]): boolean {
@@ -87,32 +95,24 @@ function isAllowed(url: string, allowedSites: string[]): boolean {
   }
 }
 
-// ─── Known no-embed hosts ────────────────────────────────────────────────────
-
 /**
- * Sites known to send X-Frame-Options or frame-ancestors CSP that block
- * embedding. `onError` on an <iframe> does NOT fire for these — the browser
- * renders its own error page inside the frame with no DOM event.
- * We detect them preemptively and show an "Open in new tab" UI instead.
+ * Build the proxy URL for an external http/https page.
+ * The middleware at /api/browser-proxy fetches the page server-side,
+ * strips X-Frame-Options/CSP headers, and injects a <base href> tag.
  */
-const KNOWN_NO_EMBED = new Set([
-  'developer.mozilla.org',
-  'mdn.io',
-  'duckduckgo.com',
-  'www.duckduckgo.com',
-  'google.com',
-  'www.google.com',
-  'github.com',
-  'stackoverflow.com',
-  'www.stackoverflow.com',
-]);
+function proxyUrl(externalUrl: string): string {
+  return `/api/browser-proxy?url=${encodeURIComponent(externalUrl)}`;
+}
 
-function isKnownNoEmbed(url: string): boolean {
-  try {
-    return KNOWN_NO_EMBED.has(new URL(url).hostname);
-  } catch {
-    return false;
-  }
+/** Map a sandbox:// URL to a human-readable app name for display. */
+function sandboxAppName(url: string): string {
+  const body = url.slice('sandbox://'.length);
+  const slug  = body.split('/')[0] ?? '';
+  const names: Record<string, string> = {
+    'ticket-app':    'Ticket Manager',
+    'file-explorer': 'File Explorer',
+  };
+  return names[slug] ?? slug;
 }
 
 // ─── Page state ───────────────────────────────────────────────────────────────
@@ -122,7 +122,6 @@ type PageState =
   | { kind: 'blank' }
   | { kind: 'loading'; url: string }
   | { kind: 'blocked'; url: string }
-  | { kind: 'external'; url: string }
   | { kind: 'error'; url: string; message: string }
   | { kind: 'iframe'; src: string; title: string }
   | { kind: 'srcdoc'; html: string; title: string }
@@ -134,7 +133,6 @@ function getPageTitle(page: PageState): string {
     case 'blank':    return 'about:blank';
     case 'loading':  return `Loading… ${page.url}`;
     case 'blocked':  return `Blocked: ${page.url}`;
-    case 'external': return page.url;
     case 'error':    return `Error: ${page.url}`;
     case 'iframe':   return page.title;
     case 'srcdoc':   return page.title;
@@ -240,19 +238,20 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
     if (url === 'about:home')  { setPage({ kind: 'home'  }); return; }
     if (url === 'about:blank') { setPage({ kind: 'blank' }); return; }
 
-    // HTTP/HTTPS — check allowlist before rendering
-    if (
-      (url.startsWith('https://') || url.startsWith('http://')) &&
-      !isAllowed(url, machineState.browserAllowedSites)
-    ) {
-      setPage({ kind: 'blocked', url });
-      return;
-    }
-
-    // Skip iframe attempt for hosts known to send X-Frame-Options / frame-ancestors.
-    // onError never fires for these — detect preemptively.
-    if ((url.startsWith('https://') || url.startsWith('http://')) && isKnownNoEmbed(url)) {
-      setPage({ kind: 'external', url });
+    // HTTP/HTTPS — check allowlist, then proxy through /api/browser-proxy
+    if (url.startsWith('https://') || url.startsWith('http://')) {
+      if (!isAllowed(url, machineState.browserAllowedSites)) {
+        setPage({ kind: 'blocked', url });
+        return;
+      }
+      try {
+        const { hostname } = new URL(url);
+        // Load the page via the server-side proxy so X-Frame-Options /
+        // Content-Security-Policy headers from the target site are stripped.
+        setPage({ kind: 'iframe', src: proxyUrl(url), title: hostname });
+      } catch {
+        setPage({ kind: 'error', url, message: `Invalid URL: ${url}` });
+      }
       return;
     }
 
@@ -292,13 +291,7 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
       return;
     }
 
-    // External https:// (already passed the allowlist check above)
-    try {
-      const { hostname } = new URL(url);
-      setPage({ kind: 'iframe', src: url, title: hostname });
-    } catch {
-      setPage({ kind: 'error', url, message: `Invalid URL: ${url}` });
-    }
+    setPage({ kind: 'error', url, message: `Unsupported URL scheme: ${url}` });
   }, [kernel, machineState.browserAllowedSites, stateEndpoint]);
 
   // ── Navigate (push new entry to history + resolve) ──────────────────────
@@ -460,79 +453,6 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
   );
 }
 
-// ─── IframeWithFallback ───────────────────────────────────────────────────────
-
-interface IframeWithFallbackProps {
-  src:      string;
-  title:    string;
-  windowId: string;
-}
-
-/**
- * Renders an external-site iframe. When the target site sends
- * `X-Frame-Options` or `Content-Security-Policy: frame-ancestors` headers
- * that block embedding, the browser fires `onError` on the iframe element.
- * We catch it and replace the broken frame with a styled "can't embed" page
- * that includes an "Open in new tab" link.
- */
-function IframeWithFallback({ src, title, windowId }: IframeWithFallbackProps) {
-  const [blocked, setBlocked] = useState(false);
-
-  if (blocked) {
-    return (
-      <div
-        className="h-full flex flex-col items-center justify-center gap-4 p-8 text-center"
-        style={{ background: '#0d1117' }}
-        role="alert"
-        aria-label="Page cannot be embedded"
-      >
-        <div style={{ fontSize: '2.5rem', lineHeight: 1 }} aria-hidden="true">🔒</div>
-        <h2 style={{ color: '#c9d1d9', fontSize: '1.125rem', fontWeight: 600, margin: 0 }}>
-          Can&apos;t Display Page
-        </h2>
-        <p style={{ color: '#8b949e', fontSize: '0.875rem', maxWidth: '28rem', margin: 0 }}>
-          This site blocked embedding using{' '}
-          <code style={{ color: '#79b8ff', fontFamily: 'monospace' }}>X-Frame-Options</code>
-          {' '}or{' '}
-          <code style={{ color: '#79b8ff', fontFamily: 'monospace' }}>Content-Security-Policy</code>.
-          Many sites do this as a security measure against clickjacking.
-        </p>
-        <a
-          href={src}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display:        'inline-flex',
-            alignItems:     'center',
-            gap:            '0.375rem',
-            padding:        '0.5rem 1.25rem',
-            borderRadius:   '0.5rem',
-            background:     '#1f6feb',
-            color:          '#ffffff',
-            fontSize:       '0.875rem',
-            fontWeight:     600,
-            textDecoration: 'none',
-          }}
-        >
-          Open in new tab ↗
-        </a>
-        <p style={{ color: '#484f58', fontSize: '0.75rem', margin: 0 }}>{src}</p>
-      </div>
-    );
-  }
-
-  return (
-    <iframe
-      key={`${windowId}-${src}`}
-      src={src}
-      title={title}
-      className="w-full h-full border-0"
-      sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
-      onError={() => setBlocked(true)}
-    />
-  );
-}
-
 // ─── PageRenderer ─────────────────────────────────────────────────────────────
 
 interface PageRendererProps {
@@ -575,47 +495,6 @@ function PageRenderer({
           <span style={{ color: '#8b949e', fontSize: '0.875rem' }}>
             Loading {page.url}…
           </span>
-        </div>
-      );
-
-    case 'external':
-      return (
-        <div
-          className="h-full flex flex-col items-center justify-center gap-4 p-8 text-center"
-          style={{ background: '#0d1117' }}
-          role="alert"
-          aria-label="Page cannot be embedded"
-        >
-          <div style={{ fontSize: '2.5rem', lineHeight: 1 }} aria-hidden="true">🔒</div>
-          <h2 style={{ color: '#c9d1d9', fontSize: '1.125rem', fontWeight: 600, margin: 0 }}>
-            Can&apos;t Display Page
-          </h2>
-          <p style={{ color: '#8b949e', fontSize: '0.875rem', maxWidth: '28rem', margin: 0 }}>
-            This site blocks embedding using{' '}
-            <code style={{ color: '#79b8ff', fontFamily: 'monospace' }}>X-Frame-Options</code>
-            {' '}or{' '}
-            <code style={{ color: '#79b8ff', fontFamily: 'monospace' }}>Content-Security-Policy</code>.
-          </p>
-          <a
-            href={page.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display:        'inline-flex',
-              alignItems:     'center',
-              gap:            '0.375rem',
-              padding:        '0.5rem 1.25rem',
-              borderRadius:   '0.5rem',
-              background:     '#1f6feb',
-              color:          '#ffffff',
-              fontSize:       '0.875rem',
-              fontWeight:     600,
-              textDecoration: 'none',
-            }}
-          >
-            Open in new tab &#x2197;
-          </a>
-          <p style={{ color: '#484f58', fontSize: '0.75rem', margin: 0 }}>{page.url}</p>
         </div>
       );
 
@@ -663,11 +542,18 @@ function PageRenderer({
       );
 
     case 'iframe':
+      /*
+       * The src points to /api/browser-proxy?url=... which serves the page
+       * from our own origin — no X-Frame-Options or CSP constraints apply.
+       * We still pass sandbox flags to limit what the proxied content can do.
+       */
       return (
-        <IframeWithFallback
+        <iframe
+          key={`${windowId}-${page.src}`}
           src={page.src}
-          title={pageTitle}
-          windowId={windowId}
+          title={page.title}
+          className="w-full h-full border-0"
+          sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-downloads"
         />
       );
 
