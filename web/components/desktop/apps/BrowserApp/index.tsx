@@ -140,17 +140,6 @@ function getPageTitle(page: PageState): string {
   }
 }
 
-/** Map a sandbox:// URL to a human-readable app name for display. */
-function sandboxAppName(url: string): string {
-  const body = url.slice('sandbox://'.length);
-  const slug  = body.split('/')[0] ?? '';
-  const names: Record<string, string> = {
-    'ticket-app':    'Ticket Manager',
-    'file-explorer': 'File Explorer',
-  };
-  return names[slug] ?? slug;
-}
-
 // ─── NavButton ────────────────────────────────────────────────────────────────
 
 interface NavButtonProps {
