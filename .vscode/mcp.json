@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "agent-tools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["tsx", "${workspaceFolder}/mcp/agent-tools/src/index.ts"],
+      "env": {
+        "WORKSPACE_ROOT": "${workspaceFolder}"
+      }
+    }
+  }
+}

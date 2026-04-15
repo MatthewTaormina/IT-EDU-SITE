@@ -1,8 +1,17 @@
+# ── MCP server ───────────────────────────────────────────────────────────────
+mcp/agent-tools/node_modules/
+mcp/agent-tools/dist/
+
 # ── Site build artifacts ─────────────────────────────────────────────────────
 site/node_modules/
 site/build/
 site/.docusaurus/
 site/.cache-loader/
+
+# ── Next.js build artifacts ───────────────────────────────────────────────────
+web/node_modules/
+web/.next/
+web/out/
 
 # ── OS / editor noise ─────────────────────────────────────────────────────────
 .DS_Store
