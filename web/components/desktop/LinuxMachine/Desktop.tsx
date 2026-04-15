@@ -17,7 +17,7 @@
 import { useCallback, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { useKernel, useMachineState } from './MachineContext';
 import type { AppId } from './MachineTypes';
-import { TerminalIcon, BrowserIcon, EmailIcon, TextEditorIcon } from './AppIcons';
+import { TerminalIcon, BrowserIcon, EmailIcon, TextEditorIcon, TicketIcon, FileExplorerIcon } from './AppIcons';
 
 // ─── Icon registry ────────────────────────────────────────────────────────────
 
@@ -29,10 +29,12 @@ interface AppIconSpec {
 }
 
 const DESKTOP_ICONS: readonly AppIconSpec[] = [
-  { id: 'terminal',    label: 'Terminal',    icon: <TerminalIcon className="w-7 h-7" />,   defaultTitle: 'Terminal'     },
-  { id: 'browser',     label: 'Browser',     icon: <BrowserIcon className="w-7 h-7" />,    defaultTitle: 'Web Browser'  },
-  { id: 'email',       label: 'Email',       icon: <EmailIcon className="w-7 h-7" />,      defaultTitle: 'Inbox'        },
-  { id: 'text-editor', label: 'Text Editor', icon: <TextEditorIcon className="w-7 h-7" />, defaultTitle: 'New Document' },
+  { id: 'terminal',      label: 'Terminal',       icon: <TerminalIcon className="w-7 h-7" />,      defaultTitle: 'Terminal'      },
+  { id: 'browser',       label: 'Browser',        icon: <BrowserIcon className="w-7 h-7" />,       defaultTitle: 'Web Browser'   },
+  { id: 'email',         label: 'Email',          icon: <EmailIcon className="w-7 h-7" />,         defaultTitle: 'Inbox'         },
+  { id: 'text-editor',   label: 'Text Editor',    icon: <TextEditorIcon className="w-7 h-7" />,    defaultTitle: 'New Document'  },
+  { id: 'ticket-app',    label: 'Ticket Manager', icon: <TicketIcon className="w-7 h-7" />,        defaultTitle: 'Ticket Manager'},
+  { id: 'file-explorer', label: 'File Explorer',  icon: <FileExplorerIcon className="w-7 h-7" />,  defaultTitle: 'File Explorer' },
 ];
 
 // ─── Icon button ──────────────────────────────────────────────────────────────

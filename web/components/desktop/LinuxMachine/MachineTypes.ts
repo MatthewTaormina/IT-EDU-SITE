@@ -24,7 +24,13 @@
  * overlaid on top, reconstructing the full VFS without any stale copies of
  * large read-only assets.
  */
-export type VFSOrigin = 'remote' | 'local';
+/**
+ * Three-layer filesystem provenance:
+ *   'remote' — kernel system dirs/files built by buildRemoteVFS; re-fetched each boot.
+ *   'setup'  — project-specific files ingested from vfs.json; re-fetched each boot.
+ *   'local'  — user-created or modified during the session; persisted to sessionStorage.
+ */
+export type VFSOrigin = 'remote' | 'setup' | 'local';
 
 export type DesktopVFSEntry =
   | { kind: 'file';    content: string; readOnly?: boolean; origin: VFSOrigin }
@@ -37,7 +43,7 @@ export type DesktopVFSMap = Map<string, DesktopVFSEntry>;
 
 // ─── App identifiers ──────────────────────────────────────────────────────────
 
-export type AppId = 'terminal' | 'browser' | 'email' | 'text-editor';
+export type AppId = 'terminal' | 'browser' | 'email' | 'text-editor' | 'ticket-app' | 'file-explorer';
 
 // ─── Per-app window-level state ───────────────────────────────────────────────
 
@@ -65,11 +71,26 @@ export interface TextEditorAppState {
   cursorCol: number;
 }
 
+export interface TicketAppState {
+  view: 'list' | 'new' | 'detail';
+  /** ID of the currently open ticket in detail view */
+  openTicketId?: string;
+}
+
+export interface FileExplorerAppState {
+  /** Current directory path displayed in the right pane */
+  cwd: string;
+  /** Currently selected VFS path (file or dir), or null */
+  selectedPath: string | null;
+}
+
 export type AppState =
   | TerminalAppState
   | BrowserAppState
   | EmailAppState
-  | TextEditorAppState;
+  | TextEditorAppState
+  | TicketAppState
+  | FileExplorerAppState;
 
 // ─── Windows ──────────────────────────────────────────────────────────────────
 
@@ -131,6 +152,22 @@ export interface MachineState {
   stateEndpoint?: string;
 }
 
+// ─── Virtual fetch (kernel HTTP simulation) ───────────────────────────────────
+
+/**
+ * Response object returned by `kernel.vfetch()`.
+ * Mirrors the shape of the Fetch API Response for familiarity.
+ */
+export interface VFetchResponse {
+  ok:         boolean;
+  status:     number;
+  statusText: string;
+  /** Parsed JSON body, or null when the response body is not valid JSON. */
+  data:       unknown;
+  /** Raw text body */
+  text:       string;
+}
+
 // ─── Kernel API (the syscall surface exposed to all apps) ───────────────────
 
 export interface KernelAPI {
@@ -171,6 +208,35 @@ export interface KernelAPI {
   // ── Process management ─────────────────────────────────────────────────
   spawnProcess(name: string, windowId?: string): void;
   killProcess(pid: number): void;
+
+  // ── Virtual HTTP (simulated network) ──────────────────────────────────
+  /**
+   * Simulated HTTP fetch for in-sandbox apps.
+   *
+   * URL routing:
+   *   sandbox://api/{path}  → reads /var/api/{path}.json from VFS;
+   *                           falls back to {stateEndpoint}/api/{path} if
+   *                           a state endpoint is configured.
+   *   sandbox://…           → 404 for unrecognised schemes.
+   *
+   * Always resolves (never rejects). Check `response.ok` for success.
+   */
+  vfetch(url: string): Promise<VFetchResponse>;
+
+  // ── "Open With" — sandbox:// URL dispatcher ────────────────────────────
+  /**
+   * Parse a `sandbox://` URL and open the matching desktop app.
+   *
+   * Supported routes:
+   *   sandbox://ticket-app/new              → opens Ticket Manager, new-ticket view
+   *   sandbox://ticket-app/detail/{id}      → opens Ticket Manager, detail view for {id}
+   *   sandbox://ticket-app                  → opens Ticket Manager, list view
+   *   sandbox://file-explorer/{path}        → opens File Explorer at {path}
+   *   sandbox://file-explorer               → opens File Explorer at HOME
+   *
+   * Silently ignored for unrecognised paths.
+   */
+  openWith(url: string): void;
 }
 
 // ─── Reducer actions ──────────────────────────────────────────────────────────

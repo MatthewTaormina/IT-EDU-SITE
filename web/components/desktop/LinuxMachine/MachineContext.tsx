@@ -39,6 +39,9 @@ import type {
   AppId,
   AppState,
   KernelAPI,
+  VFetchResponse,
+  TicketAppState,
+  FileExplorerAppState,
 } from './MachineTypes';
 import { machineReducer } from './MachineReducer';
 import { buildInitialState, loadManifest, loadRemoteVFS } from './stateLoader';
@@ -311,6 +314,96 @@ export function LinuxMachineProvider({
 
     killProcess(pid) {
       dispatch({ type: 'PROCESS_KILL', pid });
+    },
+
+    // ── Virtual HTTP (simulated network) ─────────────────────────────────────
+    //
+    // Routes:
+    //   sandbox://api/{path}  → reads /var/api/{path}.json from VFS
+    //                           → falls back to {stateEndpoint}/api/{path}
+    //   anything else         → 404
+
+    async vfetch(url: string): Promise<VFetchResponse> {
+      const notFound = (): VFetchResponse => ({
+        ok: false, status: 404, statusText: 'Not Found', data: null, text: '',
+      });
+
+      if (!url.startsWith('sandbox://api/')) return notFound();
+
+      const subPath = url.slice('sandbox://api/'.length); // e.g. 'tickets/abc.json'
+
+      // Try VFS first: /var/api/{subPath} (with or without .json extension)
+      const vfsPath = subPath.endsWith('.json')
+        ? `/var/api/${subPath}`
+        : `/var/api/${subPath}.json`;
+
+      const raw = kernelReadFile(stateRef.current.vfs, vfsPath);
+      if (raw !== null) {
+        let data: unknown = null;
+        try { data = JSON.parse(raw); } catch { /* text-only */ }
+        return { ok: true, status: 200, statusText: 'OK', data, text: raw };
+      }
+
+      // Fall back to real endpoint
+      const endpoint = stateRef.current.stateEndpoint;
+      if (endpoint) {
+        try {
+          const fetchUrl = `${endpoint.replace(/\/$/, '')}/api/${subPath}`;
+          const res = await fetch(fetchUrl, { credentials: 'same-origin' });
+          const text = await res.text();
+          let data: unknown = null;
+          try { data = JSON.parse(text); } catch { /* text-only */ }
+          return {
+            ok:         res.ok,
+            status:     res.status,
+            statusText: res.statusText,
+            data,
+            text,
+          };
+        } catch {
+          return { ok: false, status: 503, statusText: 'Service Unavailable', data: null, text: '' };
+        }
+      }
+
+      return notFound();
+    },
+
+    // ── "Open With" — sandbox:// URL dispatcher ────────────────────────────────
+    //
+    // AC 2.3: Parses sandbox:// URLs and dispatches WINDOW_OPEN for the
+    // appropriate app.
+
+    openWith(url: string): void {
+      if (!url.startsWith('sandbox://')) return;
+
+      const body = url.slice('sandbox://'.length); // e.g. 'ticket-app/new'
+      const [appSlug, ...rest] = body.split('/');
+
+      switch (appSlug) {
+        case 'ticket-app': {
+          const sub = rest[0] ?? '';
+          let appState: TicketAppState;
+          if (sub === 'new') {
+            appState = { view: 'new' };
+          } else if (sub === 'detail' && rest[1]) {
+            appState = { view: 'detail', openTicketId: rest[1] };
+          } else {
+            appState = { view: 'list' };
+          }
+          dispatch({ type: 'WINDOW_OPEN', app: 'ticket-app', title: 'Ticket Manager', appState });
+          break;
+        }
+        case 'file-explorer': {
+          const pathParts = rest.join('/');
+          const cwd = pathParts ? (pathParts.startsWith('/') ? pathParts : `/${pathParts}`) : (stateRef.current.env['HOME'] ?? '/home/user');
+          const appState: FileExplorerAppState = { cwd, selectedPath: null };
+          dispatch({ type: 'WINDOW_OPEN', app: 'file-explorer', title: 'File Explorer', appState });
+          break;
+        }
+        default:
+          // Unrecognised — silently ignore
+          break;
+      }
     },
 
   // dispatch is stable for the lifetime of the component — kernel is created once.

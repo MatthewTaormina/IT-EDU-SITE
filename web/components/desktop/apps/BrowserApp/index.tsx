@@ -57,7 +57,8 @@ function normalizeUrl(raw: string): string {
   const t = raw.trim();
   if (!t || t === 'about:home') return 'about:home';
   if (t === 'about:blank')      return 'about:blank';
-  if (t.startsWith('local://')) return t;
+  if (t.startsWith('local://'))   return t;
+  if (t.startsWith('sandbox://')) return t;
   // Block unsafe URL schemes
   if (/^(javascript|data|vbscript):/i.test(t)) return 'about:blank';
   if (t.startsWith('https://') || t.startsWith('http://')) return t;
@@ -71,7 +72,7 @@ function normalizeUrl(raw: string): string {
  * HTTP/HTTPS URLs require a matching entry in `allowedSites`.
  */
 function isAllowed(url: string, allowedSites: string[]): boolean {
-  if (url.startsWith('about:') || url.startsWith('local://')) return true;
+  if (url.startsWith('about:') || url.startsWith('local://') || url.startsWith('sandbox://')) return true;
   try {
     const { hostname } = new URL(url);
     return allowedSites.some(site => {
@@ -124,19 +125,32 @@ type PageState =
   | { kind: 'external'; url: string }
   | { kind: 'error'; url: string; message: string }
   | { kind: 'iframe'; src: string; title: string }
-  | { kind: 'srcdoc'; html: string; title: string };
+  | { kind: 'srcdoc'; html: string; title: string }
+  | { kind: 'launched'; url: string; appName: string };
 
 function getPageTitle(page: PageState): string {
   switch (page.kind) {
-    case 'home':    return 'Home — FictBrowser';
-    case 'blank':   return 'about:blank';
-    case 'loading': return `Loading… ${page.url}`;
+    case 'home':     return 'Home — FictBrowser';
+    case 'blank':    return 'about:blank';
+    case 'loading':  return `Loading… ${page.url}`;
     case 'blocked':  return `Blocked: ${page.url}`;
-    case 'external':  return page.url;
-    case 'error':   return `Error: ${page.url}`;
-    case 'iframe':  return page.title;
-    case 'srcdoc':  return page.title;
+    case 'external': return page.url;
+    case 'error':    return `Error: ${page.url}`;
+    case 'iframe':   return page.title;
+    case 'srcdoc':   return page.title;
+    case 'launched': return `Launched: ${page.appName}`;
   }
+}
+
+/** Map a sandbox:// URL to a human-readable app name for display. */
+function sandboxAppName(url: string): string {
+  const body = url.slice('sandbox://'.length);
+  const slug  = body.split('/')[0] ?? '';
+  const names: Record<string, string> = {
+    'ticket-app':    'Ticket Manager',
+    'file-explorer': 'File Explorer',
+  };
+  return names[slug] ?? slug;
 }
 
 // ─── NavButton ────────────────────────────────────────────────────────────────
@@ -289,7 +303,15 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
 
   // ── Navigate (push new entry to history + resolve) ──────────────────────
   const navigate = useCallback((rawUrl: string): void => {
-    const url        = normalizeUrl(rawUrl);
+    const url = normalizeUrl(rawUrl);
+
+    // AC 2.3: sandbox:// URLs launch desktop apps — don't push to browser history
+    if (url.startsWith('sandbox://')) {
+      kernel.openWith(url);
+      setPage({ kind: 'launched', url, appName: sandboxAppName(url) });
+      return;
+    }
+
     const newHistory = [...navHistory.slice(0, historyIdx + 1), url];
     const newIdx     = newHistory.length - 1;
     setNavHistory(newHistory);
@@ -297,7 +319,7 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
     setUrlInput(url);
     syncKernel(newHistory, newIdx);
     void resolveUrl(url);
-  }, [navHistory, historyIdx, syncKernel, resolveUrl]);
+  }, [kernel, navHistory, historyIdx, syncKernel, resolveUrl]);
 
   // ── Back / Forward / Reload ──────────────────────────────────────────────
   const goBack = useCallback((): void => {
@@ -659,6 +681,28 @@ function PageRenderer({
           sandbox="allow-scripts allow-forms allow-modals"
           style={{ background: '#fff' }}
         />
+      );
+
+    case 'launched':
+      return (
+        <div
+          className="h-full flex flex-col items-center justify-center gap-4 p-8 text-center"
+          style={{ background: '#0d1117' }}
+          role="status"
+          aria-live="polite"
+          aria-label={`${page.appName} launched`}
+        >
+          <div style={{ fontSize: '2.5rem', lineHeight: 1 }} aria-hidden="true">🚀</div>
+          <h2 style={{ color: '#c9d1d9', fontSize: '1.125rem', fontWeight: 600, margin: 0 }}>
+            Launching {page.appName}
+          </h2>
+          <p style={{ color: '#8b949e', fontSize: '0.875rem', maxWidth: '26rem', margin: 0 }}>
+            The application has been opened in a new window on the desktop.
+          </p>
+          <p style={{ color: '#484f58', fontSize: '0.75rem', margin: 0, fontFamily: 'monospace' }}>
+            {page.url}
+          </p>
+        </div>
       );
 
     default:
