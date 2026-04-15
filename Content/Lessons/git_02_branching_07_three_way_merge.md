@@ -115,41 +115,24 @@ Merge pull request #42: Add user authentication
 ```
 
 <QuizBox
-  questions={[
-    {
-      question: "You are on `main` and run `git merge feature-login`. Git performs a three-way merge instead of a fast-forward. What does this tell you about the branch histories?",
-      options: [
-        "`feature-login` has no commits — only `main` has advanced",
-        "Both `main` and `feature-login` have commits that the other does not — they have diverged from a common ancestor",
-        "`feature-login` is ahead of `main` with no divergence",
-        "There is a conflict that must be resolved manually"
-      ],
-      answer: 1,
-      explanation: "A three-way merge is triggered when neither branch is a direct ancestor of the other — both have independent commits since their common ancestor. A fast-forward is only possible when one branch is ahead of the other with no independent commits."
-    },
-    {
-      question: "How many parent commits does a merge commit have?",
-      options: [
-        "Zero — merge commits are special and have no parents",
-        "One — the branch being merged into",
-        "Two — one from each branch being merged",
-        "It depends on whether there were conflicts"
-      ],
-      answer: 2,
-      explanation: "A merge commit always has two parents: the tip of the branch you merged into (e.g., `main`) and the tip of the branch you merged from (e.g., `feature-login`). This two-parent structure is what creates the 'diamond' shape in the commit graph."
-    },
-    {
-      question: "In `git log --oneline --graph`, you see `|\\` on one line and `|/` a few lines later. What do these characters represent?",
-      options: [
-        "A rebase that was applied to the branch",
-        "A cherry-pick operation",
-        "The divergence and rejoining of two branches at a merge commit — the 'diamond' shape",
-        "An error in the log output"
-      ],
-      answer: 2,
-      explanation: "The `|\\` shows where the feature branch diverged from main, and `|/` shows where it rejoined at the merge commit. Together they form the visual diamond pattern that signatures a three-way merge in the DAG."
-    }
-  ]}
+  question="You are on `main` and run `git merge feature-login`. Git performs a three-way merge instead of a fast-forward. What does this tell you about the branch histories?"
+  options="`feature-login` has no commits — only `main` has advanced; Both `main` and `feature-login` have diverged from a common ancestor; `feature-login` is ahead of `main` with no divergence; There is a conflict that must be resolved manually"
+  answer="1"
+  explanation="A three-way merge is triggered when neither branch is a direct ancestor of the other. A fast-forward is only possible when one branch is ahead with no independent commits."
+/>
+
+<QuizBox
+  question="How many parent commits does a merge commit have?"
+  options="Zero — merge commits have no parents; One — the branch being merged into; Two — one from each branch being merged; It depends on whether there were conflicts"
+  answer="2"
+  explanation="A merge commit always has two parents: the tip of the branch you merged into (e.g., `main`) and the tip you merged from (e.g., `feature-login`). This two-parent structure creates the diamond shape in the commit graph."
+/>
+
+<QuizBox
+  question="In `git log --oneline --graph`, what do the `|\` and `|/` characters represent?"
+  options="A rebase; A cherry-pick; The divergence and rejoining of two branches at a merge commit — the diamond shape; An error in the log output"
+  answer="2"
+  explanation="The `|\` shows where the feature branch diverged from main, and `|/` shows where it rejoined at the merge commit. Together they form the diamond that marks a three-way merge in the DAG."
 />
 
 ## Summary

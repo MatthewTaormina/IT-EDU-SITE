@@ -69,36 +69,24 @@ Stack Overflow Developer Survey 2024 found Git in use by over 93% of professiona
 </Callout>
 
 <QuizBox
-  questions={[
-    {
-      question: "A developer saves over a working file with a broken version and loses the original. Which problem does version control directly solve in this situation?",
-      options: [
-        "Increasing code execution speed",
-        "Recovering a previous state of any file or project",
-        "Automatically fixing syntax errors",
-        "Encrypting source code for security"
-      ],
-      answer: 1,
-      explanation: "Version control lets you restore any file — or the entire project — to any previous state in seconds, eliminating the need to hunt through backups or start over."
-    },
-    {
-      question: "True or False: Solo developers don't need version control because there's no one to merge with.",
-      options: ["True", "False"],
-      answer: 1,
-      explanation: "False. Solo projects still break and need recovery, still require an audit trail, and every solo project can eventually become a collaboration. The absence of teammates removes only one of the five problems version control solves."
-    },
-    {
-      question: "What does creating a \"branch\" allow a developer to do?",
-      options: [
-        "Automatically merge every team member's changes into one file",
-        "Lock a file so no one else can edit it",
-        "Experiment on a parallel version of the codebase without affecting the main line",
-        "Upload code to a remote server faster"
-      ],
-      answer: 2,
-      explanation: "A branch is a parallel version of the codebase that diverges from the main line. You can experiment freely, and if the experiment fails you simply discard the branch — no harm done to working code."
-    }
-  ]}
+  question="A developer saves over a working file with a broken version and loses the original. Which problem does version control directly solve?"
+  options="Increasing code execution speed; Recovering a previous state of any file or project; Automatically fixing syntax errors; Encrypting source code for security"
+  answer="1"
+  explanation="Version control lets you restore any file — or the entire project — to any previous state in seconds, eliminating the need to hunt through backups or start over."
+/>
+
+<QuizBox
+  question="True or False: Solo developers do not need version control because there is no one to merge with."
+  options="True; False"
+  answer="1"
+  explanation="False. Solo projects still break and need recovery, still require an audit trail, and every solo project can eventually become a collaboration."
+/>
+
+<QuizBox
+  question="What does creating a branch allow a developer to do?"
+  options="Automatically merge every team member's changes into one file; Lock a file so no one else can edit it; Experiment on a parallel version of the codebase without affecting the main line; Upload code to a remote server faster"
+  answer="2"
+  explanation="A branch is a parallel version of the codebase that diverges from the main line. You can experiment freely, and if the experiment fails you simply discard the branch — no harm done to working code."
 />
 
 ## Summary
