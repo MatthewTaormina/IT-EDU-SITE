@@ -90,6 +90,33 @@ function injectBaseTag(html: string, pageUrl: string): string {
   return tag + html;
 }
 
+// ─── Navigation intercept script injection ────────────────────────────────────
+
+/**
+ * Script injected into every proxied HTML page.
+ * Intercepts anchor clicks in capture phase and forwards the destination URL
+ * to the parent BrowserApp via postMessage so the in-app navigation history
+ * and URL bar stay in sync instead of the iframe navigating on its own.
+ * window.name is set to the BrowserApp windowId by the React component, which
+ * lets the parent listener ignore messages from unrelated browser windows.
+ */
+const NAV_INTERCEPT_SCRIPT =
+  "(function(){document.addEventListener('click',function(e){" +
+  "var a=e.target.closest('a[href]');if(!a)return;" +
+  "var raw=a.getAttribute('href');if(!raw||raw.charAt(0)==='#')return;" +
+  "var href=a.href||raw;if(/^javascript:/i.test(href))return;" +
+  "e.preventDefault();" +
+  "window.parent.postMessage({type:'browser-navigate',href:href,windowId:window.name},'*');" +
+  "},true);})();";
+
+/** Inject the nav intercept script before `</head>` (or prepend if no head). */
+function injectNavScript(html: string): string {
+  const tag = `<script>${NAV_INTERCEPT_SCRIPT}</script>`;
+  const idx = html.indexOf('</head>');
+  if (idx !== -1) return html.slice(0, idx) + tag + html.slice(idx);
+  return tag + html;
+}
+
 // ─── Response headers to strip ────────────────────────────────────────────────
 
 /** Upstream headers that would prevent iframe embedding or leak credentials. */
@@ -187,8 +214,9 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   let finalContentType: string;
 
   if (isHtml) {
-    const html   = new TextDecoder('utf-8', { fatal: false }).decode(bodyBuffer);
-    responseBody     = injectBaseTag(html, finalUrl);
+    const html       = new TextDecoder('utf-8', { fatal: false }).decode(bodyBuffer);
+    const withBase   = injectBaseTag(html, finalUrl);
+    responseBody     = injectNavScript(withBase);
     finalContentType = 'text/html; charset=utf-8';
   } else {
     responseBody     = bodyBuffer;

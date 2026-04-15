@@ -122,6 +122,34 @@ function sandboxAppName(url: string): string {
   return names[slug] ?? slug;
 }
 
+// ─── Nav intercept script ─────────────────────────────────────────────────────
+
+/**
+ * Injected into every iframe document (both srcdoc local:// pages and proxied
+ * HTML) to intercept anchor clicks and forward the destination URL to the
+ * parent BrowserApp via postMessage so in-app navigation history and the URL
+ * bar stay in sync instead of the iframe navigating on its own.
+ *
+ * `window.name` is set to the BrowserApp `windowId` by the React component,
+ * which lets the parent message listener ignore events from unrelated windows.
+ */
+const NAV_INTERCEPT_SCRIPT =
+  "(function(){document.addEventListener('click',function(e){" +
+  "var a=e.target.closest('a[href]');if(!a)return;" +
+  "var raw=a.getAttribute('href');if(!raw||raw.charAt(0)==='#')return;" +
+  "var href=a.href||raw;if(/^javascript:/i.test(href))return;" +
+  "e.preventDefault();" +
+  "window.parent.postMessage({type:'browser-navigate',href:href,windowId:window.name},'*');" +
+  "},true);})();";
+
+/** Inject the nav intercept `<script>` before `</head>` (or prepend). */
+function injectNavScript(html: string): string {
+  const tag = `<script>${NAV_INTERCEPT_SCRIPT}</script>`;
+  const idx = html.indexOf('</head>');
+  if (idx !== -1) return html.slice(0, idx) + tag + html.slice(idx);
+  return tag + html;
+}
+
 // ─── Page state ───────────────────────────────────────────────────────────────
 
 type PageState =
@@ -260,7 +288,7 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
       const vfsContent = kernel.readFile(vfsPath);
       if (vfsContent !== null) {
         const m = /<title[^>]*>([^<]+)<\/title>/i.exec(vfsContent);
-        setPage({ kind: 'srcdoc', html: vfsContent, title: m?.[1] ?? url });
+        setPage({ kind: 'srcdoc', html: injectNavScript(vfsContent), title: m?.[1] ?? url });
         return;
       }
 
@@ -275,7 +303,7 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
           if (res.ok) {
             const html = await res.text();
             const m    = /<title[^>]*>([^<]+)<\/title>/i.exec(html);
-            setPage({ kind: 'srcdoc', html, title: m?.[1] ?? url });
+            setPage({ kind: 'srcdoc', html: injectNavScript(html), title: m?.[1] ?? url });
             return;
           }
         } catch {
@@ -343,6 +371,19 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
     void resolveUrl(currentUrl);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // ── Listen for in-iframe link clicks forwarded via postMessage ──────────
+  useEffect(() => {
+    function handleMessage(e: MessageEvent): void {
+      if (!e.data || e.data.type !== 'browser-navigate') return;
+      if (e.data.windowId !== windowId) return;
+      const href = e.data.href;
+      if (typeof href !== 'string' || !href) return;
+      navigate(href);
+    }
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [navigate, windowId]);
 
   // ── URL bar handlers ─────────────────────────────────────────────────────
   const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>): void => {
@@ -546,6 +587,7 @@ function PageRenderer({
       return (
         <iframe
           key={`${windowId}-${page.src}`}
+          name={windowId}
           src={page.src}
           title={page.title}
           className="w-full h-full border-0"
@@ -557,6 +599,7 @@ function PageRenderer({
       return (
         <iframe
           key={`${windowId}-srcdoc-${page.title}`}
+          name={windowId}
           srcDoc={page.html}
           title={pageTitle}
           className="w-full h-full border-0"
