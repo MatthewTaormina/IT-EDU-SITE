@@ -35,7 +35,7 @@ All components that can be used in lesson `.md` / `.mdx` files. **New components
 |---|---|---|
 | `<Callout type="tip\|warning\|danger">` | ✅ Built | Styled alert box |
 | `<QuizBox />` | ⬜ Planned | Inline knowledge check with localStorage scoring |
-| `<TerminalEmulator />` | ⬜ Planned | Simulated CLI interaction |
+| `<TerminalSandbox />` | ✅ Built | Interactive Linux + Git terminal sandbox |
 | `<CodeSandbox />` | ⬜ Planned (Sandpack) | Embedded live code editor with preview |
 | `<ProgressCheck />` | ⬜ Planned | Unit completion self-assessment |
 | `<ResourceList />` | ⬜ Planned | Curated further reading with type badges |

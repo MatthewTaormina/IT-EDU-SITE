@@ -194,7 +194,7 @@ Lesson and unit body files may use ONLY the following MDX component tags. Do not
 | Component | Purpose |
 |--|--|
 | `<QuizBox />` | Inline knowledge check |
-| `<TerminalEmulator />` | Simulated terminal interaction |
+| `<TerminalSandbox />` | Interactive Linux + Git terminal sandbox |
 | `<CodeSandbox />` | Embedded code playground |
 | `<Callout type="tip" />` | Styled tip/note box |
 | `<Callout type="warning" />` | Styled warning box |

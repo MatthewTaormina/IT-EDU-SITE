@@ -45,7 +45,7 @@ Output MUST be valid JSON matching this structure exactly:
       "bloom_level": 3,
       "learning_objective": "By the end of this lesson, learners will be able to...",
       "key_concepts": ["string"],
-      "mdx_components": ["QuizBox | TerminalEmulator | CodeSandbox | Callout | ProgressCheck | ResourceList"],
+      "mdx_components": ["QuizBox | TerminalSandbox | CodeSandbox | Callout | ProgressCheck | ResourceList"],
       "notes": "Optional guidance for the lesson author"
     }
   ]
@@ -56,6 +56,7 @@ Output MUST be valid JSON matching this structure exactly:
 
 - DO NOT write lesson body markdown — that is the Lesson Author's job
 - DO NOT invent MDX components outside the approved whitelist
+- Flag `TerminalSandbox` in `mdx_components` for any lesson that involves typed commands (git, Linux navigation, CLI tools) — it replaces `TerminalEmulator` as the built component
 - Every `learning_objective` must begin with "By the end of this lesson, learners will be able to..."
 - Bloom Level must be 3 or higher — never plan recall-only (Level 1–2) lessons
 - Output JSON only; no markdown prose wrapping the JSON
