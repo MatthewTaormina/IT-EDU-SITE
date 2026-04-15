@@ -265,6 +265,8 @@ Use these fields directly as inputs when generating lesson content. Do not re-de
 | `learning-experience-designer` | `.objectives/`, `.designs/` | `/Content/`, `.knowledge/` | `/web/`, `/site/`, `/Content/` (edit) |
 | `ui-component-engineer` | `/web/components/`, `/web/app/globals.css` | `/Content/` | `/Content/` (edit), `/site/` |
 | `platform-engineer` | `/web/`, `netlify.toml` | `/Content/` | `/Content/` (edit) |
+| `web-ux-expert` | `.reviews/reports/` (UX audit reports) | `/web/`, `/Content/` | `/Content/` (edit), `/site/`, `.knowledge/` |
+| `systems-architect` | `.reviews/reports/` (arch reviews, ADRs) | Entire repository (read-only) | All source code and content files (edit) |
 
 ---
 
