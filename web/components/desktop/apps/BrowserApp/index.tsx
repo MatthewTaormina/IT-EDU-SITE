@@ -57,6 +57,7 @@ import {
 
 import { useKernel, useMachineState, useStateEndpoint } from '../../LinuxMachine/MachineContext';
 import type { BrowserAppState } from '../../LinuxMachine/MachineTypes';
+import { injectNavScript } from '../../../../lib/navIntercept';
 
 // ─── URL helpers ─────────────────────────────────────────────────────────────
 
@@ -120,49 +121,6 @@ function sandboxAppName(url: string): string {
     'file-explorer': 'File Explorer',
   };
   return names[slug] ?? slug;
-}
-
-// ─── Nav intercept script ─────────────────────────────────────────────────────
-
-/**
- * Build the nav intercept script for a specific page URL.
- *
- * The original URL is embedded as a string literal (BASE) so relative hrefs
- * are always resolved against the correct origin — even when a CSR framework
- * removes or replaces a `<base href>` tag during hydration.
- *
- * Using `new URL(raw, BASE)` rather than `a.href` makes the intercept
- * independent of whatever the page does to `<head>` after initial parse.
- *
- * `window.name` is set to the BrowserApp `windowId` by the React component,
- * which lets the parent message listener ignore events from unrelated windows.
- */
-function buildNavInterceptScript(pageUrl: string): string {
-  // JSON.stringify produces a correctly escaped JS string literal.
-  // Extra escaping prevents `</script>` sequences in the URL from ending the tag.
-  const safe = JSON.stringify(pageUrl)
-    .replace(/</g, '\\u003c')
-    .replace(/>/g, '\\u003e')
-    .replace(/&/g, '\\u0026');
-  return (
-    "(function(){var BASE=" + safe + ";" +
-    "document.addEventListener('click',function(e){" +
-    "var a=e.target.closest('a[href]');if(!a)return;" +
-    "var raw=a.getAttribute('href');if(!raw||raw.charAt(0)==='#')return;" +
-    "var href;try{href=new URL(raw,BASE).href;}catch(x){href=raw;}" +
-    "if(/^javascript:/i.test(href))return;" +
-    "e.preventDefault();" +
-    "window.parent.postMessage({type:'browser-navigate',href:href,windowId:window.name},'*');" +
-    "},true);})();"
-  );
-}
-
-/** Inject the nav intercept `<script>` before `</head>` (or prepend). */
-function injectNavScript(html: string, pageUrl: string): string {
-  const tag = `<script>${buildNavInterceptScript(pageUrl)}</script>`;
-  const idx = html.indexOf('</head>');
-  if (idx !== -1) return html.slice(0, idx) + tag + html.slice(idx);
-  return tag + html;
 }
 
 // ─── Page state ───────────────────────────────────────────────────────────────
