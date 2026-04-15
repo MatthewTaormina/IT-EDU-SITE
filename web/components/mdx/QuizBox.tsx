@@ -35,8 +35,12 @@ interface QuizBoxProps {
    * Example: "Option A; Option B with `code`; Option C"
    */
   options: string;
-  /** Zero-based index of the correct option. */
-  answer: number;
+  /**
+   * Zero-based index of the correct option.
+   * Use a plain string attribute (answer="1") — never a JSX expression ({1}).
+   * Parsed with parseInt inside the component for reliability across MDX formats.
+   */
+  answer: string | number;
   /** Shown after answering. Backtick-wrapped words render as inline code. */
   explanation: string;
 }
@@ -45,11 +49,13 @@ interface QuizBoxProps {
 export default function QuizBox({ question, options, answer, explanation }: QuizBoxProps) {
   const id = useId();
   const parsedOptions = options.split(';').map((o) => o.trim()).filter(Boolean);
+  // Accept both string "1" and number 1 — parseInt handles both robustly.
+  const correctIndex = parseInt(String(answer), 10);
 
   const [selected, setSelected] = useState<number | null>(null);
   const [confirmed, setConfirmed] = useState(false);
 
-  const isCorrect = selected === answer;
+  const isCorrect = selected === correctIndex;
 
   function handleSelect(i: number) {
     if (confirmed) return;
@@ -97,7 +103,7 @@ export default function QuizBox({ question, options, answer, explanation }: Quiz
                 : 'cursor-pointer border-border bg-surface text-foreground hover:border-primary/60 hover:bg-primary/5';
             } else {
               cls += 'cursor-default ';
-              if (i === answer) {
+              if (i === correctIndex) {
                 cls += 'border-green-500 bg-green-50 text-green-900 dark:bg-green-950 dark:text-green-100 font-medium';
               } else if (i === selected) {
                 cls += 'border-red-400 bg-red-50 text-red-900 dark:bg-red-950 dark:text-red-100';
