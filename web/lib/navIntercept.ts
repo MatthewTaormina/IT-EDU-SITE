@@ -56,6 +56,24 @@
  *   • URLs that already target the iframe's own origin are left untouched
  *     to prevent double-proxying.
  *
+ * JavaScript redirect intercepts
+ * ──────────────────────────────
+ * Bot-detection challenge pages frequently redirect via JS after setting a
+ * cookie (`location.href = '...'`, `location.assign(url)`,
+ * `location.replace(url)`). Without interception, these navigate the iframe
+ * directly to the external URL — which fails because the remote server
+ * blocks framing.
+ *
+ * The script overrides `Location.prototype.href` (setter),
+ * `Location.prototype.assign`, and `Location.prototype.replace` to route
+ * these navigations through the parent BrowserApp's proxy pipeline.
+ *
+ * `<meta http-equiv="refresh">` redirect intercept
+ * ─────────────────────────────────────────────────
+ * Some pages use `<meta http-equiv="refresh" content="0;url=…">` for
+ * redirects. A MutationObserver watches `<head>` for these tags and posts
+ * a navigation message to the parent before the browser acts on them.
+ *
  * Injection safety
  * ────────────────
  * `JSON.stringify` is used to serialise the URL into a JS string literal.
@@ -206,8 +224,92 @@ export function buildNavInterceptScript(pageUrl: string): string {
 
     '}'; // end if(origin !== "null")
 
+  // ── 4. JavaScript redirect intercepts ────────────────────────────────────
+  // Override Location.prototype methods so that JS-driven redirects
+  // (location.href = '…', location.assign(), location.replace()) post a
+  // navigation message to the parent instead of navigating the iframe
+  // directly to the external URL.
+  const locationIntercept =
+    '(function(){' +
+    'function resolve(raw){' +
+      'try{return new URL(raw,BASE).href;}catch(x){return raw;}' +
+    '}' +
+
+    // ── location.assign() ───────────────────────────────────────────────
+    'var _assign=Location.prototype.assign;' +
+    'Location.prototype.assign=function(url){' +
+      'var abs=resolve(url);' +
+      'if(/^https?:/i.test(abs)){POST("nav",{type:"browser-navigate",href:abs});return;}' +
+      '_assign.call(this,url);' +
+    '};' +
+
+    // ── location.replace() ──────────────────────────────────────────────
+    'var _replace=Location.prototype.replace;' +
+    'Location.prototype.replace=function(url){' +
+      'var abs=resolve(url);' +
+      'if(/^https?:/i.test(abs)){POST("nav",{type:"browser-navigate",href:abs});return;}' +
+      '_replace.call(this,url);' +
+    '};' +
+
+    // ── location.href setter ────────────────────────────────────────────
+    'try{' +
+      'var desc=Object.getOwnPropertyDescriptor(Location.prototype,"href");' +
+      'if(desc&&desc.set){' +
+        'var _hrefSet=desc.set;' +
+        'Object.defineProperty(Location.prototype,"href",{' +
+          'get:desc.get,' +
+          'set:function(url){' +
+            'var abs=resolve(url);' +
+            'if(/^https?:/i.test(abs)){POST("nav",{type:"browser-navigate",href:abs});return;}' +
+            '_hrefSet.call(this,url);' +
+          '},' +
+          'configurable:true,enumerable:true' +
+        '});' +
+      '}' +
+    '}catch(x){}' +
+
+    '})();';
+
+  // ── 5. Meta refresh redirect intercept ───────────────────────────────────
+  // Watch for <meta http-equiv="refresh" content="N;url=…"> tags added to
+  // the DOM and intercept the redirect URL before the browser acts on it.
+  const metaRefreshIntercept =
+    '(function(){' +
+    'function checkMeta(node){' +
+      'if(!node||!node.tagName||node.tagName!=="META")return;' +
+      'var he=node.getAttribute("http-equiv");' +
+      'if(!he||he.toLowerCase()!=="refresh")return;' +
+      'var c=node.getAttribute("content")||"";' +
+      'var m=/url\\s*=\\s*["\']?([^"\'\\s;]+)/i.exec(c);' +
+      'if(!m)return;' +
+      'var abs;try{abs=new URL(m[1],BASE).href;}catch(x){abs=m[1];}' +
+      'node.parentNode&&node.parentNode.removeChild(node);' +
+      'if(/^https?:/i.test(abs)){POST("nav",{type:"browser-navigate",href:abs});}' +
+    '}' +
+    'try{' +
+      // Check existing meta tags immediately
+      'var metas=document.querySelectorAll("meta[http-equiv]");' +
+      'for(var i=0;i<metas.length;i++)checkMeta(metas[i]);' +
+      // Observe future additions
+      'var obs=new MutationObserver(function(muts){' +
+        'for(var i=0;i<muts.length;i++){' +
+          'var added=muts[i].addedNodes;' +
+          'for(var j=0;j<added.length;j++){' +
+            'checkMeta(added[j]);' +
+            'if(added[j].querySelectorAll){' +
+              'var sub=added[j].querySelectorAll("meta[http-equiv]");' +
+              'for(var k=0;k<sub.length;k++)checkMeta(sub[k]);' +
+            '}' +
+          '}' +
+        '}' +
+      '});' +
+      'obs.observe(document.documentElement,{childList:true,subtree:true});' +
+    '}catch(x){}' +
+    '})();';
+
   // ── Closing ───────────────────────────────────────────────────────────────
-  return preamble + linkIntercept + formIntercept + fetchIntercept + '})();';
+  return preamble + linkIntercept + formIntercept + fetchIntercept +
+    locationIntercept + metaRefreshIntercept + '})();';
 }
 
 /**

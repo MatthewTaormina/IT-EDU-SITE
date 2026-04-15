@@ -25,12 +25,23 @@
  *   X-Final-URL  — The URL after any redirects. The BrowserApp reads this to
  *                   keep the URL bar accurate after POST → 303 → GET chains.
  *
+ * Cookie relay
+ * ────────────
+ * Upstream Set-Cookie headers are forwarded to the browser with a per-host
+ * prefix (`_bp_{host}_`) and Path=/api/browser-proxy so they only travel on
+ * proxy requests. On outbound requests the middleware extracts these prefixed
+ * cookies and sends them as a standard Cookie header to the target server.
+ * This enables bot-detection challenge flows that depend on round-tripping
+ * cookies (e.g. Cloudflare cf_clearance).
+ *
  * Security
  * ────────
  * • Only http:// and https:// are proxied.
  * • Private / loopback / link-local addresses are blocked (SSRF guard).
  * • Response bodies are capped at 10 MB.
- * • Set-Cookie, Clear-Site-Data, and credential headers are stripped.
+ * • Clear-Site-Data and credential headers are stripped.
+ * • Upstream cookies are namespaced to avoid collisions with first-party
+ *   cookies and scoped to the /api/browser-proxy path.
  * • The proxied content is served with Cache-Control: no-store so it is
  *   never cached under our origin.
  *
@@ -102,18 +113,113 @@ function injectBaseTag(html: string, pageUrl: string): string {
   return tag + html;
 }
 
+// ─── Cookie relay ─────────────────────────────────────────────────────────────
+
+/**
+ * Prefix used for browser-proxy cookie relay.
+ * Upstream cookies are stored under `_bp_{host}_{name}` on our origin,
+ * scoped to Path=/api/browser-proxy so they never leak to other routes.
+ */
+const COOKIE_PREFIX = '_bp_';
+
+/**
+ * Build the relay prefix for a given target hostname.
+ * E.g. `_bp_example.com_` — the trailing underscore separates host from name.
+ */
+function cookiePrefix(host: string): string {
+  return `${COOKIE_PREFIX}${host}_`;
+}
+
+/**
+ * Extract proxy-relay cookies from the incoming request for a given target
+ * host and return them as a standard `Cookie` header value.
+ */
+function extractProxyCookies(request: NextRequest, targetHost: string): string {
+  const prefix = cookiePrefix(targetHost);
+  const raw    = request.headers.get('cookie') ?? '';
+  const pairs: string[] = [];
+  for (const segment of raw.split(';')) {
+    const trimmed = segment.trim();
+    if (trimmed.startsWith(prefix)) {
+      pairs.push(trimmed.slice(prefix.length));
+    }
+  }
+  return pairs.join('; ');
+}
+
+/**
+ * Rewrite an upstream `Set-Cookie` header so the cookie is stored under a
+ * host-prefixed name and scoped to /api/browser-proxy on our origin.
+ *
+ * Original: `cf_clearance=abc; Path=/; Domain=.example.com; Secure; HttpOnly`
+ * Rewritten: `_bp_example.com_cf_clearance=abc; Path=/api/browser-proxy; Secure; SameSite=Lax`
+ *
+ * - `Domain` is removed (cookie belongs to our origin).
+ * - `Path` is forced to `/api/browser-proxy`.
+ * - `HttpOnly` is removed so the in-iframe nav intercept can see the cookie
+ *   via `document.cookie` if needed (the cookie is never sensitive — it's a
+ *   relay of a third-party value).
+ * - `SameSite=None` is replaced with `SameSite=Lax` to comply with browser
+ *   requirements (None requires Secure + cross-site context we don't have).
+ */
+function rewriteSetCookie(header: string, targetHost: string): string {
+  const parts = header.split(';').map(s => s.trim());
+  if (parts.length === 0 || !parts[0]) return '';
+
+  const eqIdx = parts[0].indexOf('=');
+  if (eqIdx < 0) return '';
+
+  const name  = parts[0].slice(0, eqIdx);
+  const value = parts[0].slice(eqIdx + 1);
+
+  const result = [`${cookiePrefix(targetHost)}${name}=${value}`];
+  let hasPath    = false;
+  let hasSameSite = false;
+
+  for (let i = 1; i < parts.length; i++) {
+    const lower = parts[i].toLowerCase();
+    // Drop Domain — cookie lives on our origin
+    if (lower.startsWith('domain'))   continue;
+    // Drop HttpOnly — nav script may need to read the cookie
+    if (lower === 'httponly')         continue;
+    // Force Path
+    if (lower.startsWith('path')) {
+      result.push('Path=/api/browser-proxy');
+      hasPath = true;
+      continue;
+    }
+    // Normalise SameSite
+    if (lower.startsWith('samesite')) {
+      result.push('SameSite=Lax');
+      hasSameSite = true;
+      continue;
+    }
+    result.push(parts[i]);
+  }
+
+  if (!hasPath)     result.push('Path=/api/browser-proxy');
+  if (!hasSameSite) result.push('SameSite=Lax');
+
+  return result.join('; ');
+}
+
 // ─── Response headers to strip ────────────────────────────────────────────────
 
-/** Upstream headers that would prevent iframe embedding or leak credentials. */
+/**
+ * Upstream headers that would prevent iframe embedding or leak credentials.
+ * Note: `set-cookie` is NOT stripped — it is rewritten by the cookie relay
+ * (see `rewriteSetCookie`) so that bot-detection challenge cookies can
+ * round-trip through the proxy.
+ */
 const STRIP_HEADERS = new Set([
   'x-frame-options',
   'content-security-policy',
   'content-security-policy-report-only',
-  'set-cookie',
   'clear-site-data',
   'cross-origin-opener-policy',
   'cross-origin-embedder-policy',
   'cross-origin-resource-policy',
+  // set-cookie is handled separately — not stripped
 ]);
 
 // ─── Body size cap ────────────────────────────────────────────────────────────
@@ -156,28 +262,56 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   const isRaw = request.nextUrl.searchParams.get('_raw') === '1';
 
   // ── Build upstream request headers ────────────────────────────────────────
-  // Start with realistic browser headers, then layer in request-specific ones.
+  // Mimic a real Chrome 124 on Linux to reduce bot-detection triggers.
+  // Order follows the typical header ordering Chrome sends.
   const incomingAccept      = request.headers.get('accept');
   const incomingContentType = request.headers.get('content-type');
 
+  const isNavigation = !isRaw; // HTML page loads vs. API/XHR calls
+
   const outHeaders: Record<string, string> = {
-    'User-Agent':      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
-    'Accept':          incomingAccept || 'text/html,application/xhtml+xml,application/xml;q=0.9,image/*,*/*;q=0.8',
-    'Accept-Language': 'en-CA,en;q=0.9',
-    // Ask for plain (uncompressed) responses so we can manipulate the body
-    'Accept-Encoding': 'identity',
-    // Mimic same-origin by setting Referer and Origin to the target site
-    'Referer':         rawUrl,
+    'Host':                      parsed.host,
+    'Connection':                'keep-alive',
+    'Cache-Control':             'max-age=0',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent':                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Accept':                    incomingAccept || (isNavigation
+      ? 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+      : '*/*'),
+    'Sec-CH-UA':                 '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+    'Sec-CH-UA-Mobile':          '?0',
+    'Sec-CH-UA-Platform':        '"Linux"',
+    'Sec-Fetch-Dest':            isNavigation ? 'document' : 'empty',
+    'Sec-Fetch-Mode':            isNavigation ? 'navigate' : 'cors',
+    'Sec-Fetch-Site':            'none',
+    'Sec-Fetch-User':            isNavigation ? '?1' : '',
+    'Accept-Language':           'en-CA,en-US;q=0.9,en;q=0.8',
+    'Accept-Encoding':           'identity',
+    'Referer':                   rawUrl,
+    'DNT':                       '1',
+    'Priority':                  isNavigation ? 'u=0, i' : 'u=1',
   };
+
+  // Remove empty values (e.g. Sec-Fetch-User for non-navigation)
+  for (const key of Object.keys(outHeaders)) {
+    if (!outHeaders[key]) delete outHeaders[key];
+  }
 
   // POST/PUT/PATCH — include Origin header (browsers send it on non-GET)
   if (request.method !== 'GET' && request.method !== 'HEAD') {
     outHeaders['Origin'] = parsed.origin;
+    outHeaders['Sec-Fetch-Site'] = 'same-origin';
   }
 
   // Forward Content-Type from the incoming request (needed for form POSTs)
   if (incomingContentType) {
     outHeaders['Content-Type'] = incomingContentType;
+  }
+
+  // ── Cookie relay: forward stored proxy cookies to upstream ────────────────
+  const proxyCookies = extractProxyCookies(request, parsed.hostname);
+  if (proxyCookies) {
+    outHeaders['Cookie'] = proxyCookies;
   }
 
   // ── Read incoming request body (for POST, PUT, etc.) ──────────────────────
@@ -246,10 +380,26 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   // ── Build response headers ────────────────────────────────────────────────
   const headers = new Headers();
 
+  // Collect Set-Cookie headers separately (there can be multiple)
+  const rewrittenCookies: string[] = [];
+  const targetHost = parsed.hostname;
+
   for (const [k, v] of upstream.headers.entries()) {
-    if (!STRIP_HEADERS.has(k.toLowerCase())) {
+    const lower = k.toLowerCase();
+    if (lower === 'set-cookie') {
+      // Rewrite each Set-Cookie with a host prefix and proxy path
+      const rewritten = rewriteSetCookie(v, targetHost);
+      if (rewritten) rewrittenCookies.push(rewritten);
+      continue;
+    }
+    if (!STRIP_HEADERS.has(lower)) {
       try { headers.set(k, v); } catch { /* skip malformed names */ }
     }
+  }
+
+  // Append rewritten Set-Cookie headers
+  for (const cookie of rewrittenCookies) {
+    headers.append('Set-Cookie', cookie);
   }
 
   // Overrides
