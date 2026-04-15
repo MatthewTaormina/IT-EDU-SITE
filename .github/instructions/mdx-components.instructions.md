@@ -162,6 +162,88 @@ Never force-push to a shared branch — it rewrites history that teammates have 
 
 ---
 
+## `<TerminalSandbox>`
+
+A fully interactive Linux + Git terminal emulator running entirely in the browser. Backed by a virtual filesystem (VFS), a shell interpreter, and an optional Git plugin. The sandbox is always dark-themed and is intentionally isolated from the site's light/dark theme. A **Reset** button in the title bar restores the terminal to the exact state defined by the component's props.
+
+### Props
+
+| Prop | Type | Required | Default | Description |
+|---|---|---|---|---|
+| `preload` | `Record<string, string>` | – | `{}` | Files to create in the virtual filesystem before the shell starts. Keys are absolute paths; values are file contents. |
+| `initialCwd` | `string` | – | `'/home/user'` | The working directory the shell opens in. Must be an absolute path that exists (either by default or via `preload`). |
+| `initialCommands` | `string[]` | – | `[]` | Commands that run automatically (silently, in order) on first mount and on every Reset. Use this to set up a repo state before the learner starts. |
+| `git` | `boolean` | – | `true` | Mount the Git plugin. Set to `false` for lessons that have nothing to do with Git — it slightly reduces startup work. |
+| `height` | `string` | – | `'24rem'` | Height of the scrollable output area as a CSS value, e.g. `'24rem'` or `'400px'`. Increase it for commands that produce many output lines. |
+| `label` | `string` | – | — | Short label shown in the terminal title bar (e.g. `'my-project'`). Omit for a generic bar. |
+
+### How props interact
+
+- `preload` files are created **before** `initialCommands` run, so you can write a file into the VFS and then `cat` it or `git add` it inside `initialCommands`.
+- `initialCommands` run once on mount and again every time the learner clicks **Reset** — they are deterministic setup steps, not one-time operations.
+- Setting `git={false}` disables all `git` sub-commands. Use it only when Git is not the subject of the lesson.
+
+### Example 1 — Minimal (no setup)
+
+Drop a bare interactive shell onto the page. The learner can type any supported command freely.
+
+```mdx
+<TerminalSandbox />
+```
+
+### Example 2 — Git workflow (pre-initialised repo)
+
+Use `initialCommands` to set up a repository so the learner starts in a meaningful state — here, a project with one commit already made.
+
+```mdx
+<TerminalSandbox
+  label="git-demo"
+  initialCommands={[
+    'git init',
+    'git config user.email "learner@example.com"',
+    'git config user.name "Learner"',
+    'echo "# My Project" > README.md',
+    'git add README.md',
+    'git commit -m "Initial commit"',
+  ]}
+/>
+```
+
+The learner lands in `/home/user` with a repo that already has one commit. Clicking **Reset** replays these commands exactly.
+
+### Example 3 — Pre-loaded file with a starter script
+
+Use `preload` to seed a file that exists before the shell starts. Combine with `initialCommands` to stage it and focus the learner on writing commit messages.
+
+```mdx
+<TerminalSandbox
+  label="first-commit"
+  height="28rem"
+  preload={{
+    '/home/user/index.html': '<!DOCTYPE html>\n<html lang="en">\n<head><meta charset="UTF-8"><title>Hello</title></head>\n<body><h1>Hello, world!</h1></body>\n</html>\n',
+  }}
+  initialCommands={[
+    'git init',
+    'git config user.email "learner@example.com"',
+    'git config user.name "Learner"',
+  ]}
+/>
+```
+
+The learner can run `ls`, `cat index.html`, `git add index.html`, and then `git commit -m "..."` without any file-creation steps.
+
+### Rules
+
+- Use `initialCommands` for **setup only** — do not use it to demonstrate steps the learner should practise themselves.
+- Keep `initialCommands` arrays short (≤ 10 commands). Long setup sequences are a sign the lesson needs restructuring.
+- `preload` paths must be absolute (`/home/user/filename`). Relative paths are not supported.
+- Do not set `git={false}` in a lesson that is part of a Git unit — learners expect `git` to be available.
+- Prefer `height="28rem"` or taller when commands like `git log` or `ls -la` may produce long output; the default `24rem` clips easily.
+- Place `<TerminalSandbox>` inline with the prose section it relates to — immediately after the paragraph that explains what the learner should try.
+- One sandbox per major exercise section is typical. Do not place two sandboxes back-to-back without explanatory prose between them.
+
+---
+
 ## Component placement order
 
 Within a lesson body, components appear in this order:
@@ -169,14 +251,15 @@ Within a lesson body, components appear in this order:
 ```
 … prose content …
 
-<Callout>   ← inline with relevant content section
+<Callout>           ← inline with relevant content section
+<TerminalSandbox>   ← inline with the prose it relates to (exercise section)
 
 … more prose …
 
-<QuizBox>   ← after body, before Summary
-<QuizBox>   ← (repeat for additional questions)
+<QuizBox>           ← after body, before Summary
+<QuizBox>           ← (repeat for additional questions)
 
-<ProgressCheck>  ← after QuizBox, before Summary
+<ProgressCheck>     ← after QuizBox, before Summary
 
 ## Summary
 …
