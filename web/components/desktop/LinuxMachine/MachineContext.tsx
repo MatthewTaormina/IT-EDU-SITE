@@ -107,6 +107,8 @@ function parseSandboxUrl(url: string): {
 }
 
 // ─── sessionStorage key ─────────────────────────────────────────────────────────
+
+function sessionKey(machineId: string): string {
   return `linux-machine-${machineId}`;
 }
 
