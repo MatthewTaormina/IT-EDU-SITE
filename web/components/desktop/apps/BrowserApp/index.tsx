@@ -86,6 +86,34 @@ function isAllowed(url: string, allowedSites: string[]): boolean {
   }
 }
 
+// ─── Known no-embed hosts ────────────────────────────────────────────────────
+
+/**
+ * Sites known to send X-Frame-Options or frame-ancestors CSP that block
+ * embedding. `onError` on an <iframe> does NOT fire for these — the browser
+ * renders its own error page inside the frame with no DOM event.
+ * We detect them preemptively and show an "Open in new tab" UI instead.
+ */
+const KNOWN_NO_EMBED = new Set([
+  'developer.mozilla.org',
+  'mdn.io',
+  'duckduckgo.com',
+  'www.duckduckgo.com',
+  'google.com',
+  'www.google.com',
+  'github.com',
+  'stackoverflow.com',
+  'www.stackoverflow.com',
+]);
+
+function isKnownNoEmbed(url: string): boolean {
+  try {
+    return KNOWN_NO_EMBED.has(new URL(url).hostname);
+  } catch {
+    return false;
+  }
+}
+
 // ─── Page state ───────────────────────────────────────────────────────────────
 
 type PageState =
@@ -93,6 +121,7 @@ type PageState =
   | { kind: 'blank' }
   | { kind: 'loading'; url: string }
   | { kind: 'blocked'; url: string }
+  | { kind: 'external'; url: string }
   | { kind: 'error'; url: string; message: string }
   | { kind: 'iframe'; src: string; title: string }
   | { kind: 'srcdoc'; html: string; title: string };
@@ -102,7 +131,8 @@ function getPageTitle(page: PageState): string {
     case 'home':    return 'Home — FictBrowser';
     case 'blank':   return 'about:blank';
     case 'loading': return `Loading… ${page.url}`;
-    case 'blocked': return `Blocked: ${page.url}`;
+    case 'blocked':  return `Blocked: ${page.url}`;
+    case 'external':  return page.url;
     case 'error':   return `Error: ${page.url}`;
     case 'iframe':  return page.title;
     case 'srcdoc':  return page.title;
@@ -202,6 +232,13 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
       !isAllowed(url, machineState.browserAllowedSites)
     ) {
       setPage({ kind: 'blocked', url });
+      return;
+    }
+
+    // Skip iframe attempt for hosts known to send X-Frame-Options / frame-ancestors.
+    // onError never fires for these — detect preemptively.
+    if ((url.startsWith('https://') || url.startsWith('http://')) && isKnownNoEmbed(url)) {
+      setPage({ kind: 'external', url });
       return;
     }
 
@@ -401,6 +438,79 @@ export function BrowserApp({ windowId, appState }: BrowserAppProps) {
   );
 }
 
+// ─── IframeWithFallback ───────────────────────────────────────────────────────
+
+interface IframeWithFallbackProps {
+  src:      string;
+  title:    string;
+  windowId: string;
+}
+
+/**
+ * Renders an external-site iframe. When the target site sends
+ * `X-Frame-Options` or `Content-Security-Policy: frame-ancestors` headers
+ * that block embedding, the browser fires `onError` on the iframe element.
+ * We catch it and replace the broken frame with a styled "can't embed" page
+ * that includes an "Open in new tab" link.
+ */
+function IframeWithFallback({ src, title, windowId }: IframeWithFallbackProps) {
+  const [blocked, setBlocked] = useState(false);
+
+  if (blocked) {
+    return (
+      <div
+        className="h-full flex flex-col items-center justify-center gap-4 p-8 text-center"
+        style={{ background: '#0d1117' }}
+        role="alert"
+        aria-label="Page cannot be embedded"
+      >
+        <div style={{ fontSize: '2.5rem', lineHeight: 1 }} aria-hidden="true">🔒</div>
+        <h2 style={{ color: '#c9d1d9', fontSize: '1.125rem', fontWeight: 600, margin: 0 }}>
+          Can&apos;t Display Page
+        </h2>
+        <p style={{ color: '#8b949e', fontSize: '0.875rem', maxWidth: '28rem', margin: 0 }}>
+          This site blocked embedding using{' '}
+          <code style={{ color: '#79b8ff', fontFamily: 'monospace' }}>X-Frame-Options</code>
+          {' '}or{' '}
+          <code style={{ color: '#79b8ff', fontFamily: 'monospace' }}>Content-Security-Policy</code>.
+          Many sites do this as a security measure against clickjacking.
+        </p>
+        <a
+          href={src}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display:        'inline-flex',
+            alignItems:     'center',
+            gap:            '0.375rem',
+            padding:        '0.5rem 1.25rem',
+            borderRadius:   '0.5rem',
+            background:     '#1f6feb',
+            color:          '#ffffff',
+            fontSize:       '0.875rem',
+            fontWeight:     600,
+            textDecoration: 'none',
+          }}
+        >
+          Open in new tab ↗
+        </a>
+        <p style={{ color: '#484f58', fontSize: '0.75rem', margin: 0 }}>{src}</p>
+      </div>
+    );
+  }
+
+  return (
+    <iframe
+      key={`${windowId}-${src}`}
+      src={src}
+      title={title}
+      className="w-full h-full border-0"
+      sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+      onError={() => setBlocked(true)}
+    />
+  );
+}
+
 // ─── PageRenderer ─────────────────────────────────────────────────────────────
 
 interface PageRendererProps {
@@ -443,6 +553,47 @@ function PageRenderer({
           <span style={{ color: '#8b949e', fontSize: '0.875rem' }}>
             Loading {page.url}…
           </span>
+        </div>
+      );
+
+    case 'external':
+      return (
+        <div
+          className="h-full flex flex-col items-center justify-center gap-4 p-8 text-center"
+          style={{ background: '#0d1117' }}
+          role="alert"
+          aria-label="Page cannot be embedded"
+        >
+          <div style={{ fontSize: '2.5rem', lineHeight: 1 }} aria-hidden="true">🔒</div>
+          <h2 style={{ color: '#c9d1d9', fontSize: '1.125rem', fontWeight: 600, margin: 0 }}>
+            Can&apos;t Display Page
+          </h2>
+          <p style={{ color: '#8b949e', fontSize: '0.875rem', maxWidth: '28rem', margin: 0 }}>
+            This site blocks embedding using{' '}
+            <code style={{ color: '#79b8ff', fontFamily: 'monospace' }}>X-Frame-Options</code>
+            {' '}or{' '}
+            <code style={{ color: '#79b8ff', fontFamily: 'monospace' }}>Content-Security-Policy</code>.
+          </p>
+          <a
+            href={page.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display:        'inline-flex',
+              alignItems:     'center',
+              gap:            '0.375rem',
+              padding:        '0.5rem 1.25rem',
+              borderRadius:   '0.5rem',
+              background:     '#1f6feb',
+              color:          '#ffffff',
+              fontSize:       '0.875rem',
+              fontWeight:     600,
+              textDecoration: 'none',
+            }}
+          >
+            Open in new tab &#x2197;
+          </a>
+          <p style={{ color: '#484f58', fontSize: '0.75rem', margin: 0 }}>{page.url}</p>
         </div>
       );
 
@@ -491,12 +642,10 @@ function PageRenderer({
 
     case 'iframe':
       return (
-        <iframe
-          key={`${windowId}-${page.src}`}
+        <IframeWithFallback
           src={page.src}
           title={pageTitle}
-          className="w-full h-full border-0"
-          sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+          windowId={windowId}
         />
       );
 
@@ -536,7 +685,8 @@ function HomePage({ onNavigate, allowedSites }: HomePageProps) {
     if (q.startsWith('local://') || (q.includes('.') && !q.includes(' '))) {
       onNavigate(q);
     } else {
-      onNavigate(`https://duckduckgo.com/?q=${encodeURIComponent(q)}`);
+      // Wikipedia search embeds fine; DuckDuckGo/Google block iframes
+      onNavigate(`https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(q)}&ns0=1`);
     }
   }
 
