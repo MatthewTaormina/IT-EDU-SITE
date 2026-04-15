@@ -1,0 +1,185 @@
+{
+  "course_id": "git_foundations",
+  "unit_id": "git_01_init_commit",
+  "unit_title": "Initializing a Repository and Making Commits",
+  "knowledge_nodes": [
+    "git_foundations"
+  ],
+  "lessons": [
+    {
+      "lesson_id": "git_01_init_commit_01",
+      "title": "Initializing Your First Repository",
+      "slug": "init_repository",
+      "duration_minutes": 12,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to initialize a Git repository in an existing project using `git init` and understand what files are created.",
+      "key_concepts": [
+        "git init",
+        ".git folder",
+        "object database",
+        "repository structure",
+        "local repository",
+        "tracked files"
+      ],
+      "mdx_components": [
+        "TerminalEmulator"
+      ],
+      "notes": "Hands-on: students create a folder, cd into it, run `git init`. Show the `.git` folder structure briefly. Explain this is now a Git repository."
+    },
+    {
+      "lesson_id": "git_01_init_commit_02",
+      "title": "Understanding the Staging Area and Why It Exists",
+      "slug": "understanding_staging_area",
+      "duration_minutes": 14,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to explain the purpose of the staging area and describe how it enables logical, selective commits.",
+      "key_concepts": [
+        "staging area",
+        "index",
+        ".git/index file",
+        "selective staging",
+        "logical commits",
+        "hunks",
+        "incremental building"
+      ],
+      "mdx_components": [
+        "Callout",
+        "ProgressCheck"
+      ],
+      "notes": "Use a multi-file example: three files edited, want to make two commits. Show how staging area allows this intentionality. Distinguish from `git add` behavior."
+    },
+    {
+      "lesson_id": "git_01_init_commit_03",
+      "title": "Checking Repository Status with `git status`",
+      "slug": "git_status_command",
+      "duration_minutes": 11,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to interpret the output of `git status` and identify which files are modified, staged, or untracked.",
+      "key_concepts": [
+        "git status",
+        "modified files",
+        "staged files",
+        "untracked files",
+        "working tree",
+        "branch name",
+        "ahead/behind"
+      ],
+      "mdx_components": [
+        "TerminalEmulator"
+      ],
+      "notes": "Show status output with annotations: what does each section mean? Create some files, edit some, stage some. Show how status changes accordingly."
+    },
+    {
+      "lesson_id": "git_01_init_commit_04",
+      "title": "Staging Changes with `git add`",
+      "slug": "git_add_command",
+      "duration_minutes": 13,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to stage changes using `git add` with various flags and understand how content is added to the staging area.",
+      "key_concepts": [
+        "git add",
+        "staging files",
+        "git add .",
+        "git add directory",
+        "git add -p",
+        "patch mode",
+        "hunk selection"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Hands-on: stage specific files, entire directory, all changes. Show `-p` for interactive hunk staging. Explain what `git add` actually does (adds content to index)."
+    },
+    {
+      "lesson_id": "git_01_init_commit_05",
+      "title": "Viewing Staged vs. Unstaged Changes with `git diff`",
+      "slug": "git_diff_command",
+      "duration_minutes": 15,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to compare working directory changes against the repository and staging area using `git diff` and `git diff --staged`.",
+      "key_concepts": [
+        "git diff",
+        "git diff --staged",
+        "unified diff format",
+        "additions/deletions",
+        "line numbers",
+        "context lines",
+        "comparing versions"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Run `git diff` (working vs. staging), then `git diff --staged` (staging vs. repo). Explain the diff format: @@, +, -, context."
+    },
+    {
+      "lesson_id": "git_01_init_commit_06",
+      "title": "Creating Your First Commit",
+      "slug": "first_commit",
+      "duration_minutes": 13,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to create a commit with `git commit` and write a clear, meaningful commit message.",
+      "key_concepts": [
+        "git commit",
+        "commit message",
+        "imperative mood",
+        "50/72 rule",
+        "commit metadata",
+        "author/committer",
+        "timestamp"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Commit staged changes with `-m`. Show good vs. poor commit messages. Emphasize subject line ≤50 chars, imperative mood ('Add' not 'Added')."
+    },
+    {
+      "lesson_id": "git_01_init_commit_07",
+      "title": "Viewing Commit History with `git log`",
+      "slug": "git_log_command",
+      "duration_minutes": 14,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to view and interpret commit history using `git log` and various formatting options.",
+      "key_concepts": [
+        "git log",
+        "commit hash",
+        "author information",
+        "commit date",
+        "commit message",
+        "git log --oneline",
+        "git log --graph",
+        "git log --all"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Show full commit details, then `--oneline` (concise), `--graph` (visual branches), `--all` (all branches). Filter by author, date, etc."
+    },
+    {
+      "lesson_id": "git_01_init_commit_08",
+      "title": "Undoing Changes: Unstaging and Reset",
+      "slug": "undoing_changes",
+      "duration_minutes": 15,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to unstage files with `git reset` and explain the difference between unstaging and discarding changes.",
+      "key_concepts": [
+        "git reset",
+        "unstaging",
+        "git reset HEAD",
+        "git reset --hard",
+        "git restore",
+        "discarding changes",
+        "recovering work"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout",
+        "ProgressCheck"
+      ],
+      "notes": "Distinguish destructive (`--hard`) from non-destructive (`git reset` alone). Show recovering unstaged work via reflog. Be careful about command safety."
+    }
+  ]
+}

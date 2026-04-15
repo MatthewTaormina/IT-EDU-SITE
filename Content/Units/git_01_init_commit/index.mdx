@@ -1,0 +1,271 @@
+---
+type: unit
+title: "Initializing a Repository and Making Commits"
+description: "Setting up a local Git repository, understanding the staging area and index, making commits, viewing commit history with git log, and comparing changes with git diff."
+domain: "git"
+difficulty: Beginner
+prerequisites: ["git_00_intro"]
+learning_objectives:
+  - "Initialize a Git repository on your machine with `git init`"
+  - "Understand the staging area and why it exists"
+  - "Stage changes with `git add` and unstage with `git reset`"
+  - "Create commits with `git commit` and write concise, clear commit messages"
+  - "View commit history with `git log` and interpret commit metadata"
+  - "Compare changes with `git diff` (working directory vs. staging vs. repository)"
+  - "Verify repository status with `git status`"
+  - "Configure Git identity (`git config`)"
+references:
+  - type: lesson
+    slug: git_01_init_commit_01_init_repository
+  - type: lesson
+    slug: git_01_init_commit_02_understanding_staging_area
+  - type: lesson
+    slug: git_01_init_commit_03_git_status_command
+  - type: lesson
+    slug: git_01_init_commit_04_git_add_command
+  - type: lesson
+    slug: git_01_init_commit_05_git_diff_command
+  - type: lesson
+    slug: git_01_init_commit_06_first_commit
+  - type: lesson
+    slug: git_01_init_commit_07_git_log_command
+  - type: lesson
+    slug: git_01_init_commit_08_undoing_changes
+---
+
+# Initializing a Repository and Making Commits
+
+Now that you understand Git's data model, it's time to work with it. This unit focuses on the core workflow: creating a repository, moving changes through the three working areas, and building your first commit history.
+
+## Setting Up Git Identity
+
+Before you make your first commit, configure your identity. Git needs to know who you are so it can attach your name and email to commits:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```
+
+The `--global` flag means this identity is used for all repositories on your machine. You can override it per repository by omitting `--global`.
+
+## Initializing a Repository
+
+To start version control in a new or existing project:
+
+```bash
+cd my-project
+git init
+```
+
+This creates a `.git/` folder containing the object database, configuration, and branch pointers. Your working directory is now a Git repository.
+
+To check the repository status:
+
+```bash
+git status
+```
+
+This shows which files have changed, which are staged, and which are untracked.
+
+## The Staging Area — Why It Exists
+
+The staging area (or "index") is *intentional* — it lets you build a commit hunk-by-hunk, not all-or-nothing.
+
+### Example: Multi-step Commit
+
+Suppose you've edited three files:
+1. `index.html` — fixed a typo
+2. `styles.css` — refactored spacing
+3. `script.js` — added new feature
+
+You want two commits:
+- Commit A: cleanup (typo + spacing)
+- Commit B: feature
+
+```bash
+git add index.html styles.css  # Stage cleanup
+git commit -m "Fix typo and refactor spacing"
+
+git add script.js            # Stage the feature
+git commit -m "Add user authentication feature"
+```
+
+Without the staging area, you'd have to commit everything at once. With it, you can craft precise, logical commits.
+
+## Working with the Staging Area
+
+### Stage Changes
+
+Add files by name:
+
+```bash
+git add index.html
+```
+
+Add all changes in a directory:
+
+```bash
+git add src/
+```
+
+Add all changes in the entire repository:
+
+```bash
+git add .
+```
+
+Use `-p` (patch) mode to stage hunks interactively:
+
+```bash
+git add -p
+```
+
+This prompts you hunk-by-hunk: include this change? (y/n/s/e/...)
+
+### Unstage Changes
+
+Remove a file from the staging area without losing the changes in your working directory:
+
+```bash
+git reset filename.txt
+```
+
+Or unstage everything:
+
+```bash
+git reset
+```
+
+### View Staged vs. Unstaged
+
+See what you've staged:
+
+```bash
+git diff --staged
+```
+
+See what you've changed but haven't staged:
+
+```bash
+git diff
+```
+
+## Making Commits
+
+Once you've staged your changes, commit them:
+
+```bash
+git commit -m "Concise, descriptive message"
+```
+
+A good commit message:
+- **Line 1:** 50 characters or fewer, imperative mood ("Add feature", not "Added feature")
+- **Line 2:** Blank
+- **Lines 3+:** Detailed explanation if needed (wrap at 72 chars)
+
+Example:
+
+```
+Add user authentication feature
+
+- Implement login form with email/password validation
+- Add JWT token generation and storage in localStorage
+- Protect dashboard routes with middleware
+- Add logout functionality
+```
+
+Each commit advances your branch pointer and creates a new commit object in the DAG.
+
+## Viewing Commit History
+
+See commits in reverse chronological order:
+
+```bash
+git log
+```
+
+This shows commit hash, author, date, and message.
+
+**Common options:**
+
+```bash
+git log --oneline              # One line per commit
+git log --graph --oneline --all # Visual branch graph
+git log -p                     # Show full diff for each commit
+git log --author="Alice"       # Filter by author
+git log --since="2 weeks ago"  # Filter by time
+```
+
+### Understanding Commit Metadata
+
+```
+commit a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0
+Author: Alice <alice@example.com>
+Date:   Mon Apr 14 10:30:00 2026 -0400
+
+    Refactor authentication module
+
+    - Extract token validation logic into separate function
+    - Add unit tests for edge cases
+```
+
+- **commit:** The SHA-1 hash (unique identifier)
+- **Author:** Who created the commit
+- **Date:** When it was created
+- **Message:** The explanation
+
+## Comparing Changes
+
+### Between Working Directory and Staging Area
+
+See what you've changed but not staged:
+
+```bash
+git diff
+```
+
+### Between Staging Area and Repository
+
+See what you've staged but not committed:
+
+```bash
+git diff --staged
+```
+
+### Between Two Commits
+
+Compare any two commits:
+
+```bash
+git diff a1b2c3d..e5f6a7b
+```
+
+## Practical Workflow
+
+A typical session looks like:
+
+```bash
+# Check status
+git status
+
+# Make some edits...
+
+# View what changed
+git diff
+
+# Stage related changes
+git add feature-file.js
+
+# Review staged changes
+git diff --staged
+
+# Commit
+git commit -m "Implement feature X"
+
+# View your work
+git log --oneline
+```
+
+## Next Steps
+
+Now that you can commit, the next unit introduces **branching** — the true power of Git. Branches let you work on multiple features in isolation, then merge them together cleanly.

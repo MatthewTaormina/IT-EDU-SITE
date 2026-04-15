@@ -1,0 +1,197 @@
+{
+  "course_id": "git_foundations",
+  "unit_id": "git_02_branching",
+  "unit_title": "Branching and Merging",
+  "knowledge_nodes": [
+    "git_foundations"
+  ],
+  "lessons": [
+    {
+      "lesson_id": "git_02_branching_01",
+      "title": "What Is a Branch? The Lightweight Pointer Model",
+      "slug": "branch_pointer_model",
+      "duration_minutes": 12,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to explain what a branch is and understand that branches are lightweight pointers to commits, not copies of files.",
+      "key_concepts": [
+        "branch",
+        "pointer",
+        "commit reference",
+        "branch name",
+        "lightweight",
+        "O(1) creation"
+      ],
+      "mdx_components": [
+        "Callout",
+        "ProgressCheck"
+      ],
+      "notes": "Emphasize: branch is NOT a copy of files, just a 41-byte pointer. Show ASCII diagram with multiple branches pointing to different commits."
+    },
+    {
+      "lesson_id": "git_02_branching_02",
+      "title": "Creating Branches with `git branch` and `git switch -c`",
+      "slug": "creating_branches",
+      "duration_minutes": 13,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to create new branches using `git branch` and `git switch -c` (or `git checkout -b`).",
+      "key_concepts": [
+        "git branch",
+        "git switch -c",
+        "git checkout -b",
+        "branch creation",
+        "HEAD",
+        "current branch"
+      ],
+      "mdx_components": [
+        "TerminalEmulator"
+      ],
+      "notes": "Two approaches: (1) create then switch separately, (2) create and switch in one command. Show legacy `git checkout -b` alongside modern `git switch -c`."
+    },
+    {
+      "lesson_id": "git_02_branching_03",
+      "title": "Listing and Viewing Branches",
+      "slug": "listing_branches",
+      "duration_minutes": 11,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to list local and remote branches and identify the currently checked-out branch.",
+      "key_concepts": [
+        "git branch",
+        "git branch -a",
+        "local branches",
+        "remote branches",
+        "current branch indicator",
+        "asterisk marker"
+      ],
+      "mdx_components": [
+        "TerminalEmulator"
+      ],
+      "notes": "Show `git branch` (local only), then `git branch -a` (all including remote-tracking). The asterisk marks current branch."
+    },
+    {
+      "lesson_id": "git_02_branching_04",
+      "title": "Switching Between Branches with `git switch`",
+      "slug": "switching_branches",
+      "duration_minutes": 13,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to switch between branches and understand that the working directory updates to match the checked-out commit.",
+      "key_concepts": [
+        "git switch",
+        "git checkout",
+        "HEAD movement",
+        "working directory update",
+        "uncommitted changes",
+        "branch switching safety"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Key safety rule: switching branches updates your working directory. You must commit or stash uncommitted changes first or Git refuses."
+    },
+    {
+      "lesson_id": "git_02_branching_05",
+      "title": "Understanding Divergent Histories",
+      "slug": "divergent_histories",
+      "duration_minutes": 14,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to recognize when two branches have diverged and understand the implications for merging.",
+      "key_concepts": [
+        "divergence",
+        "common ancestor",
+        "separate commits",
+        "three-way merge",
+        "no fast-forward",
+        "merge conflict risk"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Show: (1) linear history (no divergence, fast-forward possible), (2) diverged history (both branches have new commits, three-way merge required)."
+    },
+    {
+      "lesson_id": "git_02_branching_06",
+      "title": "Fast-Forward Merges",
+      "slug": "fast_forward_merge",
+      "duration_minutes": 15,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to perform a fast-forward merge and understand when Git uses this strategy.",
+      "key_concepts": [
+        "fast-forward merge",
+        "linear history",
+        "pointer movement",
+        "no merge commit",
+        "automatic merge"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout",
+        "ProgressCheck"
+      ],
+      "notes": "Show: switch to main, `git merge feature`. When feature is ahead of main with no divergence, Git simply moves main pointer forward."
+    },
+    {
+      "lesson_id": "git_02_branching_07",
+      "title": "Three-Way Merges and Merge Commits",
+      "slug": "three_way_merge",
+      "duration_minutes": 16,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to perform a three-way merge and understand how Git creates a merge commit when histories diverge.",
+      "key_concepts": [
+        "three-way merge",
+        "common ancestor",
+        "merge commit",
+        "two parents",
+        "merge message",
+        "recording integration"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "When both branches have new commits after a common ancestor, Git creates a merge commit with two parents. This records the integration event."
+    },
+    {
+      "lesson_id": "git_02_branching_08",
+      "title": "Deleting Branches",
+      "slug": "deleting_branches",
+      "duration_minutes": 10,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to delete merged branches with `git branch -d` and understand the safety implications.",
+      "key_concepts": [
+        "git branch -d",
+        "git branch -D",
+        "safe delete",
+        "force delete",
+        "unmerged branches",
+        "branch cleanup"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "`-d` is safe (refuses to delete unmerged branches). `-D` forces deletion. Explain that deleting a branch pointer doesn't delete commits (still in reflog)."
+    },
+    {
+      "lesson_id": "git_02_branching_09",
+      "title": "Feature Branch Workflow",
+      "slug": "feature_branch_workflow",
+      "duration_minutes": 14,
+      "bloom_level": 4,
+      "learning_objective": "By the end of this lesson, learners will be able to apply the feature branch workflow to isolate feature development and integrate changesets cleanly.",
+      "key_concepts": [
+        "feature branch",
+        "workflow",
+        "branch per feature",
+        "isolation",
+        "pull request",
+        "code review",
+        "main branch protection"
+      ],
+      "mdx_components": [
+        "Callout",
+        "ProgressCheck"
+      ],
+      "notes": "Outline: (1) create branch from main, (2) work and commit, (3) push to remote, (4) open PR, (5) merge after review. This is industry-standard."
+    }
+  ]
+}

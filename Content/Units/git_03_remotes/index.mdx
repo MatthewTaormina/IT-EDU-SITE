@@ -1,0 +1,277 @@
+---
+type: unit
+title: "Working with Remotes"
+description: "Configuring remote repositories, pushing commits to GitHub, pulling remote changes, fetching without integrating, and syncing between local and remote branches."
+domain: "git"
+difficulty: Beginner
+prerequisites: ["git_02_branching"]
+learning_objectives:
+  - "Understand what a remote repository is and why it matters"
+  - "Configure a remote with `git remote add`"
+  - "Push commits to a remote with `git push`"
+  - "Fetch remote changes without merging using `git fetch`"
+  - "Pull remote changes and merge with `git pull`"
+  - "Understand the relationship between local and remote-tracking branches"
+  - "Handle divergent histories between local and remote repositories"
+  - "Practice the GitHub workflow (clone, branch, push, pull request)"
+references:
+  - type: lesson
+    slug: git_03_remotes_01_remote_concept
+  - type: lesson
+    slug: git_03_remotes_02_git_remote_command
+  - type: lesson
+    slug: git_03_remotes_03_git_clone_command
+  - type: lesson
+    slug: git_03_remotes_04_git_push_command
+  - type: lesson
+    slug: git_03_remotes_05_remote_tracking_branches
+  - type: lesson
+    slug: git_03_remotes_06_git_fetch_command
+  - type: lesson
+    slug: git_03_remotes_07_git_pull_command
+  - type: lesson
+    slug: git_03_remotes_08_github_workflow
+---
+
+# Working with Remotes
+
+Your local repository is powerful, but the real value of Git emerges when you share code with others. A **remote** is a named alias for a remote repository — usually on GitHub, GitLab, or your company's server.
+
+## What Is a Remote?
+
+A remote is simply a URL stored under a name:
+
+```
+origin → https://github.com/alice/my-project.git
+upstream → https://github.com/canonical/my-project.git
+```
+
+When you clone a repository, Git automatically creates a remote named `origin` pointing to the repository you cloned from.
+
+## Configuring Remotes
+
+### View Configured Remotes
+
+```bash
+git remote
+```
+
+Output:
+
+```
+origin
+```
+
+See URLs:
+
+```bash
+git remote -v
+```
+
+Output:
+
+```
+origin  https://github.com/alice/my-project.git (fetch)
+origin  https://github.com/alice/my-project.git (push)
+```
+
+### Add a Remote
+
+```bash
+git remote add upstream https://github.com/canonical/my-project.git
+```
+
+### Remove a Remote
+
+```bash
+git remote remove upstream
+```
+
+## Pushing to a Remote
+
+Send your local commits to a remote repository:
+
+```bash
+git push origin main
+```
+
+This pushes the `main` branch to the `origin` remote.
+
+### Push a Feature Branch
+
+```bash
+git push origin feature-auth
+```
+
+This creates (or updates) the `feature-auth` branch on the remote.
+
+### Set Up Tracking
+
+After pushing, you can tell Git to track the remote branch automatically:
+
+```bash
+git push -u origin feature-auth
+```
+
+The `-u` flag sets `origin/feature-auth` as the upstream tracking branch. Future pushes on this branch will default to `origin/feature-auth`.
+
+## Remote-Tracking Branches
+
+When you fetch or push, Git creates **remote-tracking branches** in your local repository:
+
+```
+Local branches:         Remote-tracking branches:
+  main                    origin/main
+  feature-auth            origin/feature-auth
+```
+
+Remote-tracking branches are **read-only** pointers to what you last fetched from the remote. They're not your working branches — they're snapshots of the remote's state.
+
+View all branches including remote-tracking:
+
+```bash
+git branch -a
+```
+
+## Fetching Remote Changes
+
+**Fetch** downloads commits from the remote without merging them into your branches:
+
+```bash
+git fetch origin
+```
+
+This updates remote-tracking branches like `origin/main` but does not touch your local `main` branch.
+
+Use this to:
+- See what's new on the remote without disturbing your work
+- Inspect changes before integrating them
+- Work offline after a fetch
+
+### Fetch from All Remotes
+
+```bash
+git fetch --all
+```
+
+## Pulling Remote Changes
+
+**Pull** is fetch + merge in one command:
+
+```bash
+git pull origin main
+```
+
+This:
+1. Fetches `origin/main` to update the remote-tracking branch
+2. Merges `origin/main` into your local `main`
+
+If there's no divergence, it performs a fast-forward merge. If both branches have new commits, it performs a three-way merge (and creates a merge commit).
+
+### Pull with Rebase
+
+To avoid merge commits and keep a linear history:
+
+```bash
+git pull --rebase origin main
+```
+
+This fetches and applies your local commits on top of the remote branch instead of creating a merge commit.
+
+## Handling Divergence
+
+Suppose you pushed `main` yesterday, but someone else also pushed to `main`. Your local `main` and `origin/main` have diverged.
+
+When you try to push:
+
+```bash
+git push origin main
+```
+
+Git rejects it:
+
+```
+! [rejected] main -> main (fetch first)
+To prevent you from overwriting their changes, you must pull first:
+
+git pull origin main
+```
+
+This merges their commits into your branch. Now you can push:
+
+```bash
+git push origin main
+```
+
+## The GitHub Workflow
+
+Most teams use this workflow:
+
+1. **Clone** the repository:
+   ```bash
+   git clone https://github.com/alice/my-project.git
+   cd my-project
+   ```
+
+2. **Create a branch** for your feature:
+   ```bash
+   git switch -c feature-payment
+   ```
+
+3. **Make commits**:
+   ```bash
+   git add payment.js
+   git commit -m "Add Stripe integration"
+   ```
+
+4. **Push** to the remote:
+   ```bash
+   git push -u origin feature-payment
+   ```
+
+5. **Open a pull request** on GitHub (UI-based)
+
+6. **After review and approval**, merge on GitHub or locally:
+   ```bash
+   git switch main
+   git pull origin main
+   git merge feature-payment
+   git push origin main
+   ```
+
+## Practical Workflow
+
+```bash
+# Clone a repository
+git clone https://github.com/alice/my-project.git
+cd my-project
+
+# Check remotes
+git remote -v
+
+# Fetch the latest
+git fetch origin
+
+# Create a feature branch
+git switch -c feature-auth
+
+# Make commits
+git add auth.js
+git commit -m "Add JWT authentication"
+
+# Push to remote
+git push -u origin feature-auth
+
+# Check remote-tracking branches
+git branch -a
+
+# Later, pull updates from main
+git pull origin main
+
+# Push your latest commits
+git push origin feature-auth
+```
+
+## Next Steps
+
+You now know how to work locally and collaborate via remotes. The final unit addresses the inevitable: **merge conflicts**. When two branches modify the same code, Git can't merge automatically. Let's learn how to resolve conflicts cleanly.

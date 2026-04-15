@@ -1,0 +1,175 @@
+{
+  "course_id": "git_foundations",
+  "unit_id": "git_04_conflicts",
+  "unit_title": "Resolving Merge Conflicts",
+  "knowledge_nodes": [
+    "git_foundations"
+  ],
+  "lessons": [
+    {
+      "lesson_id": "git_04_conflicts_01",
+      "title": "When and Why Merge Conflicts Occur",
+      "slug": "when_conflicts_occur",
+      "duration_minutes": 12,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to explain the conditions that cause merge conflicts and understand that fast-forward merges never conflict.",
+      "key_concepts": [
+        "three-way merge",
+        "divergence",
+        "same file edited",
+        "same lines",
+        "automatic merge failure",
+        "fast-forward safety",
+        "human decision required"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Conflicts only in three-way merges. Require: (1) divergent histories, (2) same lines changed. Fast-forward merges skip this entirely."
+    },
+    {
+      "lesson_id": "git_04_conflicts_02",
+      "title": "Understanding Conflict Markers",
+      "slug": "conflict_markers",
+      "duration_minutes": 11,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to interpret Git's conflict markers and understand what each section represents.",
+      "key_concepts": [
+        "<<<<<<< HEAD",
+        "=======",
+        ">>>>>>> branch",
+        "conflict section",
+        "HEAD version",
+        "incoming version",
+        "branch name"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Markers are literal text Git writes. Learn to read them: HEAD version above separator, incoming version below. Branch name on closing marker."
+    },
+    {
+      "lesson_id": "git_04_conflicts_03",
+      "title": "Identifying Conflicts with `git status` and `git diff`",
+      "slug": "identifying_conflicts",
+      "duration_minutes": 12,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to identify conflicted files and inspect them using Git commands.",
+      "key_concepts": [
+        "git status",
+        "unmerged paths",
+        "both modified",
+        "git diff",
+        "conflict details",
+        "marker location"
+      ],
+      "mdx_components": [
+        "TerminalEmulator"
+      ],
+      "notes": "After failed merge, `git status` shows 'unmerged paths'. `git diff` shows conflict markers in context."
+    },
+    {
+      "lesson_id": "git_04_conflicts_04",
+      "title": "Manually Resolving a Conflict: Three Options",
+      "slug": "manual_conflict_resolution",
+      "duration_minutes": 15,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to manually resolve a conflict by choosing to keep one version, the other, or a combination of both.",
+      "key_concepts": [
+        "keep HEAD",
+        "keep incoming",
+        "combine both",
+        "edit conflict section",
+        "remove markers",
+        "working version"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Three choices: (1) keep HEAD version only, (2) keep incoming only, (3) write new code combining both. Remove markers and edit to create working state."
+    },
+    {
+      "lesson_id": "git_04_conflicts_05",
+      "title": "Completing a Merge: Staging and Committing",
+      "slug": "completing_merge",
+      "duration_minutes": 12,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to finalize a merge after resolving conflicts by staging resolved files and creating a merge commit.",
+      "key_concepts": [
+        "git add",
+        "mark resolved",
+        "git commit",
+        "merge commit message",
+        "two parents",
+        "merge complete"
+      ],
+      "mdx_components": [
+        "TerminalEmulator"
+      ],
+      "notes": "After editing files: (1) `git add` each resolved file, (2) `git commit` (Git pre-fills merge commit message). Now merge is complete."
+    },
+    {
+      "lesson_id": "git_04_conflicts_06",
+      "title": "Using Merge Strategies: `-X ours` and `-X theirs`",
+      "slug": "merge_strategies",
+      "duration_minutes": 13,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to use automatic merge strategies to favor one branch over another, and understand when this is appropriate.",
+      "key_concepts": [
+        "merge strategy",
+        "git merge -X ours",
+        "git merge -X theirs",
+        "automatic resolution",
+        "risk of strategy",
+        "manual resolution preferred"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Strategies auto-resolve conflicts. Rare to use; usually better to decide manually based on domain knowledge. Use with caution."
+    },
+    {
+      "lesson_id": "git_04_conflicts_07",
+      "title": "Aborting a Merge You're Not Ready For",
+      "slug": "aborting_merge",
+      "duration_minutes": 10,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to cancel a merge in progress without losing work.",
+      "key_concepts": [
+        "git merge --abort",
+        "cancel merge",
+        "restore state",
+        "no commits lost",
+        "safe operation",
+        "try again later"
+      ],
+      "mdx_components": [
+        "TerminalEmulator"
+      ],
+      "notes": "`git merge --abort` cancels the merge entirely and returns to pre-merge state. Safe, loses nothing. Use if you need time to think."
+    },
+    {
+      "lesson_id": "git_04_conflicts_08",
+      "title": "Practical Scenario: Real-World Conflict Resolution",
+      "slug": "practical_conflict_scenario",
+      "duration_minutes": 16,
+      "bloom_level": 4,
+      "learning_objective": "By the end of this lesson, learners will be able to apply conflict resolution skills to a realistic scenario with multiple files and logical decisions.",
+      "key_concepts": [
+        "multi-file conflicts",
+        "domain knowledge",
+        "decision making",
+        "testing after merge",
+        "team communication",
+        "best practices"
+      ],
+      "mdx_components": [
+        "Callout",
+        "ProgressCheck"
+      ],
+      "notes": "Walk through a realistic example: two features edited same authentication module. Learner must decide which approach is best, or combine both thoughtfully."
+    }
+  ]
+}

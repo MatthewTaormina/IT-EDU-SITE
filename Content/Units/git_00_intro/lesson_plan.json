@@ -1,0 +1,138 @@
+{
+  "course_id": "git_foundations",
+  "unit_id": "git_00_intro",
+  "unit_title": "Introduction to Version Control",
+  "knowledge_nodes": [
+    "git_foundations"
+  ],
+  "lessons": [
+    {
+      "lesson_id": "git_00_intro_01",
+      "title": "Why Version Control Exists",
+      "slug": "why_version_control_exists",
+      "duration_minutes": 12,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to identify the core problems that version control solves and explain why it is essential in professional software development.",
+      "key_concepts": [
+        "change tracking",
+        "recovery from mistakes",
+        "parallel development",
+        "audit trails",
+        "collaboration",
+        "single point of failure"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Introduce motivation with real-world scenarios (e.g., 'I broke something', 'two people edited the same file'). Use table format to show problems and solutions."
+    },
+    {
+      "lesson_id": "git_00_intro_02",
+      "title": "Three Generations of Version Control Systems",
+      "slug": "three_generations_vcs",
+      "duration_minutes": 15,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to distinguish between local, centralized, and distributed version control systems and explain Git's advantages as a distributed system.",
+      "key_concepts": [
+        "local VCS",
+        "centralized VCS",
+        "distributed VCS",
+        "clone",
+        "repository",
+        "offline work",
+        "branching performance"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Use a timeline or comparison table. Emphasize Git's distributed nature: every clone is a full copy. Mention RCS, SVN, Git explicitly."
+    },
+    {
+      "lesson_id": "git_00_intro_03",
+      "title": "Git's Object Model: Blobs, Trees, and Commits",
+      "slug": "git_object_model",
+      "duration_minutes": 18,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to explain Git's content-addressed object model and describe how blobs, trees, and commits work together to store project history.",
+      "key_concepts": [
+        "blob",
+        "tree",
+        "commit",
+        "SHA-1",
+        "content-addressed",
+        "immutable",
+        "object database"
+      ],
+      "mdx_components": [
+        "Callout",
+        "CodeSandbox"
+      ],
+      "notes": "Make this visual: show blob as raw file content, tree as directory snapshot, commit as named snapshot with parents. Use ASCII diagrams (safe to include in prose)."
+    },
+    {
+      "lesson_id": "git_00_intro_04",
+      "title": "The DAG: Directed Acyclic Graph of Commits",
+      "slug": "dag_commit_graph",
+      "duration_minutes": 16,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to visualize commit history as a DAG and explain how immutability ensures history cannot be lost.",
+      "key_concepts": [
+        "DAG",
+        "parent commit",
+        "merge commit",
+        "directed acyclic graph",
+        "immutability",
+        "linear history",
+        "divergent history"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Show linear history (A->B->C) and branching (B->C, B->D->E). Emphasize that commits are immutable; you can add to history but never rewrite it."
+    },
+    {
+      "lesson_id": "git_00_intro_05",
+      "title": "The Three Working Areas",
+      "slug": "three_working_areas",
+      "duration_minutes": 14,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to distinguish between the working directory, staging area, and repository, and explain how changes flow through these areas.",
+      "key_concepts": [
+        "working directory",
+        "staging area",
+        "index",
+        "repository",
+        "staging",
+        "committing",
+        ".git folder"
+      ],
+      "mdx_components": [
+        "Callout",
+        "ProgressCheck"
+      ],
+      "notes": "Flow diagram is essential: working → staging → repo. Explain why staging area exists: allows selective, logical commits."
+    },
+    {
+      "lesson_id": "git_00_intro_06",
+      "title": "Installing Git and Configuring Your Identity",
+      "slug": "install_configure_git",
+      "duration_minutes": 10,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to install Git on their machine and configure their identity for making commits.",
+      "key_concepts": [
+        "git installation",
+        "git config",
+        "user.name",
+        "user.email",
+        "global config",
+        "per-repo config",
+        "terminal"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Hands-on: students download from git-scm.com, run `git config --global`. Distinguish global (used for all repos) vs. per-repo (used only for one)."
+    }
+  ]
+}

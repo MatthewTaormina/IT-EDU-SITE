@@ -1,0 +1,279 @@
+---
+type: unit
+title: "Branching and Merging"
+description: "Creating, switching, and listing branches; understanding divergent histories; performing fast-forward and three-way merges; and managing the branch lifecycle."
+domain: "git"
+difficulty: Beginner
+prerequisites: ["git_01_init_commit"]
+learning_objectives:
+  - "Create branches with `git branch` and `git switch -c`"
+  - "List branches and see the current branch with `git branch -a`"
+  - "Switch branches with `git switch`"
+  - "Understand what a branch pointer is and how it advances"
+  - "Recognize the difference between fast-forward and three-way merges"
+  - "Merge branches with `git merge`"
+  - "Delete branches with `git branch -d`"
+  - "Practice common branching workflows (feature branches, hotfix branches)"
+references:
+  - type: lesson
+    slug: git_02_branching_01_branch_pointer_model
+  - type: lesson
+    slug: git_02_branching_02_creating_branches
+  - type: lesson
+    slug: git_02_branching_03_listing_branches
+  - type: lesson
+    slug: git_02_branching_04_switching_branches
+  - type: lesson
+    slug: git_02_branching_05_divergent_histories
+  - type: lesson
+    slug: git_02_branching_06_fast_forward_merge
+  - type: lesson
+    slug: git_02_branching_07_three_way_merge
+  - type: lesson
+    slug: git_02_branching_08_deleting_branches
+  - type: lesson
+    slug: git_02_branching_09_feature_branch_workflow
+---
+
+# Branching and Merging
+
+You now know how to make commits. **Branching** unlocks the collaborative power of Git by letting multiple developers (or you on multiple tasks) work in parallel without interfering with each other.
+
+## What Is a Branch?
+
+A branch is a **lightweight pointer to a commit**. Creating a branch costs almost nothing — Git writes a 40-character SHA-1 to a file.
+
+```
+main    → commit D
+feature → commit F
+```
+
+When you switch to a branch and make a new commit, that branch pointer advances to the new commit. Other branches are unaffected.
+
+## Creating Branches
+
+### Create a New Branch
+
+```bash
+git branch feature-auth
+```
+
+This creates a new branch pointing to the current commit. You're still on the old branch.
+
+### Create and Switch Simultaneously
+
+```bash
+git switch -c feature-auth
+```
+
+Or the older syntax:
+
+```bash
+git checkout -b feature-auth
+```
+
+Both create the branch and check it out (make it current).
+
+## Viewing Branches
+
+See all local branches and which one is current:
+
+```bash
+git branch
+```
+
+Output:
+
+```
+  develop
+* main        ← You are here
+  feature-auth
+```
+
+See all branches including remote-tracking branches:
+
+```bash
+git branch -a
+```
+
+## Switching Branches
+
+Move to an existing branch:
+
+```bash
+git switch main
+```
+
+Or the older syntax:
+
+```bash
+git checkout main
+```
+
+**Important:** When you switch branches, Git updates your working directory to match the checked-out branch's commit. Uncommitted changes may prevent switching — you must commit or stash first.
+
+## Divergent Histories
+
+When two branches have different commits after a shared common ancestor, their histories **diverge**.
+
+```
+        E ← F  (feature)
+       /
+A ← B ← C ← D  (main)
+```
+
+`main` has commit D; `feature` has commits E and F. They share ancestors A, B, C but have diverged.
+
+To merge them back together, we need to create a merge commit that ties them together.
+
+## Merging Branches
+
+### Fast-Forward Merge
+
+If one branch is purely ahead of another with no divergence, Git performs a **fast-forward** merge:
+
+```
+A ← B ← C ← D  (main)
+             ↑
+             E ← F  (feature)
+```
+
+Merge `feature` into `main`:
+
+```bash
+git switch main
+git merge feature
+```
+
+Git simply moves the `main` pointer forward to F. No merge commit is created.
+
+Result:
+
+```
+A ← B ← C ← D ← E ← F  (main)
+                   ↑ (feature)
+```
+
+### Three-Way Merge
+
+If histories have diverged, Git performs a **three-way merge** by finding the common ancestor and creating a merge commit:
+
+```
+        E ← F  (feature)
+       /
+A ← B ← C ← D  (main)
+```
+
+Merge `feature` into `main`:
+
+```bash
+git switch main
+git merge feature
+```
+
+Git identifies the common ancestor (C) and creates a merge commit G with **two parents** (D and F):
+
+```
+        E ← F
+       /     \
+A ← B ← C ← D ← G  (main)
+```
+
+The merge commit records that we integrated `feature` back into `main`.
+
+### Handling Merge Conflicts
+
+If both branches modified the same lines in the same file, Git cannot automatically resolve the merge. It marks the conflict in the file:
+
+```
+<<<<<<< HEAD
+This is the version from main
+=======
+This is the version from feature
+>>>>>>> feature
+```
+
+You must:
+1. Edit the file and choose which version(s) to keep
+2. Remove the conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`)
+3. Stage the resolved file: `git add filename`
+4. Complete the merge: `git commit`
+
+## Deleting Branches
+
+After merging, you often want to clean up:
+
+```bash
+git branch -d feature
+```
+
+Use `-D` (force delete) if the branch hasn't been merged:
+
+```bash
+git branch -D feature  # Warning: deletes unmerged commits
+```
+
+**Note:** Deleting a branch pointer doesn't delete the commits — they're still in your object database and recoverable via `git reflog`.
+
+## Common Branching Strategies
+
+### Feature Branch Workflow
+
+1. Create a branch for each feature: `git switch -c feature-auth`
+2. Work and commit: `git commit -m "..."`
+3. Push to remote: `git push origin feature-auth`
+4. Open a pull request (GitHub)
+5. After review, merge: `git merge feature-auth`
+6. Delete: `git branch -d feature-auth`
+
+### Hotfix Pattern
+
+```
+main → Release-1.0 ← Emergency patch
+```
+
+If production has a critical bug:
+
+```bash
+git switch main
+git switch -c hotfix-urgent
+# Make and commit the fix
+git switch main
+git merge hotfix-urgent
+git branch -d hotfix-urgent
+```
+
+Then merge back to development branches so they don't regress.
+
+## Practical Workflow
+
+```bash
+# See current branches
+git branch
+
+# Create and switch to a feature branch
+git switch -c feature-payment
+
+# Make some commits
+git add payment.js
+git commit -m "Add Stripe integration"
+
+# Check the log
+git log --oneline
+
+# Switch back to main
+git switch main
+
+# Merge the feature
+git merge feature-payment
+
+# View the merged result
+git log --oneline --graph
+
+# Clean up
+git branch -d feature-payment
+```
+
+## Next Steps
+
+So far, we've worked locally. The next unit introduces **remotes** — how to push your commits to GitHub (or another server) and pull changes from collaborators.

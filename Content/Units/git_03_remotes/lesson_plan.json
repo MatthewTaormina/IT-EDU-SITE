@@ -1,0 +1,176 @@
+{
+  "course_id": "git_foundations",
+  "unit_id": "git_03_remotes",
+  "unit_title": "Working with Remotes",
+  "knowledge_nodes": [
+    "git_foundations"
+  ],
+  "lessons": [
+    {
+      "lesson_id": "git_03_remotes_01",
+      "title": "What Is a Remote? Understanding Named Repository URLs",
+      "slug": "remote_concept",
+      "duration_minutes": 12,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to explain what a remote is and understand that remotes are named aliases for repository URLs.",
+      "key_concepts": [
+        "remote",
+        "remote URL",
+        "named alias",
+        "local vs. remote",
+        "origin",
+        "github.com",
+        "collaboration"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Example: `origin` usually points to GitHub repo. Multiple remotes possible (e.g., `upstream` for canonical repository). Explain naming convention."
+    },
+    {
+      "lesson_id": "git_03_remotes_02",
+      "title": "Configuring Remotes with `git remote`",
+      "slug": "git_remote_command",
+      "duration_minutes": 13,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to view, add, and remove remote configurations using `git remote` commands.",
+      "key_concepts": [
+        "git remote",
+        "git remote -v",
+        "git remote add",
+        "git remote remove",
+        "fetch URL",
+        "push URL"
+      ],
+      "mdx_components": [
+        "TerminalEmulator"
+      ],
+      "notes": "Show: `git remote` (list), `git remote -v` (show URLs), `git remote add upstream <url>`, `git remote remove upstream`."
+    },
+    {
+      "lesson_id": "git_03_remotes_03",
+      "title": "Cloning a Repository",
+      "slug": "git_clone_command",
+      "duration_minutes": 11,
+      "bloom_level": 2,
+      "learning_objective": "By the end of this lesson, learners will be able to clone a repository from GitHub and understand what gets copied.",
+      "key_concepts": [
+        "git clone",
+        "clone URL",
+        "origin remote",
+        "full repository history",
+        "working directory",
+        "default branch"
+      ],
+      "mdx_components": [
+        "TerminalEmulator"
+      ],
+      "notes": "When cloning: entire object database copied, `origin` remote created automatically, default branch checked out. Much faster than downloading ZIP."
+    },
+    {
+      "lesson_id": "git_03_remotes_04",
+      "title": "Pushing Commits to a Remote with `git push`",
+      "slug": "git_push_command",
+      "duration_minutes": 14,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to push local commits to a remote repository and set up tracking branches.",
+      "key_concepts": [
+        "git push",
+        "git push -u",
+        "branch name",
+        "tracking branches",
+        "upstream",
+        "remote-tracking branches"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Show: `git push origin main` (push main to origin). Then `git push -u origin feature-auth` (push and set tracking). Explain `-u` flag."
+    },
+    {
+      "lesson_id": "git_03_remotes_05",
+      "title": "Understanding Remote-Tracking Branches",
+      "slug": "remote_tracking_branches",
+      "duration_minutes": 13,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to explain remote-tracking branches and understand their relationship to local branches.",
+      "key_concepts": [
+        "remote-tracking branch",
+        "origin/main",
+        "read-only",
+        "local snapshot",
+        "last fetch state",
+        "git branch -a"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Remote-tracking branches like `origin/main` are read-only pointers to the remote's state as of last fetch. They're not your working branches."
+    },
+    {
+      "lesson_id": "git_03_remotes_06",
+      "title": "Fetching Remote Changes without Merging",
+      "slug": "git_fetch_command",
+      "duration_minutes": 14,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to fetch remote changes and inspect them before merging into local branches.",
+      "key_concepts": [
+        "git fetch",
+        "fetch only",
+        "no merge",
+        "download commits",
+        "update remote-tracking branches",
+        "safe exploration"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout"
+      ],
+      "notes": "Fetch updates remote-tracking branches but doesn't change your local branches. Safe way to see what's new before integrating."
+    },
+    {
+      "lesson_id": "git_03_remotes_07",
+      "title": "Pulling Remote Changes with `git pull`",
+      "slug": "git_pull_command",
+      "duration_minutes": 15,
+      "bloom_level": 3,
+      "learning_objective": "By the end of this lesson, learners will be able to pull remote changes (fetch + merge) and understand the implications for local history.",
+      "key_concepts": [
+        "git pull",
+        "fetch + merge",
+        "merge commit",
+        "fast-forward",
+        "merge conflicts",
+        "divergence"
+      ],
+      "mdx_components": [
+        "TerminalEmulator",
+        "Callout",
+        "ProgressCheck"
+      ],
+      "notes": "Explain: `git pull` = `git fetch` + `git merge`. If remote has new commits and you do too, you get merge or conflict."
+    },
+    {
+      "lesson_id": "git_03_remotes_08",
+      "title": "The GitHub Workflow: Clone, Branch, Push, Pull Request",
+      "slug": "github_workflow",
+      "duration_minutes": 16,
+      "bloom_level": 4,
+      "learning_objective": "By the end of this lesson, learners will be able to apply the complete GitHub workflow from cloning a repository through opening a pull request.",
+      "key_concepts": [
+        "clone",
+        "feature branch",
+        "push",
+        "pull request",
+        "code review",
+        "merge on GitHub",
+        "collaboration"
+      ],
+      "mdx_components": [
+        "Callout"
+      ],
+      "notes": "Workflow: (1) clone repo, (2) create feature branch, (3) make commits, (4) push to GitHub, (5) open PR in web UI, (6) merge after review."
+    }
+  ]
+}

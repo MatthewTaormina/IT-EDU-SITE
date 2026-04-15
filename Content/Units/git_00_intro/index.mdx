@@ -1,0 +1,146 @@
+---
+type: unit
+title: "Introduction to Version Control"
+description: "Why version control exists, the three generations of VCS, Git's place as a distributed system, and the foundational data model (blobs, trees, commits, DAG)."
+domain: "git"
+difficulty: Beginner
+prerequisites: ["None"]
+learning_objectives:
+  - "Understand why version control is essential in professional software development"
+  - "Distinguish between local, centralized, and distributed version control systems"
+  - "Explain Git's immutable, content-addressed object model (blobs, trees, commits)"
+  - "Visualize the DAG structure of commits and how branches relate to commits"
+  - "Recognize the three working areas (working directory, staging area, repository)"
+  - "Set up Git on your machine and configure basic identity"
+references:
+  - type: lesson
+    slug: git_00_intro_01_why_version_control_exists
+  - type: lesson
+    slug: git_00_intro_02_three_generations_vcs
+  - type: lesson
+    slug: git_00_intro_03_git_object_model
+  - type: lesson
+    slug: git_00_intro_04_dag_commit_graph
+  - type: lesson
+    slug: git_00_intro_05_three_working_areas
+  - type: lesson
+    slug: git_00_intro_06_install_configure_git
+---
+
+# Introduction to Version Control
+
+Welcome to Git Foundations! This unit introduces the *why* and *how* of version control, setting the mental model you'll need to master every Git workflow.
+
+## Core Concepts
+
+**Version control** is the practice of tracking changes to files over time, enabling recovery from mistakes, parallel development through branching, and an auditable history of all changes.
+
+### The Three Generations of VCS
+
+Throughout software history, version control solutions have evolved to solve increasingly complex collaboration challenges:
+
+| Generation | Examples | Model | Core Problem |
+| :--- | :--- | :--- | :--- |
+| **Local VCS** | RCS, SCCS | Files tracked in a local database on one machine | No collaboration; single point of failure |
+| **Centralized VCS** | CVS, Subversion (SVN), Perforce | Single authoritative server; clients check out working copies | Server is a single point of failure; no offline work; slow branching |
+| **Distributed VCS** | Git, Mercurial, Darcs | Every clone is a full copy of the entire repository including history | Enables offline work, multiple remotes, fast local branching |
+
+**Git is a distributed VCS.** When you clone a repository, you receive the *entire* object database — every version of every file, every commit, every branch. This is why core operations are nearly instantaneous: they read from local storage.
+
+### Git's Data Model: The Object Store
+
+Git stores your project history as a **content-addressed object store** using SHA-1 hashing. Three types of objects form the foundation:
+
+#### 1. **Blob** — File Content
+
+A blob stores the raw contents of a single file:
+
+```
+Content: "Hello, world!\n"
+SHA-1:   8ab686eafeb1f44702738c8b0f24f2567c36da6d
+```
+
+A blob has no name — it's pure content.
+
+#### 2. **Tree** — Directory Snapshot
+
+A tree captures the structure of a directory at a point in time, mapping filenames to blobs (files) or other trees (subdirectories):
+
+```
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+├── blob 8ab686...  README.md
+├── blob 3b18e5...  index.html
+└── tree 9c3f9a...  src/
+    ├── blob 1e2f4a... main.js
+```
+
+#### 3. **Commit** — Named Snapshot
+
+A commit captures a moment in time: the full project state, authorship, timestamp, and a commit message. Every commit points to its parent commit(s), forming a graph:
+
+```
+commit a1b2c3d4
+tree    4b825dc6...
+parent  9f0e1a2b...
+author  Alice <alice@example.com>
+time    2026-04-14T10:30:00
+
+Refactor authentication module
+```
+
+### The DAG (Directed Acyclic Graph)
+
+Commits form a **DAG** because each commit points to its parents (zero for the initial commit, one for normal commits, two or more for merges). Because commits are **immutable**, you can never rewrite history — only add to it.
+
+```
+A ← B ← C ← D  (main)
+             ↑
+             E ← F  (feature)
+```
+
+When `feature` merges into `main`, a new merge commit `G` is created with **two** parents:
+
+```
+A ← B ← C ← D ← G  (main)
+             ↑  /
+             E ← F  (feature → main)
+```
+
+**Key insight:** The entire history is immutable. Every operation — commit, branch, merge — is a transformation of pointers or an addition of new objects.
+
+### The Three Working Areas
+
+Every Git workflow moves changes through exactly three areas:
+
+| Area | Location | Description |
+| :--- | :--- | :--- |
+| **Working Directory** | Your project folder on disk | Files you see and edit. Git tracks which differ from the repository. |
+| **Staging Area (Index)** | `.git/index` | A proposed snapshot, built incrementally with `git add`. |
+| **Repository** | `.git/objects/` | The permanent DAG of commits. Written to by `git commit`. |
+
+```
+Working Dir  →  git add  →  Staging Area  →  git commit  →  Repository
+  (edit)                      (index)                      (.git/objects)
+```
+
+### HEAD and Branches
+
+A **branch** is simply a named pointer to a commit:
+
+```
+main    → commit D
+feature → commit F
+HEAD    → main
+```
+
+When you make a new commit, the current branch pointer advances to point to the new commit, and `HEAD` moves with it.
+
+## Why This Matters
+
+Understanding Git's object model removes *all* ambiguity from command behavior. When you know that a branch is just a 41-byte pointer, not a copy of files, you understand why creating a branch is instantaneous. When you know commits are immutable, you understand why rewriting history is impossible without rewriting your entire DAG.
+
+This mental model is prerequisite for mastering advanced Git: rebasing, cherry-picking, reflog, and everything beyond basic workflows.
+
+## Next Steps
+
+In the next unit, we'll initialize a real Git repository and start moving changes through the three working areas with our first commits.

@@ -1,7 +1,10 @@
 {
   "course_id": "git_foundations",
   "title": "Foundations of Git",
-  "description": "A beginner course introducing the core concepts and workflows of Git version control.",
+  "description": "A beginner course introducing the core concepts and workflows of Git version control, from the object model to branching, merging, remotes, and conflict resolution.",
+  "domain": "git",
+  "difficulty": "Beginner",
+  "estimated_hours": 15,
   "skills_required": [],
   "skills_granted": [
     "git:init_repo",
@@ -13,23 +16,28 @@
   ],
   "units": [
     {
-      "unit_id": "git_intro",
+      "unit_id": "git_00_intro",
+      "unit_slug": "git_00_intro",
       "title": "Introduction to Version Control"
     },
     {
-      "unit_id": "git_init_commit",
+      "unit_id": "git_01_init_commit",
+      "unit_slug": "git_01_init_commit",
       "title": "Initializing a Repository and Making Commits"
     },
     {
-      "unit_id": "git_branching",
+      "unit_id": "git_02_branching",
+      "unit_slug": "git_02_branching",
       "title": "Branching and Merging"
     },
     {
-      "unit_id": "git_remotes",
+      "unit_id": "git_03_remotes",
+      "unit_slug": "git_03_remotes",
       "title": "Working with Remotes"
     },
     {
-      "unit_id": "git_conflicts",
+      "unit_id": "git_04_conflicts",
+      "unit_slug": "git_04_conflicts",
       "title": "Resolving Merge Conflicts"
     }
   ]
