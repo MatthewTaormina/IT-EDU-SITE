@@ -11,6 +11,7 @@ const navLinks = [
   { href: '/projects', label: 'Projects' },
   { href: '/articles', label: 'Articles' },
   { href: '/resources', label: 'Resources' },
+  { href: '/desktop', label: 'Sandbox' },
 ];
 
 export default function Nav() {
