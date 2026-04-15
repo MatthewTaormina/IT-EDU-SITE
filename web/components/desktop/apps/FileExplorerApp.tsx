@@ -164,7 +164,8 @@ export function FileExplorerApp({ windowId, appState }: FileExplorerAppProps) {
       const appState: TextEditorAppState = { filePath: entry.path, content, dirty: false, cursorLine: 1, cursorCol: 1 };
       kernel.openWindow('text-editor', title, appState);
     } else if (entry.kind === 'url') {
-      const appState: BrowserAppState = { url: entry.href, history: [entry.href], historyIndex: 0 };
+      const href = entry.href ?? '';
+      const appState: BrowserAppState = { url: href, history: [href], historyIndex: 0 };
       kernel.openWindow('browser', basename(entry.path), appState);
     } else {
       select(entry.path);
