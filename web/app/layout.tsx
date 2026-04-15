@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import Nav from '@/components/ui/Nav';
-import Footer from '@/components/ui/Footer';
 import ThemeProvider from '@/components/ui/ThemeProvider';
 import './globals.css';
 
@@ -35,9 +33,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <ThemeProvider>
-          <Nav />
-          <main id="main-content" className="flex-1">{children}</main>
-          <Footer />
+          {children}
         </ThemeProvider>
       </body>
     </html>
